@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Function : MonoBehaviour
+public class Function
 {
 
     public virtual void Play(GameObject target)
