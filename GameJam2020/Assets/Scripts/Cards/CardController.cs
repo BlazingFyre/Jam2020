@@ -2,9 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.EventSystems;
 
 public class CardController : MonoBehaviour
 {
+  private GlobalVariables globalVariables;
+  public void Start()
+  {
+    globalVariables = GameObject.Find("EventSystem").GetComponent<GlobalVariables>();
+  }
 
     public CardController() { }
 
@@ -20,6 +26,16 @@ public class CardController : MonoBehaviour
     }
 
     public void ToggleHighlight()
+    {
+
+    }
+
+    public void OnPointerUp(PointerEventData pointerEventData)
+    {
+        Debug.Log(globalVariables.getSelectedObject().name);
+    }
+
+    public void OnPointerDown(PointerEventData pointerEventData)
     {
 
     }
