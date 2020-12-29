@@ -4,14 +4,28 @@ using UnityEngine;
 
 public class GlobalVariables : MonoBehaviour
 {
-  private Target selectedObject = null;
+    private GameObject selectedObject = null;
+    private GameObject selectedHighlight = null;
 
-  public Target getSelectedObject()
-  {
-    return this.selectedObject;
-  }
-  public void setSelectedObject(Target selectedObject_)
-  {
-    this.selectedObject = selectedObject_;
-  }
+    public GameObject getSelectedObject()
+    {
+        return this.selectedObject;
+    }
+    public void setSelectedObject(GameObject selectedObject, GameObject highlight)
+    {
+        this.selectedObject = selectedObject;
+
+        if (selectedHighlight != null)
+        {
+            selectedHighlight.SetActive(false);
+        }
+
+        this.selectedHighlight = highlight;
+
+        if (selectedHighlight != null)
+        {
+            selectedHighlight.SetActive(true);
+        }
+
+    }
 }
