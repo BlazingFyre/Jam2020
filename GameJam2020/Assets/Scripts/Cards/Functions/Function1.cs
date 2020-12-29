@@ -6,7 +6,11 @@ public class Function1 : Function
 {
   public override void Play(GameObject target)
   {
-      // Do nothing.
+      Debug.Log("yeet");
       Discard();
+  }
+  public void Play()
+  {
+    Play(null);
   }
 }

@@ -9,7 +9,7 @@ public class CardData : MonoBehaviour
     string name;
     string text;
     string art;
-    Type function;
+    public Type function = typeof(Function1);
 
     public CardData(string name, string text, string art, Type function)
     {

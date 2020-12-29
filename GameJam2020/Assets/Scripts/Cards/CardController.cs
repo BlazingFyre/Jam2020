@@ -29,11 +29,16 @@ public class CardController : MonoBehaviour, IPointerUpHandler, IPointerDownHand
 
     public void PlayCard()
     {
+      Debug.Log("hehe");
       //The following section is dedicated to calling the function that should be called upon playing this card, stored in CardData.
       //We need to get the Type of the function:
-      Type function = CardData.getFunction();
+      cardData.function = typeof(Function1);
+      Type functionType = cardData.getFunction();
+      Debug.Log(functionType);
       //We then create an instance of that type:
-
+      Function cardFunctionInstance = (Function)System.Activator.CreateInstance(functionType);
+      //And then call the Play() function of cardFunctionInstance
+      cardFunctionInstance.Play(null);
     }
 
     public void ToggleHighlight()
@@ -43,8 +48,8 @@ public class CardController : MonoBehaviour, IPointerUpHandler, IPointerDownHand
 
     public void OnPointerUp(PointerEventData pointerEventData)
     {
-        Debug.Log(globalVariables.getSelectedObject().name);
-
+        Debug.Log("a");
+        PlayCard();
 
     }
 
