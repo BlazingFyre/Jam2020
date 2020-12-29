@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class CardData : MonoBehaviour
 {
@@ -8,9 +9,9 @@ public class CardData : MonoBehaviour
     string name;
     string text;
     string art;
-    string function;
+    Type function;
 
-    public CardData(string name, string text, string art, string function)
+    public CardData(string name, string text, string art, Type function)
     {
         this.name = name;
         this.text = text;
@@ -30,7 +31,7 @@ public class CardData : MonoBehaviour
     {
         return art;
     }
-    public string getFunction()
+    public Type getFunction()
     {
         return function;
     }

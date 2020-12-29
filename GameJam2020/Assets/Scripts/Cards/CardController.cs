@@ -7,9 +7,11 @@ using UnityEngine.EventSystems;
 public class CardController : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
 {
   private GlobalVariables globalVariables;
+  private CardData cardData;
   public void Start()
   {
     globalVariables = GameObject.Find("EventSystem").GetComponent<GlobalVariables>();
+    cardData = gameObject.GetComponent<CardData>();
   }
 
     public CardController() { }
@@ -18,11 +20,20 @@ public class CardController : MonoBehaviour, IPointerUpHandler, IPointerDownHand
     {
 
     }
+//From William: What is this function for?
+    // public void PlayTest(GameObject target)
+    // {
+    //     print(target.name);
+    //     // Grab function and Play() it
+    // }
 
-    public void PlayTest(GameObject target)
+    public void PlayCard()
     {
-        print(target.name);
-        // Grab function and Play() it
+      //The following section is dedicated to calling the function that should be called upon playing this card, stored in CardData.
+      //We need to get the Type of the function:
+      Type function = CardData.getFunction();
+      //We then create an instance of that type:
+
     }
 
     public void ToggleHighlight()
@@ -33,6 +44,7 @@ public class CardController : MonoBehaviour, IPointerUpHandler, IPointerDownHand
     public void OnPointerUp(PointerEventData pointerEventData)
     {
         Debug.Log(globalVariables.getSelectedObject().name);
+
 
     }
 
