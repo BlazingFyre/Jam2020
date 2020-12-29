@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 using UnityEngine.EventSystems;
 
-public class CardController : MonoBehaviour
+public class CardController : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
 {
   private GlobalVariables globalVariables;
   public void Start()
@@ -33,6 +33,7 @@ public class CardController : MonoBehaviour
     public void OnPointerUp(PointerEventData pointerEventData)
     {
         Debug.Log(globalVariables.getSelectedObject().name);
+
     }
 
     public void OnPointerDown(PointerEventData pointerEventData)
