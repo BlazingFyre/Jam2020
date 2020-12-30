@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,11 +17,21 @@ public class GlobalVariables : MonoBehaviour
         if (this.selectedObject != null)
         {
             this.selectedObject.GetComponent<Select>().DisableSelectedHighlight();
+            
+            if (this.selectedObject.tag == "Card Side")
+            {
+                this.selectedObject.GetComponent<Select>().DisableSelectedUpscaling();
+            }
         }
 
         if (selectedObject != null)
         {
             selectedObject.GetComponent<Select>().EnableSelectedHighlight();
+
+            if (selectedObject.tag == "Card Side")
+            {
+                selectedObject.GetComponent<Select>().EnableSelectedUpscaling();
+            }
         }
 
         this.selectedObject = selectedObject;

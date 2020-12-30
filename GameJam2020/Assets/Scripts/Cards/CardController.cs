@@ -28,12 +28,15 @@ public class CardController : MonoBehaviour, IPointerUpHandler, IPointerDownHand
       //cardData.function = typeof(Function2);
       Type functionType = cardData.GetFunction();
 
-      Debug.Log(functionType);
+      //Debug.Log(functionType);
 
       //We then create an instance of that type:
       Function cardFunctionInstance = (Function) System.Activator.CreateInstance(functionType);
       //And then call the Play() function of cardFunctionInstance
-      cardFunctionInstance.Play(target);
+      if (cardFunctionInstance.IsTargetable(target))
+        {
+            cardFunctionInstance.Play(target);
+        }
     }
 
     public void OnPointerUp(PointerEventData pointerEventData)

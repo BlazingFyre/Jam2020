@@ -6,12 +6,15 @@ using System;
 public class CardData : MonoBehaviour
 {
 
-    string name;
-    string text;
-    string art;
+    public string name;
+    public string text;
+    public Sprite art;
     public Type function;
+    // For manually entering in card functions
+    public string functionName = null;
+    
 
-    public CardData(string name, string text, string art, Type function)
+    public CardData(string name, string text, Sprite art, Type function)
     {
         this.name = name;
         this.text = text;
@@ -21,7 +24,10 @@ public class CardData : MonoBehaviour
 
     public void Start()
     {
-        function = typeof(Function2);
+        if (functionName != null)
+        {
+            function = Type.GetType(functionName);
+        }
     }
 
     public string GetName()
@@ -32,7 +38,7 @@ public class CardData : MonoBehaviour
     {
         return text;
     }
-    public string GetArt()
+    public Sprite GetArt()
     {
         return art;
     }

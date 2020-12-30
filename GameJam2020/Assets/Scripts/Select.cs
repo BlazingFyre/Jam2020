@@ -14,6 +14,8 @@ public class Select : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public Color selectedColor = new Color(0f, 0.75f, 1f);
     public Color targetableColor = new Color(1f, 0.5f, 0f);
 
+    public float selectUpscaling = 1.3f;
+
     public GameObject highlight;
 
     // Start is called before the first frame update
@@ -32,6 +34,17 @@ public class Select : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         globalVariables.SetSelectedObject(null);
         //Debug.Log(this.name + " no longer moused over");
+    }
+
+    public void EnableSelectedUpscaling()
+    {
+        gameObject.transform.parent.SetSiblingIndex(int.MaxValue);
+        gameObject.GetComponent<RectTransform>().localScale = new Vector3(selectUpscaling, selectUpscaling, 1);
+    }
+
+    public void DisableSelectedUpscaling()
+    {
+        gameObject.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
     }
 
     public void EnableSelectedHighlight()
