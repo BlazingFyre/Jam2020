@@ -10,4 +10,9 @@ public class Function1 : Function
       Discard();
   }
 
+    public override bool IsTargetable(GameObject target)
+    {
+        return true;
+    }
+
 }

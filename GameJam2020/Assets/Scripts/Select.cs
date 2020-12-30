@@ -8,9 +8,11 @@ public class Select : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     private GlobalVariables globalVariables;
     private bool highlightLock = false;
+    private bool selected = false;
+    private bool targetable = false;
 
     public Color selectedColor = new Color(0f, 0.75f, 1f);
-    public Color lockedColor = new Color(1f, 0.5f, 0f);
+    public Color targetableColor = new Color(1f, 0.5f, 0f);
 
     public GameObject highlight;
 
@@ -18,62 +20,95 @@ public class Select : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     void Start()
     {
         globalVariables = GameObject.Find("EventSystem").GetComponent<GlobalVariables>();
-        highlight.GetComponent<Image>().color = selectedColor;
+        SetColorSelected();
     }
     public void OnPointerEnter(PointerEventData pointerEventData)
     {
-        globalVariables.setSelectedObject(this.gameObject);
+        globalVariables.SetSelectedObject(this.gameObject);
         //Debug.Log(this.name + " moused over");
     }
 
     public void OnPointerExit(PointerEventData pointerEventData)
     {
-        globalVariables.setSelectedObject(null);
+        globalVariables.SetSelectedObject(null);
         //Debug.Log(this.name + " no longer moused over");
     }
 
-    public void EnableHighlight()
+    public void EnableSelectedHighlight()
     {
         if (!highlightLock)
         {
-            highlight.SetActive(true);
+            selected = true;
+            UpdateHighlight();
         }
     }
 
-    public void DisableHighlight()
+    public void DisableSelectedHighlight()
     {
         if (!highlightLock)
         {
+            selected = false;
+            UpdateHighlight();
+        }
+    }
+
+    public void EnableTargetableHighlight()
+    {
+        if (!highlightLock)
+        {
+            targetable = true;
+            UpdateHighlight();
+        }
+    }
+
+    public void DisableTargetableHighlight()
+    {
+        if (!highlightLock)
+        {
+            targetable = false;
+            UpdateHighlight();
+        }
+    }
+
+    private void SetColorSelected()
+    {
+        highlight.GetComponent<Image>().color = selectedColor;
+    }
+
+    private void SetColorTargetable()
+    {
+        highlight.GetComponent<Image>().color = targetableColor;
+    }
+
+    private void UpdateHighlight()
+    {
+        if (!selected && !targetable)
+        {
             highlight.SetActive(false);
+        }
+        else
+        {
+            if (selected)
+            {
+                SetColorSelected();
+            } 
+            else if (targetable)
+            {
+                SetColorTargetable();
+            }
+            highlight.SetActive(true);
         }
     }
 
     public void EnableHighlightLock()
     {
         highlightLock = true;
-        highlight.GetComponent<Image>().color = lockedColor;
     }
 
     public void DisableHighlightLock()
     {
         highlightLock = false;
-        highlight.GetComponent<Image>().color = selectedColor;
-    }
-
-    public void UpdateHighlight()
-    {
-        if (!highlightLock)
-        {
-            if (globalVariables.getSelectedObject() != this)
-            {
-                highlight.SetActive(false);
-            }
-            else
-            {
-                highlight.SetActive(true);
-            }
-        }
-        
+        UpdateHighlight();
     }
 
 }

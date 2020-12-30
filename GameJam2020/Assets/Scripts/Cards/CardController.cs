@@ -25,8 +25,8 @@ public class CardController : MonoBehaviour, IPointerUpHandler, IPointerDownHand
     {
       //The following section is dedicated to calling the function that should be called upon playing this card, stored in CardData.
       //We need to get the Type of the function:
-      cardData.function = typeof(Function1);
-      Type functionType = cardData.getFunction();
+      //cardData.function = typeof(Function2);
+      Type functionType = cardData.GetFunction();
 
       Debug.Log(functionType);
 
@@ -38,18 +38,41 @@ public class CardController : MonoBehaviour, IPointerUpHandler, IPointerDownHand
 
     public void OnPointerUp(PointerEventData pointerEventData)
     {
-        if (globalVariables.getSelectedObject() != null)
+        if (globalVariables.GetSelectedObject() != null)
         {
-            PlayCard(globalVariables.getSelectedObject());
+            PlayCard(globalVariables.GetSelectedObject());
         }
 
-        this.GetComponent<Select>().DisableHighlightLock();
-        this.GetComponent<Select>().DisableHighlight();
+        // Turn off "dragged" card highlight
+        this.GetComponent<Select>().DisableTargetableHighlight();
+
+        // Turn off highlights for potential targets
+        globalVariables.SetPotentialTargets(null);
     }
 
     public void OnPointerDown(PointerEventData pointerEventData)
     {
-        this.GetComponent<Select>().EnableHighlightLock();
+        // Turn on dragged card highlight
+        this.GetComponent<Select>().EnableTargetableHighlight();
+
+        // Highlight the potential targets within the scene using the Function's IsTargetable method
+        Select[] selectors = FindObjectsOfType<Select>();
+        
+        Type functionType = cardData.GetFunction();
+        Function cardFunctionInstance = (Function)System.Activator.CreateInstance(functionType);
+
+        List<GameObject> targetables = new List<GameObject>();
+
+        foreach (Select s in selectors)
+        {
+            if (cardFunctionInstance.IsTargetable(s.gameObject))
+            {
+                targetables.Add(s.gameObject);
+            }
+        }
+
+        globalVariables.SetPotentialTargets(targetables);
+
     }
 
 }

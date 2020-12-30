@@ -9,7 +9,7 @@ public class CardData : MonoBehaviour
     string name;
     string text;
     string art;
-    public Type function = typeof(Function1);
+    public Type function;
 
     public CardData(string name, string text, string art, Type function)
     {
@@ -19,19 +19,24 @@ public class CardData : MonoBehaviour
         this.function = function;
     }
 
-    public string getName()
+    public void Start()
+    {
+        function = typeof(Function2);
+    }
+
+    public string GetName()
     {
         return name;
     }
-    public string getText()
+    public string GetText()
     {
         return text;
     }
-    public string getArt()
+    public string GetArt()
     {
         return art;
     }
-    public Type getFunction()
+    public Type GetFunction()
     {
         return function;
     }
