@@ -2,18 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Function
+public class Function : MonoBehaviour
 {
-
-    public virtual void Play(GameObject target)
+    public virtual void Play(GameObject cardSide, GameObject target)
     {
         // Do nothing.
-        Discard();
+        Discard(cardSide.transform.parent.gameObject);
     }
 
-    public virtual void Discard()
+    public virtual void Discard(GameObject card)
     {
-        //TODO: add discard function
+        Spirit owner = card.GetComponent<Owner>().GetOwner();
+
+        // wtf
+        if (owner.GetHand().GetComponent<CardContainer>().Contains(card))
+        {
+            owner.GetHand().GetComponent<CardContainer>().DrawTarget(card);
+        } 
+        else if (owner.GetDeck().GetComponent<CardContainer>().Contains(card))
+        {
+            owner.GetDeck().GetComponent<CardContainer>().DrawTarget(card);
+        }
+
+        owner.GetGraveyard().GetComponent<CardContainer>().PlaceTop(card);
     }
 
     public virtual bool IsTargetable(GameObject target)

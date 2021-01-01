@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class CardContainer : MonoBehaviour
+public class CardContainer : Owner
 {
     public int maxCards;
     public List<GameObject> cards = new List<GameObject>();
@@ -11,9 +11,9 @@ public class CardContainer : MonoBehaviour
 
     public void Start()
     {
-        if (aligner == null)
+        foreach (GameObject c in cards)
         {
-            this.aligner = gameObject.GetComponent<CardAligner>();
+            c.GetComponent<Owner>().SetOwner(owner);
         }
     }
 
@@ -77,6 +77,7 @@ public class CardContainer : MonoBehaviour
     {
         if (!IsFull())
         {
+            target.GetComponent<Owner>().SetOwner(owner);
             cards.Insert(0, target);
         }
     }
@@ -85,6 +86,7 @@ public class CardContainer : MonoBehaviour
     {
         if (!IsFull())
         {
+            target.GetComponent<Owner>().SetOwner(owner);
             cards.Add(target);
         }
     }
@@ -93,6 +95,7 @@ public class CardContainer : MonoBehaviour
     {
         if (!IsFull())
         {
+            target.GetComponent<Owner>().SetOwner(owner);
             cards.Insert(index, target);
         }
     }

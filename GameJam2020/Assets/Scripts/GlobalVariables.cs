@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class GlobalVariables : MonoBehaviour
 {
-    private GameObject selectedObject = null;
-    private List<GameObject> potentialTargets = null;
+    public GameObject selectedObject = null;
+    public List<GameObject> potentialTargets = null;
 
     public GameObject GetSelectedObject()
     {

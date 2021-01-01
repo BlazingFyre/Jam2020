@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Function2 : Function
 {
-    public override void Play(GameObject target)
+    public override void Play(GameObject cardSide, GameObject target)
     {
         Entity targetComponent = target.GetComponent<Entity>();
 
@@ -13,7 +13,7 @@ public class Function2 : Function
             targetComponent.Damage(10);
         }
 
-        Discard();
+        Discard(cardSide.transform.parent.gameObject);
     }
 
     public override bool IsTargetable(GameObject target)

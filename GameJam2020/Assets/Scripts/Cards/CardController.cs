@@ -8,13 +8,12 @@ public class CardController : MonoBehaviour, IPointerUpHandler, IPointerDownHand
 {
   private GlobalVariables globalVariables;
   private CardData cardData;
+
   public void Start()
   {
     globalVariables = GameObject.Find("EventSystem").GetComponent<GlobalVariables>();
     cardData = gameObject.GetComponent<CardData>();
   }
-
-    public CardController() { }
 
     void FixedUpdate()
     {
@@ -35,7 +34,7 @@ public class CardController : MonoBehaviour, IPointerUpHandler, IPointerDownHand
       //And then call the Play() function of cardFunctionInstance
       if (cardFunctionInstance.IsTargetable(target))
         {
-            cardFunctionInstance.Play(target);
+            cardFunctionInstance.Play(gameObject, target);
         }
     }
 
@@ -47,7 +46,8 @@ public class CardController : MonoBehaviour, IPointerUpHandler, IPointerDownHand
         }
 
         // Turn off "dragged" card highlight
-        this.GetComponent<Select>().DisableTargetableHighlight();
+        this.GetComponent<Select>().DisableHighlightLock();
+        this.GetComponent<Select>().DisableSelectedHighlight();
 
         // Turn off highlights for potential targets
         globalVariables.SetPotentialTargets(null);
@@ -56,7 +56,8 @@ public class CardController : MonoBehaviour, IPointerUpHandler, IPointerDownHand
     public void OnPointerDown(PointerEventData pointerEventData)
     {
         // Turn on dragged card highlight
-        this.GetComponent<Select>().EnableTargetableHighlight();
+        this.GetComponent<Select>().EnableHighlightLock();
+        this.GetComponent<Select>().EnableSelectedHighlight();
 
         // Highlight the potential targets within the scene using the Function's IsTargetable method
         Select[] selectors = FindObjectsOfType<Select>();

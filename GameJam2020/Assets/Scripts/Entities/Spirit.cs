@@ -2,17 +2,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewBehaviourScript : Entity
+public class Spirit : Entity
 {
-    // Start is called before the first frame update
-    void Start()
+
+    public GameObject deck;
+    public GameObject graveyard;
+    public GameObject hand;
+
+    public void Start()
     {
-        
+        deck.GetComponent<CardContainer>().SetOwner(this);
+        graveyard.GetComponent<CardContainer>().SetOwner(this);
+        hand.GetComponent<CardContainer>().SetOwner(this);
     }
 
-    // Update is called once per frame
-    void Update()
+    public GameObject GetDeck()
     {
-        
+        return deck;
     }
+
+    public GameObject GetGraveyard()
+    {
+        return graveyard;
+    }
+
+    public GameObject GetHand()
+    {
+        return hand;
+    }
+
 }
