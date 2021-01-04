@@ -6,7 +6,10 @@ public class Entity : MonoBehaviour
 {
     public int health = 10;
     public int maxHealth = 10;
+
     //TODO: add statuses
+
+    public char side;
 
     public Entity() { }
     public Entity(int maxHealth, int health)
@@ -30,6 +33,16 @@ public class Entity : MonoBehaviour
         return maxHealth;
     }
 
+    public int GetSide()
+    {
+        return side;
+    }
+
+    public void SetSide(char side)
+    {
+        this.side = side;
+    }
+
     public void SetHealth(int amount)
     {
         if (health <= 0)
@@ -40,10 +53,15 @@ public class Entity : MonoBehaviour
 
     public void Damage(int amount)
     {
+
+        int prevHealth = health;
+
         //TODO: apply status effects to amount(?)
+
+        //Assure the health does not exceed maxHealth or go below 0
         health = Mathf.Min(Mathf.Max(health - amount, 0), maxHealth);
 
-        print(this.name + " now has " + health + " HP after being dealt " + amount + " damage.");
+        print(this.name + "'s HP: " + prevHealth + " -> " + health + " (damaged by " + amount + ")");
 
         if (health <= 0)
         {
@@ -53,8 +71,15 @@ public class Entity : MonoBehaviour
 
     public void Heal(int amount)
     {
+
+        int prevHealth = health;
+
         //TODO: apply status effects to amount(?)
-        health = Mathf.Min(Mathf.Max(health - amount, 0), maxHealth);
+
+        //Assure the health does not exceed maxHealth or go below 0
+        health = Mathf.Min(Mathf.Max(health + amount, 0), maxHealth);
+
+        print(this.name + "'s HP: " + prevHealth + " -> " + health + " (healed by " + amount + ")");
 
         // This check should be here just in case there is some negative healing status
         if (health <= 0)
@@ -68,6 +93,7 @@ public class Entity : MonoBehaviour
     public void Destroy()
     {
         print(this.name + " was destroyed!");
+        Object.Destroy(gameObject);
     }
 
 }

@@ -2,27 +2,46 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using TMPro;
 
-public class CardContainer : Owner
+public class CardContainer : MonoBehaviour
 {
-    public int maxCards;
+    
+    public SpiritFunction owner;
+    public GameObject cardDisplay = null;
+
+    public int maxCards = int.MaxValue;
     public List<GameObject> cards = new List<GameObject>();
-    public CardAligner aligner = null;
 
     public void Start()
     {
         foreach (GameObject c in cards)
         {
-            c.GetComponent<Owner>().SetOwner(owner);
+            c.GetComponent<CardFunction>().SetCardContainer(this);
         }
     }
 
     public void FixedUpdate()
     {
-        if (!IsEmpty())
+
+        if (cardDisplay != null)
         {
-            aligner.AlignCards(cards);
+            cardDisplay.GetComponent<TextMeshProUGUI>().text = cards.Count().ToString();
         }
+    }
+
+    public void SetOwner(SpiritFunction owner)
+    {
+        this.owner = owner;
+        foreach (GameObject c in cards)
+        {
+            c.GetComponent<CardFunction>().SetController(owner);
+        }
+    }
+
+    public SpiritFunction GetOwner()
+    {
+        return owner;
     }
 
     public bool IsFull()
@@ -38,6 +57,11 @@ public class CardContainer : Owner
     public bool Contains(GameObject target)
     {
         return cards.Contains(target);
+    }
+
+    public int Size()
+    {
+        return cards.Count();
     }
 
     public GameObject DrawTop()
@@ -56,9 +80,11 @@ public class CardContainer : Owner
         {
             cards.Remove(target);
             return target;
+        } 
+        else
+        {
+            return null;
         }
-
-        return null;
     }
 
     public GameObject DrawIndex(int index)
@@ -68,35 +94,36 @@ public class CardContainer : Owner
             GameObject poppedObject = cards[index];
             cards.RemoveAt(index);
             return poppedObject;
+        } 
+        else
+        {
+            return null;
         }
-
-        return null;
     }
 
     public void PlaceTop(GameObject target)
     {
-        if (!IsFull())
-        {
-            target.GetComponent<Owner>().SetOwner(owner);
-            cards.Insert(0, target);
-        }
+        PlaceIndex(0, target);
     }
 
     public void PlaceBottom(GameObject target)
     {
-        if (!IsFull())
-        {
-            target.GetComponent<Owner>().SetOwner(owner);
-            cards.Add(target);
-        }
+        PlaceIndex(cards.Count() - 1, target);
     }
 
     public void PlaceIndex(int index, GameObject target)
     {
-        if (!IsFull())
+        if (IsEmpty())
         {
-            target.GetComponent<Owner>().SetOwner(owner);
+            cards.Add(target);
+            target.GetComponent<CardFunction>().SetCardContainer(this);
+            target.GetComponent<CardFunction>().SetController(owner);
+        }
+        else if (!IsFull())
+        {
             cards.Insert(index, target);
+            target.GetComponent<CardFunction>().SetCardContainer(this);
+            target.GetComponent<CardFunction>().SetController(owner);
         }
     }
 
@@ -112,6 +139,11 @@ public class CardContainer : Owner
             cards[i] = cards[r];
             cards[r] = tmp;
         }
+    }
+
+    public List<GameObject> GetCards()
+    {
+        return cards;
     }
 
 }
