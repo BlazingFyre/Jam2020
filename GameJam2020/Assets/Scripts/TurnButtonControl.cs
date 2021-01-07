@@ -19,7 +19,7 @@ public class TurnButtonControl : MonoBehaviour, IPointerUpHandler, IPointerDownH
     public void OnPointerDown(PointerEventData pointerEventData)
     {
         pressed = true;
-        gameObject.GetComponent<Select>().SetHighlightColor(pressedColor);
+        gameObject.GetComponent<Select>().SetDarkened(true);
     }
 
     public void OnPointerUp(PointerEventData pointerEventData)
@@ -30,7 +30,7 @@ public class TurnButtonControl : MonoBehaviour, IPointerUpHandler, IPointerDownH
         }
 
         pressed = false;
-        gameObject.GetComponent<Select>().RevertHighlightColor();
+        gameObject.GetComponent<Select>().SetDarkened(false);
     }
 
 }

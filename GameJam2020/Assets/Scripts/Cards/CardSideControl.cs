@@ -22,9 +22,9 @@ public class CardSideControl : MonoBehaviour, IPointerUpHandler, IPointerDownHan
         {
 
             // Turn on dragged card highlight / keep card from darkening
-            this.GetComponent<Select>().EnableHighlightLock();
-            this.GetComponent<Select>().EnableHighlight();
-            this.GetComponent<Select>().EnableDarkenedLock();
+            this.GetComponent<Select>().SetHighlightLock(true);
+            this.GetComponent<Select>().SetHighlighted(true);
+            this.GetComponent<Select>().SetDarkenLock(true);
 
             // Highlight the potential targets within the scene using the Function's IsTargetable method
             Select[] selectors = FindObjectsOfType<Select>();
@@ -91,9 +91,9 @@ public class CardSideControl : MonoBehaviour, IPointerUpHandler, IPointerDownHan
             }
 
             // Turn off "dragged" card highlight
-            this.GetComponent<Select>().DisableHighlightLock();
-            this.GetComponent<Select>().DisableHighlight();
-            this.GetComponent<Select>().DisableDarkenedLock();
+            this.GetComponent<Select>().SetHighlightLock(false);
+            this.GetComponent<Select>().SetHighlighted(false);
+            this.GetComponent<Select>().SetDarkenLock(false);
 
             // Turn off highlights for potential targets
             globalVariables.SetPotentialTargets(null, null);

@@ -129,21 +129,21 @@ public class GlobalVariables : MonoBehaviour
     {
         if (this.selectedObject != null)
         {
-            this.selectedObject.GetComponent<Select>().DisableHighlight();
+            this.selectedObject.GetComponent<Select>().SetHighlighted(false);
             
             if (this.selectedObject.tag == "Card Side")
             {
-                this.selectedObject.GetComponent<Select>().DisableUpscaling();
+                this.selectedObject.GetComponent<Select>().SetUpscaled(false);
             }
         }
 
         if (selectedObject != null)
         {
-            selectedObject.GetComponent<Select>().EnableHighlight();
+            selectedObject.GetComponent<Select>().SetHighlighted(true);
 
             if (selectedObject.tag == "Card Side")
             {
-                selectedObject.GetComponent<Select>().EnableUpscaling();
+                selectedObject.GetComponent<Select>().SetUpscaled(true);
             }
         }
 
@@ -176,7 +176,7 @@ public class GlobalVariables : MonoBehaviour
 
         foreach (GameObject o in nonpotentialTargets)
         {
-            o.GetComponent<Select>().EnableDarkened();
+            o.GetComponent<Select>().SetDarkened(true);
         }
     }
 
@@ -184,12 +184,13 @@ public class GlobalVariables : MonoBehaviour
     {
         isTargeting = false;
 
-        // Relight all non-card selectable objects (the cards are handled by CardAligner)
         foreach (GameObject o in this.nonpotentialTargets)
         {
+            o.GetComponent<Select>().SetDarkened(false);
+
             if (o.GetComponent<CardSideControl>() == null)
             {
-                o.GetComponent<Select>().DisableDarkened();
+                
             }
         }
         

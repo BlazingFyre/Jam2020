@@ -21,23 +21,21 @@ public class HandAligner : CardAligner
             c.SetActive(true);
 
         }
-
-        if (!globalVariables.IsTargeting())
-        {
-            DarkenCards();
-        }
     }
 
     public void DarkenCards()
     {
+
+        /*
+
         if (container.GetOwner().GetWakingSpirit().GetSide() == 'A')
         {
             foreach (GameObject c in container.GetCards())
             {
                 if (c.GetComponent<CardFunction>().GetSideA() != null)
                 {
-                    c.GetComponent<CardFunction>().GetSideA().gameObject.GetComponent<Select>().DisableDarkened();
-                    c.GetComponent<CardFunction>().GetSideB().gameObject.GetComponent<Select>().EnableDarkened();
+                    c.GetComponent<CardFunction>().GetSideA().gameObject.GetComponent<Select>().SetDarkened(false);
+                    c.GetComponent<CardFunction>().GetSideB().gameObject.GetComponent<Select>().SetDarkened(true);
                 }
             }
         }
@@ -47,11 +45,14 @@ public class HandAligner : CardAligner
             {
                 if (c.GetComponent<CardFunction>().GetSideA() != null)
                 {
-                    c.GetComponent<CardFunction>().GetSideA().GetComponent<Select>().EnableDarkened();
-                    c.GetComponent<CardFunction>().GetSideB().GetComponent<Select>().DisableDarkened();
+                    c.GetComponent<CardFunction>().GetSideA().GetComponent<Select>().SetDarkened(true);
+                    c.GetComponent<CardFunction>().GetSideB().GetComponent<Select>().SetDarkened(false);
                 }
             }
         }
+
+        */
+        
     }
 
 }

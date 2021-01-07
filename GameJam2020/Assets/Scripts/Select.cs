@@ -6,20 +6,19 @@ using UnityEngine.EventSystems;
 
 public class Select : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    private GlobalVariables globalVariables;
+    
     public bool highlightLock = false;
-    public bool selected = false;
-    public bool darkenedLock = false;
+    public bool highlighted = false;
+    public bool darkenLock = false;
     public bool darkened = false;
+    public bool upscaled = false;
 
     public Color selectedColor = new Color(0f, 0.75f, 1f);
-    private Color originalSelectedColor;
-
     public Color litColor = new Color(1f, 1f, 1f);
     public Color darkenedColor = new Color(0.5f, 0.5f, 0.5f);
-
     public float selectUpscaling = 1.3f;
 
+    private GlobalVariables globalVariables;
     public GameObject highlight;
     public GameObject front;
 
@@ -27,92 +26,71 @@ public class Select : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     void Start()
     {
         globalVariables = GameObject.Find("EventSystem").GetComponent<GlobalVariables>();
-        SetColorSelected();
 
         highlight = gameObject.transform.Find("Highlight").gameObject;
         front = gameObject.transform.Find("Front").gameObject;
 
-        originalSelectedColor = selectedColor;
-        litColor = front.GetComponent<Image>().color;
+        highlight.GetComponent<Image>().color = selectedColor;
+        front.GetComponent<Image>().color = litColor;
     }
     public void OnPointerEnter(PointerEventData pointerEventData)
     {
         globalVariables.SetSelectedObject(this.gameObject);
-        //Debug.Log(this.name + " moused over");
     }
 
     public void OnPointerExit(PointerEventData pointerEventData)
     {
         globalVariables.SetSelectedObject(null);
-        //Debug.Log(this.name + " no longer moused over");
     }
 
-    public void EnableUpscaling()
+    public bool IsUpscaled()
     {
-        gameObject.transform.parent.SetSiblingIndex(int.MaxValue);
-        gameObject.GetComponent<RectTransform>().localScale = new Vector3(selectUpscaling, selectUpscaling, 1);
+        return upscaled;
     }
 
-    public void DisableUpscaling()
+    public void SetUpscaled(bool upscaled)
     {
-        gameObject.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
-    }
+        this.upscaled = upscaled;
 
-    public void EnableHighlight()
-    {
-        if (!highlightLock)
+        if (upscaled)
         {
-            selected = true;
-            if (!darkened)
-            {
-                UpdateHighlight();
-            }
+            gameObject.transform.parent.SetSiblingIndex(int.MaxValue);
+            gameObject.GetComponent<RectTransform>().localScale = new Vector3(selectUpscaling, selectUpscaling, 1);
+        }
+        else
+        {
+            gameObject.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
         }
     }
 
-    public void DisableHighlight()
+    public bool IsHighlighted()
+    {
+        return highlighted;
+    }
+
+    public void SetHighlighted(bool highlighted)
     {
         if (!highlightLock)
         {
-            selected = false;
-            if (!darkened)
-            {
-                UpdateHighlight();
-            }
+            this.highlighted = highlighted;
+            highlight.SetActive(highlighted);
         }
-    }
-
-    private void SetColorSelected()
-    {
-        highlight.GetComponent<Image>().color = selectedColor;
-    }
-
-    private void UpdateHighlight()
-    {
-        highlight.SetActive(selected);
-    }
-
-    public void EnableHighlightLock()
-    {
-        highlightLock = true;
-    }
-
-    public void DisableHighlightLock()
-    {
-        highlightLock = false;
-        UpdateHighlight();
     }
 
     public void SetHighlightColor(Color color)
     {
         selectedColor = color;
-        SetColorSelected();
+        highlight.GetComponent<Image>().color = selectedColor;
     }
 
-    public void RevertHighlightColor()
+    public bool IsHighlightLocked()
     {
-        selectedColor = originalSelectedColor;
-        SetColorSelected();
+        return highlightLock;
+    }
+
+    public void SetHighlightLock(bool highlightLock)
+    {
+        this.highlightLock = highlightLock;
     }
 
     public bool IsDarkened()
@@ -120,44 +98,30 @@ public class Select : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         return darkened;
     }
 
-    public void EnableDarkened()
+    public void SetDarkened(bool darkened)
     {
-        if (!darkenedLock)
+        if (!darkenLock)
         {
-            darkened = true;
-            UpdateDarkened();
-        }
-    }
-    public void DisableDarkened()
-    {
-        if (!darkenedLock)
-        {
-            darkened = false;
-            UpdateDarkened();
+            this.darkened = darkened;
+            if (darkened)
+            {
+                front.GetComponent<Image>().color = darkenedColor;
+            }
+            else
+            {
+                front.GetComponent<Image>().color = litColor;
+            }
         }
     }
 
-    public void EnableDarkenedLock()
+    public bool IsDarkenLocked()
     {
-        darkenedLock = true;
+        return darkenLock;
     }
 
-    public void DisableDarkenedLock()
+    public void SetDarkenLock(bool darkenLock)
     {
-        darkenedLock = false;
-        UpdateDarkened();
+        this.darkenLock = darkenLock;
     }
 
-    private void UpdateDarkened()
-    {
-        if (darkened)
-        {
-            front.GetComponent<Image>().color = darkenedColor;
-        }
-        else
-        {
-            front.GetComponent<Image>().color = litColor;
-            UpdateHighlight();
-        }
-    }
 }

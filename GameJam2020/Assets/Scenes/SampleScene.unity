@@ -261,15 +261,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightLock: 0
-  selected: 0
-  darkenedLock: 0
+  highlighted: 0
+  darkenLock: 0
   darkened: 0
-  selectedColor: {r: 1, g: 0, b: 0.20000002, a: 1}
-  litColor: {r: 1, g: 1, b: 1, a: 1}
-  darkenedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  upscaled: 0
+  selectedColor: {r: 1, g: 0.15346906, b: 0.14509803, a: 1}
+  litColor: {r: 1, g: 0.5756765, b: 0.3176471, a: 1}
+  darkenedColor: {r: 1, g: 0.15294118, b: 0.14509805, a: 1}
   selectUpscaling: 1.3
   highlight: {fileID: 1936898015}
-  front: {fileID: 0}
+  front: {fileID: 159378358}
 --- !u!1 &159378358
 GameObject:
   m_ObjectHideFlags: 0
@@ -320,7 +321,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.8773585, g: 0.6318947, b: 0.39315593, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -567,9 +568,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightLock: 0
-  selected: 0
-  darkenedLock: 0
+  highlighted: 0
+  darkenLock: 0
   darkened: 0
+  upscaled: 0
   selectedColor: {r: 0, g: 0.75, b: 1, a: 1}
   litColor: {r: 1, g: 1, b: 1, a: 1}
   darkenedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
@@ -865,9 +867,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightLock: 0
-  selected: 0
-  darkenedLock: 0
+  highlighted: 0
+  darkenLock: 0
   darkened: 0
+  upscaled: 0
   selectedColor: {r: 0, g: 0.75, b: 1, a: 1}
   litColor: {r: 1, g: 1, b: 1, a: 1}
   darkenedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
@@ -949,9 +952,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightLock: 0
-  selected: 0
-  darkenedLock: 0
+  highlighted: 0
+  darkenLock: 0
   darkened: 0
+  upscaled: 0
   selectedColor: {r: 0, g: 0.75, b: 1, a: 1}
   litColor: {r: 1, g: 1, b: 1, a: 1}
   darkenedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
@@ -1309,9 +1313,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightLock: 0
-  selected: 0
-  darkenedLock: 0
+  highlighted: 0
+  darkenLock: 0
   darkened: 0
+  upscaled: 0
   selectedColor: {r: 0, g: 0.75, b: 1, a: 1}
   litColor: {r: 1, g: 1, b: 1, a: 1}
   darkenedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
@@ -1548,9 +1553,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightLock: 0
-  selected: 0
-  darkenedLock: 0
+  highlighted: 0
+  darkenLock: 0
   darkened: 0
+  upscaled: 0
   selectedColor: {r: 0, g: 0.75, b: 1, a: 1}
   litColor: {r: 1, g: 1, b: 1, a: 1}
   darkenedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
@@ -1632,9 +1638,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightLock: 0
-  selected: 0
-  darkenedLock: 0
+  highlighted: 0
+  darkenLock: 0
   darkened: 0
+  upscaled: 0
   selectedColor: {r: 0, g: 0.75, b: 1, a: 1}
   litColor: {r: 1, g: 1, b: 1, a: 1}
   darkenedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
@@ -1920,9 +1927,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightLock: 0
-  selected: 0
-  darkenedLock: 0
+  highlighted: 0
+  darkenLock: 0
   darkened: 0
+  upscaled: 0
   selectedColor: {r: 0, g: 0.75, b: 1, a: 1}
   litColor: {r: 1, g: 1, b: 1, a: 1}
   darkenedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
@@ -2578,9 +2586,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightLock: 0
-  selected: 0
-  darkenedLock: 0
+  highlighted: 0
+  darkenLock: 0
   darkened: 0
+  upscaled: 0
   selectedColor: {r: 0, g: 0.75, b: 1, a: 1}
   litColor: {r: 1, g: 1, b: 1, a: 1}
   darkenedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
@@ -2863,9 +2872,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightLock: 0
-  selected: 0
-  darkenedLock: 0
+  highlighted: 0
+  darkenLock: 0
   darkened: 0
+  upscaled: 0
   selectedColor: {r: 0, g: 0.75, b: 1, a: 1}
   litColor: {r: 1, g: 1, b: 1, a: 1}
   darkenedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
@@ -3235,9 +3245,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightLock: 0
-  selected: 0
-  darkenedLock: 0
+  highlighted: 0
+  darkenLock: 0
   darkened: 0
+  upscaled: 0
   selectedColor: {r: 0, g: 0.75, b: 1, a: 1}
   litColor: {r: 1, g: 1, b: 1, a: 1}
   darkenedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
@@ -3488,9 +3499,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightLock: 0
-  selected: 0
-  darkenedLock: 0
+  highlighted: 0
+  darkenLock: 0
   darkened: 0
+  upscaled: 0
   selectedColor: {r: 0, g: 0.75, b: 1, a: 1}
   litColor: {r: 1, g: 1, b: 1, a: 1}
   darkenedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
@@ -3949,9 +3961,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightLock: 0
-  selected: 0
-  darkenedLock: 0
+  highlighted: 0
+  darkenLock: 0
   darkened: 0
+  upscaled: 0
   selectedColor: {r: 0, g: 0.75, b: 1, a: 1}
   litColor: {r: 1, g: 1, b: 1, a: 1}
   darkenedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
@@ -4183,9 +4196,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightLock: 0
-  selected: 0
-  darkenedLock: 0
+  highlighted: 0
+  darkenLock: 0
   darkened: 0
+  upscaled: 0
   selectedColor: {r: 0, g: 0.75, b: 1, a: 1}
   litColor: {r: 1, g: 1, b: 1, a: 1}
   darkenedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
