@@ -20,7 +20,6 @@ public class CardSideControl : MonoBehaviour, IPointerUpHandler, IPointerDownHan
     {
         if (!gameObject.GetComponent<Select>().IsDarkened())
         {
-
             // Turn on dragged card highlight / keep card from darkening
             this.GetComponent<Select>().SetHighlightLock(true);
             this.GetComponent<Select>().SetHighlighted(true);

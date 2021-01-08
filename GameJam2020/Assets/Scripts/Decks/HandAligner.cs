@@ -19,39 +19,23 @@ public class HandAligner : CardAligner
             c.GetComponent<RectTransform>().position = new Vector3(currX, gameObject.GetComponent<RectTransform>().position.y);
             currX += cardWidth;
             c.SetActive(true);
-
         }
+
+        DarkenCards();
     }
 
-    public void DarkenCards()
+    private void DarkenCards()
     {
+        bool isOnSideA = container.GetOwner().GetWakingSpirit().GetSide() == 'A';
 
-        /*
-
-        if (container.GetOwner().GetWakingSpirit().GetSide() == 'A')
+        foreach (GameObject c in container.GetCards())
         {
-            foreach (GameObject c in container.GetCards())
+            if (c.GetComponent<CardFunction>().GetSideA() != null)
             {
-                if (c.GetComponent<CardFunction>().GetSideA() != null)
-                {
-                    c.GetComponent<CardFunction>().GetSideA().gameObject.GetComponent<Select>().SetDarkened(false);
-                    c.GetComponent<CardFunction>().GetSideB().gameObject.GetComponent<Select>().SetDarkened(true);
-                }
+                c.GetComponent<CardFunction>().GetSideA().gameObject.GetComponent<Select>().SetDarkened(!isOnSideA);
+                c.GetComponent<CardFunction>().GetSideB().gameObject.GetComponent<Select>().SetDarkened(isOnSideA);
             }
         }
-        else
-        {
-            foreach (GameObject c in container.GetCards())
-            {
-                if (c.GetComponent<CardFunction>().GetSideA() != null)
-                {
-                    c.GetComponent<CardFunction>().GetSideA().GetComponent<Select>().SetDarkened(true);
-                    c.GetComponent<CardFunction>().GetSideB().GetComponent<Select>().SetDarkened(false);
-                }
-            }
-        }
-
-        */
         
     }
 

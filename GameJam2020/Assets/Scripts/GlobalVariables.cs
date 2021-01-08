@@ -10,6 +10,7 @@ public class GlobalVariables : MonoBehaviour
     public GameObject enemy;
 
     public GameObject turnTaker;
+    public GameObject turnButton;
 
     public bool isTargeting = false;
 
@@ -44,6 +45,12 @@ public class GlobalVariables : MonoBehaviour
 
     public void EndTurn()
     {
+        // Make sure the end turn button cannot be touched until next turn
+        turnButton.GetComponent<Select>().SetSelectable(false);
+        turnButton.GetComponent<Select>().SetHighlighted(false);
+        turnButton.GetComponent<Select>().SetDarkened(true);
+        turnButton.GetComponent<Select>().SetDarkenLock(true);
+
         //TODO: end of turn effects
 
         if (turnTaker == player)
@@ -76,6 +83,7 @@ public class GlobalVariables : MonoBehaviour
         {
             //TODO: enemy.act
         }
+
     }
 
     private IEnumerator HandRefresh(SpiritFunction turnSpirit)
@@ -119,6 +127,11 @@ public class GlobalVariables : MonoBehaviour
             GameObject drawnCard = turnSpirit.GetDeck().DrawTop();
             turnSpirit.GetHand().PlaceBottom(drawnCard);
         }
+
+        // Re-enable the end turn button
+        turnButton.GetComponent<Select>().SetDarkenLock(false);
+        turnButton.GetComponent<Select>().SetDarkened(false);
+        turnButton.GetComponent<Select>().SetSelectable(true);
     }
 
     public GameObject GetSelectedObject()
@@ -186,12 +199,12 @@ public class GlobalVariables : MonoBehaviour
 
         foreach (GameObject o in this.nonpotentialTargets)
         {
-            o.GetComponent<Select>().SetDarkened(false);
-
             if (o.GetComponent<CardSideControl>() == null)
             {
-                
+                o.GetComponent<Select>().SetDarkened(false);
             }
+
+            player.GetComponent<SpiritFunction>().GetHand().GetComponent<CardAligner>().UpdateAlignment();
         }
         
     }

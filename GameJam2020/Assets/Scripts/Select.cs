@@ -12,6 +12,7 @@ public class Select : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public bool darkenLock = false;
     public bool darkened = false;
     public bool upscaled = false;
+    public bool selectable = true;
 
     public Color selectedColor = new Color(0f, 0.75f, 1f);
     public Color litColor = new Color(1f, 1f, 1f);
@@ -35,12 +36,28 @@ public class Select : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     }
     public void OnPointerEnter(PointerEventData pointerEventData)
     {
-        globalVariables.SetSelectedObject(this.gameObject);
+        if (selectable)
+        {
+            globalVariables.SetSelectedObject(this.gameObject);
+        }
     }
 
     public void OnPointerExit(PointerEventData pointerEventData)
     {
-        globalVariables.SetSelectedObject(null);
+        if (selectable)
+        {
+            globalVariables.SetSelectedObject(null);
+        }
+    }
+
+    public bool IsSelectable()
+    {
+        return selectable;
+    }
+
+    public void SetSelectable(bool selectable)
+    {
+        this.selectable = selectable;
     }
 
     public bool IsUpscaled()

@@ -9,25 +9,39 @@ public class CardContainer : MonoBehaviour
     
     public SpiritFunction owner;
     public GameObject cardDisplay = null;
+    public CardAligner cardAligner;
 
     public int maxCards = int.MaxValue;
     public List<GameObject> cards = new List<GameObject>();
 
     public void Start()
     {
+        cardAligner = gameObject.GetComponent<CardAligner>();
+
         foreach (GameObject c in cards)
         {
             c.GetComponent<CardFunction>().SetCardContainer(this);
         }
+
+        cardAligner.UpdateAlignment();
     }
 
     public void FixedUpdate()
     {
-
         if (cardDisplay != null)
         {
             cardDisplay.GetComponent<TextMeshProUGUI>().text = cards.Count().ToString();
         }
+    }
+
+    public void UpdateAligner()
+    {
+        cardAligner.UpdateAlignment();
+    }
+
+    public SpiritFunction GetOwner()
+    {
+        return owner;
     }
 
     public void SetOwner(SpiritFunction owner)
@@ -39,9 +53,9 @@ public class CardContainer : MonoBehaviour
         }
     }
 
-    public SpiritFunction GetOwner()
+    public List<GameObject> GetCards()
     {
-        return owner;
+        return cards;
     }
 
     public bool IsFull()
@@ -79,6 +93,9 @@ public class CardContainer : MonoBehaviour
         if (Contains(target))
         {
             cards.Remove(target);
+
+            UpdateAligner();
+
             return target;
         } 
         else
@@ -93,6 +110,9 @@ public class CardContainer : MonoBehaviour
         {
             GameObject poppedObject = cards[index];
             cards.RemoveAt(index);
+
+            UpdateAligner();
+
             return poppedObject;
         } 
         else
@@ -125,9 +145,11 @@ public class CardContainer : MonoBehaviour
             target.GetComponent<CardFunction>().SetCardContainer(this);
             target.GetComponent<CardFunction>().SetController(owner);
         }
+
+        UpdateAligner();
     }
 
-    // Not entirely sure if this works lol
+    // B: I totally ripped this from StackExchange, but it also totally works, so ¯\_(ツ)_/¯
     public void Shuffle()
     {
         var count = cards.Count;
@@ -139,11 +161,6 @@ public class CardContainer : MonoBehaviour
             cards[i] = cards[r];
             cards[r] = tmp;
         }
-    }
-
-    public List<GameObject> GetCards()
-    {
-        return cards;
     }
 
 }

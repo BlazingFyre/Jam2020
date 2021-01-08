@@ -227,7 +227,7 @@ RectTransform:
   - {fileID: 1936898016}
   - {fileID: 159378359}
   m_Father: {fileID: 1775118413}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -265,6 +265,7 @@ MonoBehaviour:
   darkenLock: 0
   darkened: 0
   upscaled: 0
+  selectable: 1
   selectedColor: {r: 1, g: 0.15346906, b: 0.14509803, a: 1}
   litColor: {r: 1, g: 0.5756765, b: 0.3176471, a: 1}
   darkenedColor: {r: 1, g: 0.15294118, b: 0.14509805, a: 1}
@@ -572,12 +573,13 @@ MonoBehaviour:
   darkenLock: 0
   darkened: 0
   upscaled: 0
+  selectable: 1
   selectedColor: {r: 0, g: 0.75, b: 1, a: 1}
   litColor: {r: 1, g: 1, b: 1, a: 1}
   darkenedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   selectUpscaling: 1.3
   highlight: {fileID: 181587452}
-  front: {fileID: 0}
+  front: {fileID: 1649882985}
 --- !u!1 &274875301
 GameObject:
   m_ObjectHideFlags: 0
@@ -871,12 +873,13 @@ MonoBehaviour:
   darkenLock: 0
   darkened: 0
   upscaled: 0
+  selectable: 1
   selectedColor: {r: 0, g: 0.75, b: 1, a: 1}
   litColor: {r: 1, g: 1, b: 1, a: 1}
   darkenedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   selectUpscaling: 1.3
   highlight: {fileID: 2138746389}
-  front: {fileID: 0}
+  front: {fileID: 1232374905}
 --- !u!222 &360766275
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -956,12 +959,13 @@ MonoBehaviour:
   darkenLock: 0
   darkened: 0
   upscaled: 0
+  selectable: 1
   selectedColor: {r: 0, g: 0.75, b: 1, a: 1}
   litColor: {r: 1, g: 1, b: 1, a: 1}
   darkenedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   selectUpscaling: 1.3
   highlight: {fileID: 319254896}
-  front: {fileID: 0}
+  front: {fileID: 178557780}
 --- !u!222 &411306839
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1317,6 +1321,7 @@ MonoBehaviour:
   darkenLock: 0
   darkened: 0
   upscaled: 0
+  selectable: 1
   selectedColor: {r: 0, g: 0.75, b: 1, a: 1}
   litColor: {r: 1, g: 1, b: 1, a: 1}
   darkenedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
@@ -1557,12 +1562,13 @@ MonoBehaviour:
   darkenLock: 0
   darkened: 0
   upscaled: 0
+  selectable: 1
   selectedColor: {r: 0, g: 0.75, b: 1, a: 1}
   litColor: {r: 1, g: 1, b: 1, a: 1}
   darkenedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   selectUpscaling: 1.3
   highlight: {fileID: 274875301}
-  front: {fileID: 0}
+  front: {fileID: 682587675}
 --- !u!222 &710372667
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1642,12 +1648,13 @@ MonoBehaviour:
   darkenLock: 0
   darkened: 0
   upscaled: 0
+  selectable: 1
   selectedColor: {r: 0, g: 0.75, b: 1, a: 1}
   litColor: {r: 1, g: 1, b: 1, a: 1}
   darkenedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   selectUpscaling: 1.3
   highlight: {fileID: 1852832994}
-  front: {fileID: 0}
+  front: {fileID: 1146370520}
 --- !u!222 &778186047
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1820,7 +1827,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1775118413}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1839,7 +1846,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ef7273569807af408ec77acc06a3425, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  container: {fileID: 0}
+  container: {fileID: 956921583}
 --- !u!114 &956921583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1852,8 +1859,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adc109ec80096f94387082605439d2d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  owner: {fileID: 0}
+  owner: {fileID: 1251292237}
   cardDisplay: {fileID: 0}
+  cardAligner: {fileID: 0}
   maxCards: 7
   cards:
   - {fileID: 870346940}
@@ -1931,12 +1939,13 @@ MonoBehaviour:
   darkenLock: 0
   darkened: 0
   upscaled: 0
+  selectable: 1
   selectedColor: {r: 0, g: 0.75, b: 1, a: 1}
   litColor: {r: 1, g: 1, b: 1, a: 1}
   darkenedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   selectUpscaling: 1.3
   highlight: {fileID: 1620480423}
-  front: {fileID: 0}
+  front: {fileID: 2116375103}
 --- !u!222 &983234470
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2124,7 +2133,7 @@ RectTransform:
   - {fileID: 2135971995}
   - {fileID: 1467205127}
   m_Father: {fileID: 1775118413}
-  m_RootOrder: 4
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2146,8 +2155,8 @@ MonoBehaviour:
   deck: {fileID: 1878479987}
   graveyard: {fileID: 1556832570}
   hand: {fileID: 956921580}
-  spiritA: {fileID: 0}
-  spiritB: {fileID: 0}
+  spiritA: {fileID: 2135971994}
+  spiritB: {fileID: 1467205126}
   turnStartCards: 4
 --- !u!1 &1252444212
 GameObject:
@@ -2438,6 +2447,7 @@ MonoBehaviour:
   player: {fileID: 1251292235}
   enemy: {fileID: 1251292235}
   turnTaker: {fileID: 0}
+  turnButton: {fileID: 107959344}
   isTargeting: 0
   cardDrawDelay: 0.1
   selectedObject: {fileID: 0}
@@ -2526,8 +2536,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1467205127}
-  - component: {fileID: 1467205129}
   - component: {fileID: 1467205128}
+  - component: {fileID: 1467205129}
   m_Layer: 5
   m_Name: Side B
   m_TagString: Untagged
@@ -2590,6 +2600,7 @@ MonoBehaviour:
   darkenLock: 0
   darkened: 0
   upscaled: 0
+  selectable: 1
   selectedColor: {r: 0, g: 0.75, b: 1, a: 1}
   litColor: {r: 1, g: 1, b: 1, a: 1}
   darkenedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
@@ -2823,7 +2834,7 @@ RectTransform:
   - {fileID: 1364195608}
   - {fileID: 1512065628}
   m_Father: {fileID: 1775118413}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2842,7 +2853,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f523196693b67a945bc64b8ed1e10646, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  container: {fileID: 0}
+  container: {fileID: 1556832573}
 --- !u!114 &1556832573
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2857,6 +2868,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   owner: {fileID: 0}
   cardDisplay: {fileID: 1512065625}
+  cardAligner: {fileID: 0}
   maxCards: 50
   cards: []
 --- !u!114 &1556832574
@@ -2876,12 +2888,13 @@ MonoBehaviour:
   darkenLock: 0
   darkened: 0
   upscaled: 0
+  selectable: 1
   selectedColor: {r: 0, g: 0.75, b: 1, a: 1}
   litColor: {r: 1, g: 1, b: 1, a: 1}
   darkenedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   selectUpscaling: 1.3
   highlight: {fileID: 658115867}
-  front: {fileID: 0}
+  front: {fileID: 1364195607}
 --- !u!1 &1605452775
 GameObject:
   m_ObjectHideFlags: 0
@@ -3249,12 +3262,13 @@ MonoBehaviour:
   darkenLock: 0
   darkened: 0
   upscaled: 0
+  selectable: 1
   selectedColor: {r: 0, g: 0.75, b: 1, a: 1}
   litColor: {r: 1, g: 1, b: 1, a: 1}
   darkenedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   selectUpscaling: 1.3
   highlight: {fileID: 1605452775}
-  front: {fileID: 0}
+  front: {fileID: 1991370881}
 --- !u!222 &1691949830
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3353,11 +3367,11 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
+  - {fileID: 1251292236}
   - {fileID: 107959345}
   - {fileID: 956921581}
   - {fileID: 1556832571}
   - {fileID: 1878479988}
-  - {fileID: 1251292236}
   - {fileID: 616505082}
   - {fileID: 870346941}
   - {fileID: 1543678295}
@@ -3479,7 +3493,7 @@ RectTransform:
   - {fileID: 577393432}
   - {fileID: 1252444215}
   m_Father: {fileID: 1775118413}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3503,12 +3517,13 @@ MonoBehaviour:
   darkenLock: 0
   darkened: 0
   upscaled: 0
+  selectable: 1
   selectedColor: {r: 0, g: 0.75, b: 1, a: 1}
   litColor: {r: 1, g: 1, b: 1, a: 1}
   darkenedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   selectUpscaling: 1.3
   highlight: {fileID: 2095866780}
-  front: {fileID: 0}
+  front: {fileID: 577393431}
 --- !u!114 &1878479990
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3523,6 +3538,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   owner: {fileID: 0}
   cardDisplay: {fileID: 1252444212}
+  cardAligner: {fileID: 0}
   maxCards: 50
   cards: []
 --- !u!114 &1878479991
@@ -3537,7 +3553,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f523196693b67a945bc64b8ed1e10646, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  container: {fileID: 0}
+  container: {fileID: 1878479990}
 --- !u!1 &1936898015
 GameObject:
   m_ObjectHideFlags: 0
@@ -3965,12 +3981,13 @@ MonoBehaviour:
   darkenLock: 0
   darkened: 0
   upscaled: 0
+  selectable: 1
   selectedColor: {r: 0, g: 0.75, b: 1, a: 1}
   litColor: {r: 1, g: 1, b: 1, a: 1}
   darkenedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   selectUpscaling: 1.3
   highlight: {fileID: 337870926}
-  front: {fileID: 0}
+  front: {fileID: 1260522298}
 --- !u!222 &2087870495
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4136,8 +4153,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2135971995}
-  - component: {fileID: 2135971997}
   - component: {fileID: 2135971996}
+  - component: {fileID: 2135971997}
   m_Layer: 5
   m_Name: Side A
   m_TagString: Untagged
@@ -4200,6 +4217,7 @@ MonoBehaviour:
   darkenLock: 0
   darkened: 0
   upscaled: 0
+  selectable: 1
   selectedColor: {r: 0, g: 0.75, b: 1, a: 1}
   litColor: {r: 1, g: 1, b: 1, a: 1}
   darkenedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}

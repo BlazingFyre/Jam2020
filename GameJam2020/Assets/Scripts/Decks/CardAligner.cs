@@ -14,13 +14,14 @@ public class CardAligner : MonoBehaviour
         container = gameObject.GetComponent<CardContainer>();
     }
 
-    public void FixedUpdate()
+    public void UpdateAlignment()
     {
         if (!container.IsEmpty())
         {
             AlignCards();
         }
     }
+
     public virtual void AlignCards()
     {
         foreach (GameObject c in container.GetCards())

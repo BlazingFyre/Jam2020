@@ -42,7 +42,7 @@ public class SpiritSideControl : Entity
             SetAwake(true);
             flip.SetAwake(false);
 
-            spiritFunction.GetHand().GetComponent<HandAligner>().DarkenCards();
+            spiritFunction.GetHand().GetComponent<HandAligner>().UpdateAlignment();
         }
     }
 
@@ -53,7 +53,7 @@ public class SpiritSideControl : Entity
             SetAwake(false);
             flip.SetAwake(true);
 
-            spiritFunction.GetHand().GetComponent<HandAligner>().DarkenCards();
+            spiritFunction.GetHand().GetComponent<HandAligner>().UpdateAlignment();
         }
     }
 
