@@ -18,7 +18,7 @@ public class CardSideControl : MonoBehaviour, IPointerUpHandler, IPointerDownHan
 
     public void OnPointerDown(PointerEventData pointerEventData)
     {
-        if (!gameObject.GetComponent<Select>().IsDarkened())
+        if (cardFunction.GetController().GetWakingSpirit().GetSide() == side)
         {
             // Turn on dragged card highlight / keep card from darkening
             this.GetComponent<Select>().SetHighlightLock(true);
@@ -66,37 +66,34 @@ public class CardSideControl : MonoBehaviour, IPointerUpHandler, IPointerDownHan
 
     public void OnPointerUp(PointerEventData pointerEventData)
     {
-        if (!gameObject.GetComponent<Select>().IsDarkened())
-        {
-            // Play the card side if the player selected a potential target
-            GameObject selectedObject = globalVariables.GetSelectedObject();
+        // Play the card side if the player selected a potential target
+        GameObject selectedObject = globalVariables.GetSelectedObject();
 
-            if (selectedObject != null)
+        if (selectedObject != null)
+        {
+            if (side == 'A')
             {
-                if (side == 'A')
+                if (cardFunction.IsTargetableA(selectedObject))
                 {
-                    if (cardFunction.IsTargetableA(selectedObject))
-                    {
-                        cardFunction.PlayA(globalVariables.GetSelectedObject());
-                    }
-                }
-                else if (side == 'B')
-                {
-                    if (cardFunction.IsTargetableB(selectedObject))
-                    {
-                        cardFunction.PlayB(globalVariables.GetSelectedObject());
-                    }
+                    cardFunction.PlayA(globalVariables.GetSelectedObject());
                 }
             }
-
-            // Turn off "dragged" card highlight
-            this.GetComponent<Select>().SetHighlightLock(false);
-            this.GetComponent<Select>().SetHighlighted(false);
-            this.GetComponent<Select>().SetDarkenLock(false);
-
-            // Turn off highlights for potential targets
-            globalVariables.SetPotentialTargets(null, null);
+            else if (side == 'B')
+            {
+                if (cardFunction.IsTargetableB(selectedObject))
+                {
+                    cardFunction.PlayB(globalVariables.GetSelectedObject());
+                }
+            }
         }
+
+        // Turn off "dragged" card highlight
+        this.GetComponent<Select>().SetHighlightLock(false);
+        this.GetComponent<Select>().SetHighlighted(false);
+        this.GetComponent<Select>().SetDarkenLock(false);
+
+        // Turn off highlights for potential targets
+        globalVariables.SetPotentialTargets(null, null);
     }
 
 }

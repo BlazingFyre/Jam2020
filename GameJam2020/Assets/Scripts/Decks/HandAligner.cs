@@ -33,7 +33,10 @@ public class HandAligner : CardAligner
             if (c.GetComponent<CardFunction>().GetSideA() != null)
             {
                 c.GetComponent<CardFunction>().GetSideA().gameObject.GetComponent<Select>().SetDarkened(!isOnSideA);
+                c.GetComponent<CardFunction>().GetSideA().gameObject.GetComponent<Select>().SetSelectable(true);
+
                 c.GetComponent<CardFunction>().GetSideB().gameObject.GetComponent<Select>().SetDarkened(isOnSideA);
+                c.GetComponent<CardFunction>().GetSideB().gameObject.GetComponent<Select>().SetSelectable(true);
             }
         }
         

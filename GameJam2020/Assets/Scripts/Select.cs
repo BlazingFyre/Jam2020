@@ -17,7 +17,7 @@ public class Select : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public Color selectedColor = new Color(0f, 0.75f, 1f);
     public Color litColor = new Color(1f, 1f, 1f);
     public Color darkenedColor = new Color(0.5f, 0.5f, 0.5f);
-    public float selectUpscaling = 1.3f;
+    public float selectUpscaling = 1.2f;
 
     private GlobalVariables globalVariables;
     public GameObject highlight;
@@ -26,6 +26,9 @@ public class Select : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     // Start is called before the first frame update
     void Start()
     {
+        // Temporary
+        selectUpscaling = 1.0f;
+
         globalVariables = GameObject.Find("EventSystem").GetComponent<GlobalVariables>();
 
         highlight = gameObject.transform.Find("Highlight").gameObject;
@@ -39,6 +42,8 @@ public class Select : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         if (selectable)
         {
             globalVariables.SetSelectedObject(this.gameObject);
+
+            front.GetComponent<Image>().color = litColor;
         }
     }
 
@@ -47,6 +52,15 @@ public class Select : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         if (selectable)
         {
             globalVariables.SetSelectedObject(null);
+
+            if (darkened)
+            {
+                front.GetComponent<Image>().color = darkenedColor;
+            }
+            else
+            {
+                front.GetComponent<Image>().color = litColor;
+            }
         }
     }
 

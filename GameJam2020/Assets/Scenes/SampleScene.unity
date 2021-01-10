@@ -269,7 +269,7 @@ MonoBehaviour:
   selectedColor: {r: 1, g: 0.15346906, b: 0.14509803, a: 1}
   litColor: {r: 1, g: 0.5756765, b: 0.3176471, a: 1}
   darkenedColor: {r: 1, g: 0.15294118, b: 0.14509805, a: 1}
-  selectUpscaling: 1.3
+  selectUpscaling: 1.2
   highlight: {fileID: 1936898015}
   front: {fileID: 159378358}
 --- !u!1 &159378358
@@ -577,7 +577,7 @@ MonoBehaviour:
   selectedColor: {r: 0, g: 0.75, b: 1, a: 1}
   litColor: {r: 1, g: 1, b: 1, a: 1}
   darkenedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  selectUpscaling: 1.3
+  selectUpscaling: 1.2
   highlight: {fileID: 181587452}
   front: {fileID: 1649882985}
 --- !u!1 &274875301
@@ -877,7 +877,7 @@ MonoBehaviour:
   selectedColor: {r: 0, g: 0.75, b: 1, a: 1}
   litColor: {r: 1, g: 1, b: 1, a: 1}
   darkenedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  selectUpscaling: 1.3
+  selectUpscaling: 1.2
   highlight: {fileID: 2138746389}
   front: {fileID: 1232374905}
 --- !u!222 &360766275
@@ -963,7 +963,7 @@ MonoBehaviour:
   selectedColor: {r: 0, g: 0.75, b: 1, a: 1}
   litColor: {r: 1, g: 1, b: 1, a: 1}
   darkenedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  selectUpscaling: 1.3
+  selectUpscaling: 1.2
   highlight: {fileID: 319254896}
   front: {fileID: 178557780}
 --- !u!222 &411306839
@@ -1325,7 +1325,7 @@ MonoBehaviour:
   selectedColor: {r: 0, g: 0.75, b: 1, a: 1}
   litColor: {r: 1, g: 1, b: 1, a: 1}
   darkenedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  selectUpscaling: 1.3
+  selectUpscaling: 1.2
   highlight: {fileID: 907935734}
   front: {fileID: 0}
 --- !u!114 &616505084
@@ -1566,7 +1566,7 @@ MonoBehaviour:
   selectedColor: {r: 0, g: 0.75, b: 1, a: 1}
   litColor: {r: 1, g: 1, b: 1, a: 1}
   darkenedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  selectUpscaling: 1.3
+  selectUpscaling: 1.2
   highlight: {fileID: 274875301}
   front: {fileID: 682587675}
 --- !u!222 &710372667
@@ -1652,7 +1652,7 @@ MonoBehaviour:
   selectedColor: {r: 0, g: 0.75, b: 1, a: 1}
   litColor: {r: 1, g: 1, b: 1, a: 1}
   darkenedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  selectUpscaling: 1.3
+  selectUpscaling: 1.2
   highlight: {fileID: 1852832994}
   front: {fileID: 1146370520}
 --- !u!222 &778186047
@@ -1943,7 +1943,7 @@ MonoBehaviour:
   selectedColor: {r: 0, g: 0.75, b: 1, a: 1}
   litColor: {r: 1, g: 1, b: 1, a: 1}
   darkenedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  selectUpscaling: 1.3
+  selectUpscaling: 1.2
   highlight: {fileID: 1620480423}
   front: {fileID: 2116375103}
 --- !u!222 &983234470
@@ -2604,7 +2604,7 @@ MonoBehaviour:
   selectedColor: {r: 0, g: 0.75, b: 1, a: 1}
   litColor: {r: 1, g: 1, b: 1, a: 1}
   darkenedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  selectUpscaling: 1.3
+  selectUpscaling: 1.2
   highlight: {fileID: 2079496186}
   front: {fileID: 0}
 --- !u!1 &1512065625
@@ -2890,9 +2890,9 @@ MonoBehaviour:
   upscaled: 0
   selectable: 1
   selectedColor: {r: 0, g: 0.75, b: 1, a: 1}
-  litColor: {r: 1, g: 1, b: 1, a: 1}
-  darkenedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  selectUpscaling: 1.3
+  litColor: {r: 1, g: 0.34509805, b: 0.34509805, a: 1}
+  darkenedColor: {r: 0.6226415, g: 0.255518, b: 0.255518, a: 1}
+  selectUpscaling: 1.2
   highlight: {fileID: 658115867}
   front: {fileID: 1364195607}
 --- !u!1 &1605452775
@@ -3266,7 +3266,7 @@ MonoBehaviour:
   selectedColor: {r: 0, g: 0.75, b: 1, a: 1}
   litColor: {r: 1, g: 1, b: 1, a: 1}
   darkenedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  selectUpscaling: 1.3
+  selectUpscaling: 1.2
   highlight: {fileID: 1605452775}
   front: {fileID: 1991370881}
 --- !u!222 &1691949830
@@ -3519,9 +3519,9 @@ MonoBehaviour:
   upscaled: 0
   selectable: 1
   selectedColor: {r: 0, g: 0.75, b: 1, a: 1}
-  litColor: {r: 1, g: 1, b: 1, a: 1}
-  darkenedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  selectUpscaling: 1.3
+  litColor: {r: 0.53333336, g: 0.70980394, b: 1, a: 1}
+  darkenedColor: {r: 0.37068352, g: 0.48023167, b: 0.6603774, a: 1}
+  selectUpscaling: 1.2
   highlight: {fileID: 2095866780}
   front: {fileID: 577393431}
 --- !u!114 &1878479990
@@ -3985,7 +3985,7 @@ MonoBehaviour:
   selectedColor: {r: 0, g: 0.75, b: 1, a: 1}
   litColor: {r: 1, g: 1, b: 1, a: 1}
   darkenedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  selectUpscaling: 1.3
+  selectUpscaling: 1.2
   highlight: {fileID: 337870926}
   front: {fileID: 1260522298}
 --- !u!222 &2087870495
@@ -4221,7 +4221,7 @@ MonoBehaviour:
   selectedColor: {r: 0, g: 0.75, b: 1, a: 1}
   litColor: {r: 1, g: 1, b: 1, a: 1}
   darkenedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  selectUpscaling: 1.3
+  selectUpscaling: 1.2
   highlight: {fileID: 1671355598}
   front: {fileID: 0}
 --- !u!1 &2138746389

@@ -143,8 +143,9 @@ public class GlobalVariables : MonoBehaviour
         if (this.selectedObject != null)
         {
             this.selectedObject.GetComponent<Select>().SetHighlighted(false);
-            
-            if (this.selectedObject.tag == "Card Side")
+
+            // If the previously selected object was a card (and the player isn't targeting something with another card), downscale it
+            if (this.selectedObject.GetComponent<CardSideControl>() != null && !isTargeting)
             {
                 this.selectedObject.GetComponent<Select>().SetUpscaled(false);
             }
@@ -154,7 +155,8 @@ public class GlobalVariables : MonoBehaviour
         {
             selectedObject.GetComponent<Select>().SetHighlighted(true);
 
-            if (selectedObject.tag == "Card Side")
+            // If the selected object is a card (and the player isn't targeting something with another card), upscale it
+            if (selectedObject.GetComponent<CardSideControl>() != null && !isTargeting)
             {
                 selectedObject.GetComponent<Select>().SetUpscaled(true);
             }
@@ -189,6 +191,7 @@ public class GlobalVariables : MonoBehaviour
 
         foreach (GameObject o in nonpotentialTargets)
         {
+            o.GetComponent<Select>().SetSelectable(false);
             o.GetComponent<Select>().SetDarkened(true);
         }
     }
@@ -201,6 +204,7 @@ public class GlobalVariables : MonoBehaviour
         {
             if (o.GetComponent<CardSideControl>() == null)
             {
+                o.GetComponent<Select>().SetSelectable(true);
                 o.GetComponent<Select>().SetDarkened(false);
             }
 
