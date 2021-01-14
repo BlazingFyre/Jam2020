@@ -41,6 +41,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
+<<<<<<< HEAD
     width: 714
     height: 271
   m_MinSize: {x: 101, y: 121}
@@ -50,6 +51,12 @@ MonoBehaviour:
   - {fileID: 19}
   m_Selected: 0
   m_LastSelected: 0
+=======
+    width: 1920
+    height: 997
+  m_MinSize: {x: 875, y: 300}
+  m_MaxSize: {x: 10000, y: 10000}
+>>>>>>> parent of 4237a0a... Added changes to test if this works
 --- !u!114 &3
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -68,6 +75,7 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
+<<<<<<< HEAD
     y: 676
     width: 1920
     height: 271
@@ -75,6 +83,14 @@ MonoBehaviour:
   m_MaxSize: {x: 14002, y: 10021}
   vertical: 0
   controlID: 124
+=======
+    y: 0
+    width: 1920
+    height: 30
+  m_MinSize: {x: 0, y: 0}
+  m_MaxSize: {x: 0, y: 0}
+  m_LastLoadedLayoutName: 
+>>>>>>> parent of 4237a0a... Added changes to test if this works
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -90,6 +106,7 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 714
     y: 0
     width: 1206
@@ -101,6 +118,14 @@ MonoBehaviour:
   - {fileID: 18}
   m_Selected: 0
   m_LastSelected: 0
+=======
+    x: 0
+    y: 977
+    width: 1920
+    height: 20
+  m_MinSize: {x: 0, y: 0}
+  m_MaxSize: {x: 0, y: 0}
+>>>>>>> parent of 4237a0a... Added changes to test if this works
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -124,7 +149,11 @@ MonoBehaviour:
     height: 947
   m_MinSize: {x: 679, y: 492}
   m_MaxSize: {x: 14002, y: 14042}
+<<<<<<< HEAD
   vertical: 1
+=======
+  vertical: 0
+>>>>>>> parent of 4237a0a... Added changes to test if this works
   controlID: 55
 --- !u!114 &6
 MonoBehaviour:
@@ -146,10 +175,19 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
+<<<<<<< HEAD
     width: 1920
     height: 997
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
+=======
+    width: 1483
+    height: 947
+  m_MinSize: {x: 403, y: 492}
+  m_MaxSize: {x: 10001, y: 14042}
+  vertical: 1
+  controlID: 56
+>>>>>>> parent of 4237a0a... Added changes to test if this works
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -167,11 +205,20 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
+<<<<<<< HEAD
     width: 1920
     height: 30
   m_MinSize: {x: 0, y: 0}
   m_MaxSize: {x: 0, y: 0}
   m_LastLoadedLayoutName: 
+=======
+    width: 1483
+    height: 461
+  m_MinSize: {x: 403, y: 221}
+  m_MaxSize: {x: 8003, y: 4021}
+  vertical: 0
+  controlID: 57
+>>>>>>> parent of 4237a0a... Added changes to test if this works
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -188,11 +235,24 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
+<<<<<<< HEAD
     y: 977
     width: 1920
     height: 20
   m_MinSize: {x: 0, y: 0}
   m_MaxSize: {x: 0, y: 0}
+=======
+    y: 0
+    width: 560
+    height: 461
+  m_MinSize: {x: 201, y: 221}
+  m_MaxSize: {x: 4001, y: 4021}
+  m_ActualView: {fileID: 14}
+  m_Panes:
+  - {fileID: 14}
+  m_Selected: 0
+  m_LastSelected: 0
+>>>>>>> parent of 4237a0a... Added changes to test if this works
 --- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -229,23 +289,43 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
+<<<<<<< HEAD
   m_Name: 
+=======
+  m_Name: GameView
+>>>>>>> parent of 4237a0a... Added changes to test if this works
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 0
     y: 0
     width: 531
     height: 676
   m_MinSize: {x: 201, y: 221}
   m_MaxSize: {x: 4001, y: 4021}
+=======
+    x: 560
+    y: 0
+    width: 923
+    height: 461
+  m_MinSize: {x: 202, y: 221}
+  m_MaxSize: {x: 4002, y: 4021}
+>>>>>>> parent of 4237a0a... Added changes to test if this works
   m_ActualView: {fileID: 15}
   m_Panes:
   - {fileID: 15}
+<<<<<<< HEAD
   m_Selected: 0
   m_LastSelected: 0
 --- !u!114 &11
+=======
+  - {fileID: 16}
+  m_Selected: 1
+  m_LastSelected: 0
+--- !u!114 &10
+>>>>>>> parent of 4237a0a... Added changes to test if this works
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -260,6 +340,7 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 531
     y: 0
     width: 871
@@ -267,6 +348,15 @@ MonoBehaviour:
   m_MinSize: {x: 202, y: 221}
   m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 14}
+=======
+    x: 0
+    y: 461
+    width: 1483
+    height: 486
+  m_MinSize: {x: 231, y: 271}
+  m_MaxSize: {x: 10001, y: 10021}
+  m_ActualView: {fileID: 17}
+>>>>>>> parent of 4237a0a... Added changes to test if this works
   m_Panes:
   - {fileID: 14}
   - {fileID: 16}
@@ -288,10 +378,17 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 1402
     y: 0
     width: 518
     height: 676
+=======
+    x: 1483
+    y: 0
+    width: 437
+    height: 947
+>>>>>>> parent of 4237a0a... Added changes to test if this works
   m_MinSize: {x: 276, y: 71}
   m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 20}
@@ -352,10 +449,17 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 531
     y: 73
     width: 869
     height: 655
+=======
+    x: 561
+    y: 92
+    width: 582
+    height: 336
+>>>>>>> parent of 4237a0a... Added changes to test if this works
   m_ViewDataDictionary: {fileID: 0}
   m_ShowContextualTools: 0
   m_WindowGUID: 4d28d14330d6f4ecd9590b34f16fd779
@@ -367,9 +471,15 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
+<<<<<<< HEAD
     m_Target: {x: 366.31372, y: 423.93765, z: -3104.2766}
     speed: 2
     m_Value: {x: 434.5, y: 317, z: 0}
+=======
+    m_Target: {x: 0, y: 0, z: 0}
+    speed: 2
+    m_Value: {x: -0.5636302, y: 0.46016893, z: -5842.6294}
+>>>>>>> parent of 4237a0a... Added changes to test if this works
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -419,9 +529,15 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
+<<<<<<< HEAD
     m_Target: 407.15897
     speed: 2
     m_Value: 70.71068
+=======
+    m_Target: 10
+    speed: 2
+    m_Value: 6.5403695
+>>>>>>> parent of 4237a0a... Added changes to test if this works
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -469,15 +585,24 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 73
+<<<<<<< HEAD
     width: 530
     height: 655
+=======
+    width: 559
+    height: 440
+>>>>>>> parent of 4237a0a... Added changes to test if this works
   m_ViewDataDictionary: {fileID: 0}
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
+<<<<<<< HEAD
       m_ExpandedIDs: 64fbffff80390000a23a0000e43a0000
+=======
+      m_ExpandedIDs: ecfaffff
+>>>>>>> parent of 4237a0a... Added changes to test if this works
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -522,10 +647,17 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 531
     y: 73
     width: 869
     height: 655
+=======
+    x: 560
+    y: 73
+    width: 921
+    height: 440
+>>>>>>> parent of 4237a0a... Added changes to test if this works
   m_ViewDataDictionary: {fileID: 0}
   m_SerializedViewNames: []
   m_SerializedViewValues: []
@@ -535,7 +667,11 @@ MonoBehaviour:
   m_ShowGizmos: 0
   m_TargetDisplay: 0
   m_ClearColor: {r: 0, g: 0, b: 0, a: 0}
+<<<<<<< HEAD
   m_TargetSize: {x: 869, y: 634}
+=======
+  m_TargetSize: {x: 921, y: 419}
+>>>>>>> parent of 4237a0a... Added changes to test if this works
   m_TextureFilterMode: 0
   m_TextureHideFlags: 61
   m_RenderIMGUI: 1
@@ -550,10 +686,17 @@ MonoBehaviour:
     m_VRangeLocked: 0
     hZoomLockedByDefault: 0
     vZoomLockedByDefault: 0
+<<<<<<< HEAD
     m_HBaseRangeMin: -434.5
     m_HBaseRangeMax: 434.5
     m_VBaseRangeMin: -327.5
     m_VBaseRangeMax: 327.5
+=======
+    m_HBaseRangeMin: -460.5
+    m_HBaseRangeMax: 460.5
+    m_VBaseRangeMin: -209.5
+    m_VBaseRangeMax: 209.5
+>>>>>>> parent of 4237a0a... Added changes to test if this works
     m_HAllowExceedBaseRangeMin: 1
     m_HAllowExceedBaseRangeMax: 1
     m_VAllowExceedBaseRangeMin: 1
@@ -570,17 +713,26 @@ MonoBehaviour:
     m_DrawArea:
       serializedVersion: 2
       x: 0
+<<<<<<< HEAD
       y: 0
       width: 869
       height: 655
     m_Scale: {x: 1, y: 1}
     m_Translation: {x: 434.5, y: 327.5}
+=======
+      y: 21
+      width: 921
+      height: 419
+    m_Scale: {x: 1, y: 1}
+    m_Translation: {x: 460.5, y: 209.5}
+>>>>>>> parent of 4237a0a... Added changes to test if this works
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
+<<<<<<< HEAD
       x: -434.5
       y: -327.5
       width: 869
@@ -588,6 +740,15 @@ MonoBehaviour:
     m_MinimalGUI: 1
   m_defaultScale: 1
   m_LastWindowPixelSize: {x: 869, y: 655}
+=======
+      x: -460.5
+      y: -209.5
+      width: 921
+      height: 419
+    m_MinimalGUI: 1
+  m_defaultScale: 1
+  m_LastWindowPixelSize: {x: 921, y: 440}
+>>>>>>> parent of 4237a0a... Added changes to test if this works
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 00000000000000000000
@@ -678,10 +839,17 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 714
     y: 749
     width: 1205
     height: 250
+=======
+    x: 0
+    y: 534
+    width: 1482
+    height: 465
+>>>>>>> parent of 4237a0a... Added changes to test if this works
   m_ViewDataDictionary: {fileID: 0}
   m_SearchFilter:
     m_NameFilter: 
@@ -696,20 +864,34 @@ MonoBehaviour:
     m_SkipHidden: 1
     m_SearchArea: 1
     m_Folders:
+<<<<<<< HEAD
     - Assets/Prefabs
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
   - Assets/Prefabs
+=======
+    - Assets
+  m_ViewMode: 1
+  m_StartGridSize: 64
+  m_LastFolders:
+  - Assets
+>>>>>>> parent of 4237a0a... Added changes to test if this works
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\Fyre\Desktop\Unity\Jam2020\GameJam2020
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
+<<<<<<< HEAD
     m_SelectedIDs: cc3b0000
     m_LastClickedID: 15308
     m_ExpandedIDs: 00000000803b00008a3b000000ca9a3b
+=======
+    m_SelectedIDs: 86480000
+    m_LastClickedID: 18566
+    m_ExpandedIDs: 000000008648000000ca9a3b
+>>>>>>> parent of 4237a0a... Added changes to test if this works
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -737,7 +919,11 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
+<<<<<<< HEAD
     m_ExpandedIDs: 00000000803b0000
+=======
+    m_ExpandedIDs: 
+>>>>>>> parent of 4237a0a... Added changes to test if this works
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -764,8 +950,13 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
+<<<<<<< HEAD
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c62300000000000098450000003900008ca80000
+=======
+    m_HadKeyboardFocusLastEvent: 0
+    m_ExpandedInstanceIDs: c6230000000000009845000000390000a63900008ca80000
+>>>>>>> parent of 4237a0a... Added changes to test if this works
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -840,10 +1031,17 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 1402
     y: 73
     width: 517
     height: 655
+=======
+    x: 1483
+    y: 73
+    width: 436
+    height: 926
+>>>>>>> parent of 4237a0a... Added changes to test if this works
   m_ViewDataDictionary: {fileID: 0}
   m_OpenAddComponentMenu: 0
   m_ObjectsLockedBeforeSerialization: []
