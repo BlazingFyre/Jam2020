@@ -1,0 +1,9 @@
+{
+	"allCards": [{
+			"cardName": "Test Card",
+			"cardArt": "Placeholder1",
+			"cardText": "hello penguin"
+		}
+
+	]
+}
