@@ -17,8 +17,8 @@ public class CardWhole : MonoBehaviour
         gameObject.AddComponent<Whole>();
         gameObject.GetComponent<Whole>().InitSides(cardSideA, cardSideB);
 
-        gameObject.AddComponent<User>();
-        gameObject.GetComponent<User>().InitOwner(container.GetComponent<User>().GetOwner());
+        gameObject.AddComponent<Use>();
+        gameObject.GetComponent<Use>().InitOwner(container.GetComponent<Use>().GetOwner());
     }
 
     public CardContainer GetCardContainer()
@@ -28,6 +28,11 @@ public class CardWhole : MonoBehaviour
     public void SetCardContainer(CardContainer container)
     {
         this.container = container;
+    }
+
+    public void CopyCard(CardWhole toCopy)
+    {
+        //TODO: this
     }
 
 }

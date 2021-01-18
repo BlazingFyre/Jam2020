@@ -2,17 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Sleep : MonoBehaviour
+public class SleepStates : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public enum SleepState { Waking, Dreaming }
 }

@@ -14,8 +14,8 @@ public class CardContainer : MonoBehaviour
 
     public void InitContainer(SpiritWhole owner)
     {
-        gameObject.AddComponent<User>();
-        gameObject.GetComponent<User>().InitOwner(owner);
+        gameObject.AddComponent<Use>();
+        gameObject.GetComponent<Use>().InitOwner(owner);
 
         foreach (CardWhole c in cards)
         {
@@ -111,13 +111,13 @@ public class CardContainer : MonoBehaviour
         {
             cards.Add(target);
             target.SetCardContainer(this);
-            target.GetComponent<User>().SetController(GetComponent<User>().GetController());
+            target.GetComponent<Use>().SetController(GetComponent<Use>().GetController());
         }
         else if (!IsFull())
         {
             cards.Insert(index, target);
             target.SetCardContainer(this);
-            target.GetComponent<User>().SetController(GetComponent<User>().GetController());
+            target.GetComponent<Use>().SetController(GetComponent<Use>().GetController());
         }
 
     }
@@ -133,6 +133,16 @@ public class CardContainer : MonoBehaviour
             var temp = cards[i];
             cards[i] = cards[r];
             cards[r] = temp;
+        }
+    }
+
+    public void CopyCards(CardContainer toCopy)
+    {
+        cards = new List<CardWhole>();
+
+        foreach (CardWhole c in toCopy.GetCards())
+        {
+            cards.Add(c); // This needs to be a dedicated copying function from CardWhole!
         }
     }
 
