@@ -14,11 +14,13 @@ public class CardWhole : MonoBehaviour
     {
         SetCardContainer(container);
 
+        /*
         gameObject.AddComponent<Whole>();
         gameObject.GetComponent<Whole>().InitSides(cardSideA, cardSideB);
 
         gameObject.AddComponent<Use>();
         gameObject.GetComponent<Use>().InitOwner(container.GetComponent<Use>().GetOwner());
+        */
     }
 
     public CardContainer GetCardContainer()

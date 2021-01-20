@@ -11,6 +11,7 @@ public class Whole : MonoBehaviour
 
     public void InitSides(GameObject objectA, GameObject objectB)
     {
+        /*
         objectA.AddComponent<Half>();
         objectB.AddComponent<Half>();
 
@@ -19,6 +20,7 @@ public class Whole : MonoBehaviour
 
         side1.InitVars(this, side2, Side.A);
         side2.InitVars(this, side1, Side.B);
+        */
     }
 
     public Half GetSide(Side side)

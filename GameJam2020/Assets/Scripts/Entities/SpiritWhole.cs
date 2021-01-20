@@ -7,17 +7,27 @@ using static SleepStates;
 public class SpiritWhole : MonoBehaviour
 {
 
+    public CardContainer baseDeck;
     public CardContainer deck;
-    public CardContainer graveyard;
+    public CardContainer grave;
     public CardContainer hand;
 
     public int turnStartCards = 4;
 
-    public void InitDecks()
+    public void InitContainers(CardContainer deck, CardContainer grave, CardContainer hand)
     {
-        deck.InitContainer(this);
-        graveyard.InitContainer(this);
-        hand.InitContainer(this);
+        this.deck = deck;
+        this.grave = grave;
+        this.hand = hand;
+
+        deck.GetComponent<Use>().InitOwner(this);
+        grave.GetComponent<Use>().InitOwner(this);
+        hand.GetComponent<Use>().InitOwner(this);
+    }
+
+    public CardContainer GetBaseDeck()
+    {
+        return deck;
     }
 
     public CardContainer GetDeck()
@@ -25,9 +35,9 @@ public class SpiritWhole : MonoBehaviour
         return deck;
     }
 
-    public CardContainer GetGraveyard()
+    public CardContainer GetGrave()
     {
-        return graveyard;
+        return grave;
     }
 
     public CardContainer GetHand()

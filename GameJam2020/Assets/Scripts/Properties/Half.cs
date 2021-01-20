@@ -13,9 +13,11 @@ public class Half : MonoBehaviour
 
     public void InitVars(Whole whole, Half flip, Side side)
     {
+        /*
         this.whole = whole;
         this.flip = flip;
         this.side = side;
+        */
     }
 
     public Whole GetWhole()

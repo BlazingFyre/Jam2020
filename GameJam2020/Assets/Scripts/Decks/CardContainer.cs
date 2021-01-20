@@ -56,6 +56,11 @@ public class CardContainer : MonoBehaviour
         return cards.Count();
     }
 
+    public void Clear()
+    {
+        cards = new List<CardWhole>();
+    }
+
     public CardWhole DrawTop()
     {
         return DrawIndex(0);
@@ -136,13 +141,18 @@ public class CardContainer : MonoBehaviour
         }
     }
 
-    public void CopyCards(CardContainer toCopy)
+    public void CopyDeck(CardContainer toCopy)
     {
         cards = new List<CardWhole>();
 
         foreach (CardWhole c in toCopy.GetCards())
         {
             cards.Add(c); // This needs to be a dedicated copying function from CardWhole!
+        }
+
+        foreach (CardWhole c in cards)
+        {
+            c.GetComponent<Use>().InitOwner(GetComponent<Use>().GetOwner());
         }
     }
 
