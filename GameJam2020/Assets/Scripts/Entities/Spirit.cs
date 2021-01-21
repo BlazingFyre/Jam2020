@@ -13,7 +13,12 @@ public class Spirit : Entity
         return state;
     }
 
-    public void Awaken()
+    private void SetSleepState(SleepState state)
+    {
+
+    }
+
+    private void Awaken()
     {
         /*
         if (!IsAwake() && flip.IsAwake())

@@ -5,9 +5,6 @@ using UnityEngine;
 public class CardWhole : MonoBehaviour
 {
 
-    public GameObject cardSideA;
-    public GameObject cardSideB;
-
     public CardContainer container;
 
     public void InitCard(CardContainer container)
