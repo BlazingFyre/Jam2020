@@ -1,9 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Sides;
+using static Combatants;
 
 public class BattleSystem : MonoBehaviour
 {
+
+    // Data supplied before battle starts
+    public SpiritWhole playerSpirit;
+    public SpiritWhole enemySpirit;
+    //TODO: add compatibility for starting items?
 
     // Objects that are always loaded and connected to BattleSystem
     public GameObject battleCanvas;
@@ -14,15 +21,10 @@ public class BattleSystem : MonoBehaviour
     public CardContainer enemyGrave;
     public CardContainer enemyHand;
 
-    // Data supplied before battle starts
-    public SpiritWhole playerSpirit;
-    public SpiritWhole enemySpirit;
-    //TODO: add compatibility for starting items?
-
-
-    public void Awake()
+    public void Start()
     {
         InitBattle();
+        AlignBattle();
     }
 
     private void InitBattle()
@@ -38,6 +40,12 @@ public class BattleSystem : MonoBehaviour
         // Initialize the Spirit's decks using their Base Decks
         playerSpirit.GetDeck().CopyDeck(playerSpirit.GetBaseDeck());
         enemySpirit.GetDeck().CopyDeck(enemySpirit.GetBaseDeck());
+    }
+
+    private void AlignBattle()
+    {
+        GetComponent<BattleAligner>().AlignSpirit(playerSpirit, Combatant.Player);
+        GetComponent<BattleAligner>().AlignSpirit(enemySpirit, Combatant.Enemy);
     }
 
 }
