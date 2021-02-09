@@ -7,18 +7,23 @@ using static Combatants;
 public class BattleAligner : MonoBehaviour
 {
 
-    float verticalChange = 200;
-    float horizontalChange = 375;
+    public Transform playerSideA;
+    public Transform playerSideB;
+    public Transform enemySideA;
+    public Transform enemySideB;
 
-    public void AlignSpirit(SpiritWhole spiritWhole, Combatant combatant)
+    public void AlignSpirits()
     {
-        Debug.Log("hello");
-        spiritWhole.transform.localPosition = new Vector3(0, 0, 0);
 
-        float newHorizontalChange = (combatant == Combatant.Player) ? horizontalChange : -horizontalChange;
+        Whole playerWhole = GetComponent<BattleSystem>().GetPlayer().GetComponent<Whole>();
+        Whole enemyWhole = GetComponent<BattleSystem>().GetEnemy().GetComponent<Whole>();
 
-        spiritWhole.GetSpirit(Side.A).transform.localPosition = new Vector3(newHorizontalChange, verticalChange, 0);
-        spiritWhole.GetSpirit(Side.B).transform.localPosition = new Vector3(newHorizontalChange, -verticalChange, 0);
+        playerWhole.GetSide(Side.A).transform.position = playerSideA.position;
+        playerWhole.GetSide(Side.B).transform.position = playerSideB.position;
+
+        enemyWhole.GetSide(Side.A).transform.position = enemySideA.position;
+        enemyWhole.GetSide(Side.B).transform.position = enemySideB.position;
+
     }
 
 }

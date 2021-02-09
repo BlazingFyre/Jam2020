@@ -27,7 +27,7 @@ public class SpiritWhole : MonoBehaviour
 
     public CardContainer GetBaseDeck()
     {
-        return deck;
+        return baseDeck;
     }
 
     public CardContainer GetDeck()

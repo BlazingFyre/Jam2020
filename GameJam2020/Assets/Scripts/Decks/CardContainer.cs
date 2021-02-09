@@ -12,17 +12,6 @@ public class CardContainer : MonoBehaviour
 
     public TextMeshProUGUI cardNumberDisplay = null;
 
-    public void InitContainer(SpiritWhole owner)
-    {
-        gameObject.AddComponent<Use>();
-        gameObject.GetComponent<Use>().InitOwner(owner);
-
-        foreach (CardWhole c in cards)
-        {
-            c.InitCard(this);
-        }
-    }
-
     public void FixedUpdate()
     {
         if (cardNumberDisplay != null)
@@ -141,13 +130,13 @@ public class CardContainer : MonoBehaviour
         }
     }
 
-    public void CopyDeck(CardContainer toCopy)
+    public void CopyFrom(CardContainer toCopy)
     {
         cards = new List<CardWhole>();
 
         foreach (CardWhole c in toCopy.GetCards())
         {
-            cards.Add(c); // This needs to be a dedicated copying function from CardWhole!
+            cards.Add(c.DeepCopy()); // This needs to be a dedicated copying function from CardWhole!
         }
 
         foreach (CardWhole c in cards)

@@ -355,6 +355,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Base Deck
       objectReference: {fileID: 0}
+    - target: {fileID: 3795990374422719603, guid: 033a4a42c1a1a12408e3c1043d18815a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6093108097676703912, guid: 033a4a42c1a1a12408e3c1043d18815a,
         type: 3}
       propertyPath: m_Enabled

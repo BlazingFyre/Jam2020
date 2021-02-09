@@ -38,14 +38,23 @@ public class BattleSystem : MonoBehaviour
         enemySpirit.InitContainers(enemyDeck, enemyGrave, enemyHand);
 
         // Initialize the Spirit's decks using their Base Decks
-        playerSpirit.GetDeck().CopyDeck(playerSpirit.GetBaseDeck());
-        enemySpirit.GetDeck().CopyDeck(enemySpirit.GetBaseDeck());
+        playerSpirit.GetDeck().CopyFrom(playerSpirit.GetBaseDeck());
+        enemySpirit.GetDeck().CopyFrom(enemySpirit.GetBaseDeck());
     }
 
     private void AlignBattle()
     {
-        GetComponent<BattleAligner>().AlignSpirit(playerSpirit, Combatant.Player);
-        GetComponent<BattleAligner>().AlignSpirit(enemySpirit, Combatant.Enemy);
+        GetComponent<BattleAligner>().AlignSpirits();
+    }
+
+    public SpiritWhole GetPlayer()
+    {
+        return playerSpirit;
+    }
+
+    public SpiritWhole GetEnemy()
+    {
+        return enemySpirit;
     }
 
 }
