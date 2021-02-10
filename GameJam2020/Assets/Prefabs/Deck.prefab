@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3019681235298252992}
   - component: {fileID: 6935062357250037048}
   - component: {fileID: 272985910349709897}
+  - component: {fileID: 7241091800749009180}
   - component: {fileID: 2433414780810942675}
   - component: {fileID: 3024636845467327212}
   m_Layer: 0
@@ -54,6 +55,7 @@ MonoBehaviour:
   maxCards: 2147483647
   cards: []
   cardNumberDisplay: {fileID: 0}
+  cardAligner: {fileID: 7241091800749009180}
 --- !u!114 &272985910349709897
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68,6 +70,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   owner: {fileID: 0}
   controller: {fileID: 0}
+--- !u!114 &7241091800749009180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3795990374422719603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4de24cc8e6ac8646a29e9211eafbc97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!222 &2433414780810942675
 CanvasRenderer:
   m_ObjectHideFlags: 0

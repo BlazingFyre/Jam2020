@@ -16,7 +16,6 @@ public class Use : MonoBehaviour
     public void InitOwner(SpiritWhole owner)
     {
         this.owner = owner;
-
         this.controller = owner;
     }
 

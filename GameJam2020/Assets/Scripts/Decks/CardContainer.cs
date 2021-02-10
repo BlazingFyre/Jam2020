@@ -10,15 +10,8 @@ public class CardContainer : MonoBehaviour
     public int maxCards = int.MaxValue;
     public List<CardWhole> cards = new List<CardWhole>();
 
-    public TextMeshProUGUI cardNumberDisplay = null;
-
-    public void FixedUpdate()
-    {
-        if (cardNumberDisplay != null)
-        {
-            cardNumberDisplay.text = cards.Count().ToString();
-        }
-    }
+    public TextMeshProUGUI cardNumberDisplay;
+    public CardAligner cardAligner;
 
     public List<CardWhole> GetCards()
     {
@@ -33,16 +26,6 @@ public class CardContainer : MonoBehaviour
     public bool IsEmpty()
     {
         return cards.Count() == 0;
-    }
-
-    public bool Contains(CardWhole target)
-    {
-        return cards.Contains(target);
-    }
-
-    public int Size()
-    {
-        return cards.Count();
     }
 
     public void Clear()
@@ -62,9 +45,11 @@ public class CardContainer : MonoBehaviour
 
     public CardWhole DrawTarget(CardWhole target)
     {
-        if (Contains(target))
+        if (cards.Contains(target))
         {
             cards.Remove(target);
+
+            UpdateDeck();
 
             return target;
         }
@@ -80,6 +65,8 @@ public class CardContainer : MonoBehaviour
         {
             CardWhole poppedCard = cards[index];
             cards.RemoveAt(index);
+
+            UpdateDeck();
 
             return poppedCard;
         }
@@ -114,6 +101,8 @@ public class CardContainer : MonoBehaviour
             target.GetComponent<Use>().SetController(GetComponent<Use>().GetController());
         }
 
+        UpdateDeck();
+
     }
 
     // B: I totally ripped this from StackExchange, but it also totally works, so ¯\_(ツ)_/¯
@@ -136,13 +125,33 @@ public class CardContainer : MonoBehaviour
 
         foreach (CardWhole c in toCopy.GetCards())
         {
-            cards.Add(c.DeepCopy()); // This needs to be a dedicated copying function from CardWhole!
+            CardWhole newC = c.DeepCopy();
+            newC.transform.SetParent(gameObject.transform);
+            cards.Add(newC);
+            
         }
 
         foreach (CardWhole c in cards)
         {
             c.GetComponent<Use>().InitOwner(GetComponent<Use>().GetOwner());
         }
+
+        UpdateDeck();
+
+    }
+
+    private void UpdateDeck()
+    {
+        if (cardNumberDisplay != null)
+        {
+            cardNumberDisplay.text = cards.Count().ToString();
+        }
+
+        if (cardAligner != null)
+        {
+            cardAligner.UpdateAlignment();
+        }
+
     }
 
 }

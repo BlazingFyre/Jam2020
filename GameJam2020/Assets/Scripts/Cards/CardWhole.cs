@@ -19,6 +19,7 @@ public class CardWhole : MonoBehaviour
     public CardWhole DeepCopy()
     {
         GameObject cardCopy = Instantiate(gameObject);
+        cardCopy.transform.SetParent(gameObject.transform.parent);
         return cardCopy.GetComponent<CardWhole>();
     }
 
