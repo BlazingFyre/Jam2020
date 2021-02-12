@@ -30,8 +30,8 @@ public class BattleSystem : MonoBehaviour
     private void InitBattle()
     {
         // Place both Spirits under the hierarchy of the Canvas
-        playerSpirit.transform.SetParent(battleCanvas.transform);
-        enemySpirit.transform.SetParent(battleCanvas.transform);
+        playerSpirit.transform.parent = battleCanvas.transform;
+        enemySpirit.transform.parent = battleCanvas.transform;
 
         // Link the decks/graveyards/hands to the Spirits
         playerSpirit.InitContainers(playerDeck, playerGrave, playerHand);
