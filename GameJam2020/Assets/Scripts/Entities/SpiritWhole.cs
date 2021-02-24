@@ -13,6 +13,8 @@ public class SpiritWhole : MonoBehaviour
     public CardContainer hand;
 
     public int turnStartCards = 4;
+    public int turnStartMana = 4;
+    public int mana = 4;
 
     public void InitContainers(CardContainer deck, CardContainer grave, CardContainer hand)
     {
@@ -23,6 +25,30 @@ public class SpiritWhole : MonoBehaviour
         deck.GetComponent<Use>().InitOwner(this);
         grave.GetComponent<Use>().InitOwner(this);
         hand.GetComponent<Use>().InitOwner(this);
+    }
+
+    private void DrawCards(int amount)
+    {
+        for (int i = 0; i < amount; i++)
+        {
+            hand.PlaceTop(deck.DrawTop());
+        }
+    }
+
+    public void RefreshHand()
+    {
+        DrawCards(turnStartCards);
+    }
+
+    public void DiscardHand()
+    {
+        if (!hand.IsEmpty())
+        {
+            for (int j = hand.GetCards().Count - 1; j > -1; j--)
+            {
+                hand.GetCards()[j].GetActiveSide().Discard();
+            }
+        }
     }
 
     public CardContainer GetBaseDeck()
@@ -45,11 +71,6 @@ public class SpiritWhole : MonoBehaviour
         return hand;
     }
 
-    public int GetTurnStartCards()
-    {
-        return turnStartCards;
-    }
-
     public Spirit GetSpirit(Side side)
     {
         return GetComponent<Whole>().GetSide(side).GetComponent<Spirit>();
@@ -65,6 +86,16 @@ public class SpiritWhole : MonoBehaviour
         {
             return GetComponent<Whole>().GetSide(Side.B).GetComponent<Spirit>();
         }
+    }
+
+    public void AddMana(int amount)
+    {
+        mana = mana + amount;
+    }
+
+    public void RefreshMana()
+    {
+        mana = turnStartMana;
     }
 
 }

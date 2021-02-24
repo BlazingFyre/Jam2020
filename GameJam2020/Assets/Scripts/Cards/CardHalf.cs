@@ -19,9 +19,17 @@ public class CardHalf : MonoBehaviour
         Discard();
     }
 
+    // TODO: Shouldn't we make it so only cards in a hand be discarded? 
+    // TODO: And if so, what should the use-case be if Discard() is called on a card elsewhere?
     public virtual void Discard()
     {
-        
+        // Place this into its controller's graveyard ...
+        GetComponent<Half>().GetWhole().GetComponent<Use>().GetController().GetGrave().PlaceTop(
+            // ... after drawing it from its respective container
+            GetComponent<Half>().GetWhole().GetComponent<CardWhole>().GetCardContainer().DrawTarget(
+                GetComponent<Half>().GetWhole().GetComponent<CardWhole>()
+            )
+        );
     }
 
     public virtual string GetHalfName()

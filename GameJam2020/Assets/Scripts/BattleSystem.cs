@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Sides;
 using static Combatants;
+using static Phases;
 
 public class BattleSystem : MonoBehaviour
 {
@@ -20,6 +21,10 @@ public class BattleSystem : MonoBehaviour
     public CardContainer enemyDeck;
     public CardContainer enemyGrave;
     public CardContainer enemyHand;
+
+    // Information kept for turns
+    public SpiritWhole turnSpirit;
+    public Phase turnPhase;
 
     public void Start()
     {
@@ -40,6 +45,32 @@ public class BattleSystem : MonoBehaviour
         // Initialize the Spirit's decks using their Base Decks
         playerSpirit.GetDeck().CopyFrom(playerSpirit.GetBaseDeck());
         enemySpirit.GetDeck().CopyFrom(enemySpirit.GetBaseDeck());
+
+    }
+
+    private void StartTurn(SpiritWhole spirit)
+    {
+        turnSpirit = spirit;
+
+        // Start Phase
+        turnPhase = Phase.Start;
+
+        // Upkeep Phase
+        turnPhase = Phase.Upkeep;
+        turnSpirit.RefreshMana();
+        turnSpirit.RefreshHand();
+
+        turnPhase = Phase.Main;
+    }
+
+    private void EndTurn()
+    {
+        // Downkeep Phase
+        turnPhase = Phase.Downkeep;
+        turnSpirit.DiscardHand();
+
+        // End Phase
+        turnPhase = Phase.End;
     }
 
     private void AlignBattle()
@@ -55,6 +86,11 @@ public class BattleSystem : MonoBehaviour
     public SpiritWhole GetEnemy()
     {
         return enemySpirit;
+    }
+
+    public SpiritWhole getTurnSpirit()
+    {
+        return turnSpirit;
     }
 
 }

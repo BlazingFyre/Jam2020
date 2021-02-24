@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static SleepStates;
 
 public class CardWhole : MonoBehaviour
 {
@@ -14,6 +15,13 @@ public class CardWhole : MonoBehaviour
     public void SetCardContainer(CardContainer container)
     {
         this.container = container;
+    }
+
+    public CardHalf GetActiveSide()
+    {
+        return GetComponent<Whole>().GetSide(
+                GetComponent<Use>().GetController().GetSpirit(SleepState.Waking).GetComponent<Half>().GetSide()
+            ).GetComponent<CardHalf>();
     }
 
     public CardWhole DeepCopy()
