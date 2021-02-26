@@ -88,21 +88,24 @@ public class CardContainer : MonoBehaviour
 
     public void PlaceIndex(CardWhole target, int index)
     {
-        if (IsEmpty())
+        // B: Maybe consolidate movement of cards into single functions so this doesn't have to be accounted for
+        if (target == null) 
+        {
+            return;
+        }
+        else if (IsEmpty())
         {
             cards.Add(target);
-            target.SetCardContainer(this);
-            target.GetComponent<Use>().SetController(GetComponent<Use>().GetController());
         }
         else if (!IsFull())
         {
             cards.Insert(index, target);
-            target.SetCardContainer(this);
-            target.GetComponent<Use>().SetController(GetComponent<Use>().GetController());
         }
 
-        UpdateDeck();
+        target.SetCardContainer(this);
+        target.GetComponent<Use>().SetController(GetComponent<Use>().GetController());
 
+        UpdateDeck();
     }
 
     // B: I totally ripped this from StackExchange, but it also totally works, so ¯\_(ツ)_/¯
@@ -122,12 +125,13 @@ public class CardContainer : MonoBehaviour
     public void CopyFrom(CardContainer toCopy)
     {
         cards = new List<CardWhole>();
+        CardGenerator cardGenerator = GameObject.FindGameObjectWithTag("Battle Canvas").GetComponent<BattleCanvas>().GetCardsObject().GetComponent<CardGenerator>();
 
         foreach (CardWhole c in toCopy.GetCards())
         {
-            CardWhole newC = c.DeepCopy();
-            newC.transform.SetParent(gameObject.transform);
-            cards.Add(newC);
+
+            CardWhole newCard = cardGenerator.CopyOf(c);
+            cards.Add(newCard);
             
         }
 

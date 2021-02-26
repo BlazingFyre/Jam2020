@@ -7,20 +7,25 @@ public class HandAligner : CardAligner
 
     public override void UpdateAlignment()
     {
-        CardContainer cardContainer = GetComponent<CardContainer>();
 
-        float cardWidth = 
-            cardContainer.GetCards()[0].GetComponent<RectTransform>().rect.width 
-            * cardContainer.GetCards()[0].GetComponent<RectTransform>().localScale.x;
-        float handMiddle = gameObject.GetComponent<RectTransform>().position.x;
-        float totalHeldCardsWidth = cardContainer.GetCards().Count * cardWidth;
+        List<CardWhole> cards = GetComponent<CardContainer>().GetCards();
 
-        float currX = handMiddle - (totalHeldCardsWidth / 2) + (cardWidth / 2);
-
-        foreach (CardWhole c in cardContainer.GetCards())
+        if (cards.Count != 0)
         {
-            c.GetComponent<RectTransform>().position = new Vector3(currX, gameObject.GetComponent<RectTransform>().position.y);
-            currX += cardWidth;
+            // B: No cost (of code quality) too great.
+            float cardWidth =
+            cards[0].GetComponent<RectTransform>().rect.width
+            * cards[0].GetComponent<RectTransform>().localScale.x;
+            float handMiddle = gameObject.GetComponent<RectTransform>().position.x;
+            float totalHeldCardsWidth = cards.Count * cardWidth;
+
+            float currX = handMiddle - (totalHeldCardsWidth / 2) + (cardWidth / 2);
+
+            foreach (CardWhole c in cards)
+            {
+                c.GetComponent<RectTransform>().position = new Vector3(currX, gameObject.GetComponent<RectTransform>().position.y);
+                currX += cardWidth;
+            }
         }
 
     }
