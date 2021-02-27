@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using static Sides;
+using static SleepStates;
 
 public class Whole : MonoBehaviour
 {
@@ -33,6 +34,11 @@ public class Whole : MonoBehaviour
         {
             return side2;
         }
+    }
+
+    public Half GetSide(SleepState state)
+    {
+        return GetSide(GetComponent<Use>().GetController().GetSpirit(state).GetComponent<Half>().GetSide());
     }
 
 }

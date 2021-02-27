@@ -46,7 +46,7 @@ public class SpiritWhole : MonoBehaviour
         {
             for (int j = hand.GetCards().Count - 1; j > -1; j--)
             {
-                hand.GetCards()[j].GetActiveSide().Discard();
+                hand.GetCards()[j].GetComponent<Whole>().GetSide(SleepState.Waking).GetComponent<CardHalf>().Discard();
             }
         }
     }

@@ -17,13 +17,6 @@ public class CardWhole : MonoBehaviour
         this.container = container;
     }
 
-    public CardHalf GetActiveSide()
-    {
-        return GetComponent<Whole>().GetSide(
-                GetComponent<Use>().GetController().GetSpirit(SleepState.Waking).GetComponent<Half>().GetSide()
-            ).GetComponent<CardHalf>();
-    }
-
     public CardWhole DeepCopy()
     {
         GameObject cardCopy = Instantiate(gameObject);

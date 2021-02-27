@@ -403,7 +403,7 @@ PrefabInstance:
     - target: {fileID: 6786007777398803092, guid: 48647b4cbb88b3e43aa68c680531dff0,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 1.875
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6786007777398803092, guid: 48647b4cbb88b3e43aa68c680531dff0,
         type: 3}
@@ -429,6 +429,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6786007777398803093, guid: 48647b4cbb88b3e43aa68c680531dff0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 48647b4cbb88b3e43aa68c680531dff0, type: 3}
@@ -713,11 +718,11 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0
   far clip plane: 1000
-  field of view: 60
+  field of view: 133
   orthographic: 1
-  orthographic size: 257.5
+  orthographic size: 254.375
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -741,7 +746,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 744642465}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1022,6 +1027,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 995602306367779619, guid: c89092c0cbe49a643860f21ca1054774,
         type: 3}
+      propertyPath: m_Name
+      value: SpiritHalf
+      objectReference: {fileID: 0}
+    - target: {fileID: 995602306367779619, guid: c89092c0cbe49a643860f21ca1054774,
+        type: 3}
       propertyPath: m_Layer
       value: 5
       objectReference: {fileID: 0}
@@ -1035,6 +1045,11 @@ PrefabInstance:
       propertyPath: cards.Array.data[0]
       value: 
       objectReference: {fileID: 1920751539}
+    - target: {fileID: 7698245384437571101, guid: c89092c0cbe49a643860f21ca1054774,
+        type: 3}
+      propertyPath: m_Name
+      value: SpiritHalf
+      objectReference: {fileID: 0}
     - target: {fileID: 7698245384437571101, guid: c89092c0cbe49a643860f21ca1054774,
         type: 3}
       propertyPath: m_Layer
@@ -1345,7 +1360,7 @@ Transform:
   - {fileID: 298346537}
   - {fileID: 1041292461}
   m_Father: {fileID: 1655718048}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1455428971
 GameObject:
@@ -1410,7 +1425,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1655718048}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1530609631
 MonoBehaviour:
@@ -1494,15 +1509,15 @@ Canvas:
   serializedVersion: 3
   m_RenderMode: 1
   m_Camera: {fileID: 744642467}
-  m_PlaneDistance: 100
-  m_PixelPerfect: 0
+  m_PlaneDistance: 0
+  m_PixelPerfect: 1
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_TargetDisplay: 0
 --- !u!224 &1655718048
 RectTransform:
@@ -1517,8 +1532,8 @@ RectTransform:
   m_Children:
   - {fileID: 1455428972}
   - {fileID: 1381770844}
-  - {fileID: 1530609630}
   - {fileID: 1441967788}
+  - {fileID: 1530609630}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2117,8 +2132,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 995602306367779619, guid: c89092c0cbe49a643860f21ca1054774,
         type: 3}
+      propertyPath: m_Name
+      value: SpiritHalf
+      objectReference: {fileID: 0}
+    - target: {fileID: 995602306367779619, guid: c89092c0cbe49a643860f21ca1054774,
+        type: 3}
       propertyPath: m_Layer
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7698245384437571101, guid: c89092c0cbe49a643860f21ca1054774,
+        type: 3}
+      propertyPath: m_Name
+      value: SpiritHalf
       objectReference: {fileID: 0}
     - target: {fileID: 7698245384437571101, guid: c89092c0cbe49a643860f21ca1054774,
         type: 3}

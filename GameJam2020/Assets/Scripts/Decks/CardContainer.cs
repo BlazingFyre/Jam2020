@@ -129,10 +129,8 @@ public class CardContainer : MonoBehaviour
 
         foreach (CardWhole c in toCopy.GetCards())
         {
-
             CardWhole newCard = cardGenerator.CopyOf(c);
             cards.Add(newCard);
-            
         }
 
         foreach (CardWhole c in cards)
