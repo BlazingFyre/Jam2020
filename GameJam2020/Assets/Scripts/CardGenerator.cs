@@ -11,5 +11,4 @@ public class CardGenerator : MonoBehaviour
         newCard.transform.SetParent(gameObject.transform);
         return newCard;
     }
-
 }

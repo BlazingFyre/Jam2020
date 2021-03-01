@@ -10,7 +10,7 @@ public class Orange : CardHalf
         return target.GetComponent<Spirit>() != null;
     }
 
-    public override void Play(GameObject target)
+    public override void CardFunction(GameObject target)
     {
         target.GetComponent<Spirit>().Damage(5);
 

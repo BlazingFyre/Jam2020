@@ -58,7 +58,7 @@ public class BattleSystem : MonoBehaviour
         StartCoroutine(StartTurnRoutine(spirit));
     }
 
-    public IEnumerator StartTurnRoutine(SpiritWhole spirit)
+    private IEnumerator StartTurnRoutine(SpiritWhole spirit)
     {
         Debug.Log("turn start: " + spirit);
 
@@ -89,7 +89,7 @@ public class BattleSystem : MonoBehaviour
         StartCoroutine(EndTurnRoutine());
     }
 
-    public IEnumerator EndTurnRoutine()
+    private IEnumerator EndTurnRoutine()
     {
         Debug.Log("turn end: " + turnSpirit);
 
@@ -131,7 +131,7 @@ public class BattleSystem : MonoBehaviour
         return enemySpirit;
     }
 
-    public SpiritWhole getTurnSpirit()
+    public SpiritWhole GetTurnSpirit()
     {
         return turnSpirit;
     }

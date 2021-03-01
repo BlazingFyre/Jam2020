@@ -10,9 +10,9 @@ public class CardHalfTemplate : CardHalf
         return false;
     }
 
-    public override void Play(GameObject target)
+    public override void CardFunction(GameObject target)
     {
-        Discard();
+
     }
 
 }

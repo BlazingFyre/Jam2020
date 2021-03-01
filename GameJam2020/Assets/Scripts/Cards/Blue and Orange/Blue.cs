@@ -5,16 +5,17 @@ using UnityEngine;
 public class Blue : CardHalf
 {
 
+    public override string HalfName { get; set; } = "Blue";
+    public override string HalfText { get; set; } = "Tire target.";
+
     public override bool IsTargetable(GameObject target)
     {
         return target.GetComponent<Spirit>() != null;
     }
 
-    public override void Play(GameObject target)
+    public override void CardFunction(GameObject target)
     {
         target.GetComponent<Spirit>().Tire();
-
-        Discard();
     }
 
 }
