@@ -38,7 +38,7 @@ public class SpiritWhole : MonoBehaviour
     {
         for (int i = 0; i < amount; i++)
         {
-            actionLog.Enter(new ActionLog.Draw(
+            GameObject.FindGameObjectWithTag("Battle Systems").GetComponent<ActionLog>().Enter(new ActionLog.Draw(
                 this,
                 0,
                 deck,

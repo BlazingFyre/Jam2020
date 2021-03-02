@@ -929,6 +929,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e57a1c5b86fa0dd40aedd17b53ee9578, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  printLog: 1
 --- !u!114 &954891012 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2983774468195402128, guid: c89092c0cbe49a643860f21ca1054774,
@@ -2035,8 +2036,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 892484392}
-        m_MethodName: EndTurn
+      - m_Target: {fileID: 892484395}
+        m_MethodName: EndTurnButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

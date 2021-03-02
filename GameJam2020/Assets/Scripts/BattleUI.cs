@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Phases;
 
 public class BattleUI : MonoBehaviour
 {
@@ -22,6 +23,15 @@ public class BattleUI : MonoBehaviour
     public bool IsDragging()
     {
         return dragging;
+    }
+
+
+    public void EndTurnButton()
+    {
+        GetComponent<ActionLog>().Enter(new ActionLog.PhaseChange(
+            GetComponent<BattleSystem>().GetTurnSpirit(),
+            Phase.End
+            ));
     }
 
 }

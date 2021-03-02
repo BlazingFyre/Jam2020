@@ -11,7 +11,6 @@ public class BattleSystem : MonoBehaviour
     // Data supplied before battle starts
     public SpiritWhole playerSpirit;
     public SpiritWhole enemySpirit;
-    //TODO: add compatibility for starting items?
 
     // Objects that are always loaded and connected to BattleSystem
     public GameObject battleCanvas;
@@ -50,70 +49,10 @@ public class BattleSystem : MonoBehaviour
         enemySpirit.GetDeck().CopyFrom(enemySpirit.GetBaseDeck());
 
         // Start the first turn
-        StartTurn(playerSpirit);
-    }
-
-    public void StartTurn(SpiritWhole spirit)
-    {
-        StartCoroutine(StartTurnRoutine(spirit));
-    }
-
-    private IEnumerator StartTurnRoutine(SpiritWhole spirit)
-    {
-        Debug.Log("turn start: " + spirit);
-
-        turnSpirit = spirit;
-
-        // Start Phase
-        turnPhase = Phase.Start;
-
-        // Upkeep Phase
-        turnPhase = Phase.Upkeep;
-        turnSpirit.RefreshMana();
-        yield return new WaitForSeconds(actionDelay);
-        turnSpirit.RefreshHand();
-        yield return new WaitForSeconds(actionDelay);
-
-        turnPhase = Phase.Main;
-
-        // TODO: Actually make an enemy AI system instead of this automatic turn-ender.
-
-        if (turnSpirit == enemySpirit)
-        {
-            EndTurn();
-        }
-    }
-
-    public void EndTurn()
-    {
-        StartCoroutine(EndTurnRoutine());
-    }
-
-    private IEnumerator EndTurnRoutine()
-    {
-        Debug.Log("turn end: " + turnSpirit);
-
-        // Downkeep Phase
-        turnPhase = Phase.Downkeep;
-        turnSpirit.DiscardHand();
-        yield return new WaitForSeconds(actionDelay);
-
-        // End Phase
-        turnPhase = Phase.End;
-
-        // Start next turn
-        // B: Perhaps adding "turn queue" to support multiple turns in a row is a good idea.
-        // B: But for now, this suffices.
-
-        if (turnSpirit == playerSpirit)
-        {
-            StartTurn(enemySpirit);
-        }
-        else
-        {
-            StartTurn(playerSpirit);
-        }
-
+        GetComponent<ActionLog>().Enter(new ActionLog.PhaseChange(
+            playerSpirit, 
+            Phase.Start
+            ));
     }
 
     private void AlignBattle()
@@ -134,6 +73,28 @@ public class BattleSystem : MonoBehaviour
     public SpiritWhole GetTurnSpirit()
     {
         return turnSpirit;
+    }
+
+    public SpiritWhole GetNonturnSpirit()
+    {
+        if (turnSpirit == playerSpirit)
+        {
+            return enemySpirit;
+        } 
+        else
+        {
+            return playerSpirit;
+        }
+    }
+
+    public void SetTurnSpirit(SpiritWhole spirit)
+    {
+        this.turnSpirit = spirit;
+    }
+
+    public void SetPhase(Phase phase)
+    {
+        turnPhase = phase;
     }
 
 }

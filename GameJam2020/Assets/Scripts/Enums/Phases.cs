@@ -5,6 +5,6 @@ using UnityEngine;
 public class Phases : MonoBehaviour
 {
     
-    public enum Phase { Start, Upkeep, Main, Downkeep, End }
+    public enum Phase { Start, Main, End }
 
 }
