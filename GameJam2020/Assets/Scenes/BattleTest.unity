@@ -722,7 +722,7 @@ Camera:
   far clip plane: 1000
   field of view: 133
   orthographic: 1
-  orthographic size: 254.375
+  orthographic size: 261
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -840,9 +840,11 @@ GameObject:
   - component: {fileID: 892484393}
   - component: {fileID: 892484392}
   - component: {fileID: 892484394}
+  - component: {fileID: 892484395}
+  - component: {fileID: 892484396}
   m_Layer: 0
-  m_Name: BattleSystem
-  m_TagString: Untagged
+  m_Name: BattleSystems
+  m_TagString: Battle Systems
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -901,6 +903,32 @@ MonoBehaviour:
   playerSideB: {fileID: 591251792}
   enemySideA: {fileID: 2021715194}
   enemySideB: {fileID: 209729756}
+--- !u!114 &892484395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 892484391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 522dc7614ed34c64ea6728cd06514051, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dragging: 0
+  draggedCard: {fileID: 0}
+--- !u!114 &892484396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 892484391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e57a1c5b86fa0dd40aedd17b53ee9578, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &954891012 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2983774468195402128, guid: c89092c0cbe49a643860f21ca1054774,

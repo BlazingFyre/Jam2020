@@ -13,8 +13,6 @@ public class Orange : CardHalf
     public override void CardFunction(GameObject target)
     {
         target.GetComponent<Spirit>().Damage(5);
-
-        Discard();
     }
 
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class CardHalf : MonoBehaviour
 {
@@ -9,7 +10,14 @@ public class CardHalf : MonoBehaviour
     public virtual string HalfText { get; set; } = "";
     public virtual Sprite HalfArt { get; set; } = null;
 
-    public ActionLog.Action discardAction; // TODO: = default
+    public Type DiscardAction { get; set; } = typeof(ActionLog.Discard);
+
+    private ActionLog actionLog;
+
+    public void Start()
+    {
+         actionLog = GameObject.FindGameObjectWithTag("Battle Systems").GetComponent<ActionLog>();
+    }
 
     public virtual bool IsTargetable(GameObject target)
     {
@@ -24,25 +32,26 @@ public class CardHalf : MonoBehaviour
     public void Play(GameObject target)
     {
         // Log "Play" action
+        actionLog.Enter(new ActionLog.Play(
+                GetComponent<Half>().GetWhole().GetComponent<Use>().GetController(), 
+                this, 
+                target
+                ));
+
+        // Log card's actual text
         CardFunction(target);
-        // Log respective Discarding action
-        // Temporary:
+
+        // Log DiscardAction action
         Discard();
     }
 
-    
-
-    // TODO: Shouldn't we make it so only cards in a hand be discarded? 
-    // TODO: And if so, what should the use-case be if Discard() is called on a card elsewhere?
     public void Discard()
     {
-        // Place this into its controller's graveyard ...
-        GetComponent<Half>().GetWhole().GetComponent<Use>().GetController().GetGrave().PlaceTop(
-            // ... after drawing it from its respective container
-            GetComponent<Half>().GetWhole().GetComponent<CardWhole>().GetCardContainer().DrawTarget(
-                GetComponent<Half>().GetWhole().GetComponent<CardWhole>()
-            )
-        );
+        actionLog.Enter((ActionLog.Action)System.Activator.CreateInstance(
+            DiscardAction,
+            GetComponent<Half>().GetWhole().GetComponent<Use>().GetController(),
+            GetComponent<Half>().GetWhole().GetComponent<CardWhole>()
+            ));
     }
 
 }

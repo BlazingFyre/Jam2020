@@ -33,16 +33,6 @@ public class CardContainer : MonoBehaviour
         cards = new List<CardWhole>();
     }
 
-    public CardWhole DrawTop()
-    {
-        return DrawIndex(0);
-    }
-
-    public CardWhole DrawBottom()
-    {
-        return DrawIndex(cards.Count() - 1);
-    }
-
     public CardWhole DrawTarget(CardWhole target)
     {
         if (cards.Contains(target))
@@ -76,19 +66,8 @@ public class CardContainer : MonoBehaviour
         }
     }
 
-    public void PlaceTop(CardWhole target)
-    {
-        PlaceIndex(target, 0);
-    }
-
-    public void PlaceBottom(CardWhole target)
-    {
-        PlaceIndex(target, cards.Count() - 1);
-    }
-
     public void PlaceIndex(CardWhole target, int index)
     {
-        // B: Maybe consolidate movement of cards into single functions so this doesn't have to be accounted for
         if (target == null) 
         {
             return;
@@ -99,6 +78,9 @@ public class CardContainer : MonoBehaviour
         }
         else if (!IsFull())
         {
+            // B: Process negative values as moving backwards from the bottom.
+            index = (index + cards.Count) % cards.Count;
+
             cards.Insert(index, target);
         }
 
@@ -148,12 +130,10 @@ public class CardContainer : MonoBehaviour
         {
             cardNumberDisplay.text = cards.Count().ToString();
         }
-
         if (cardAligner != null)
         {
             cardAligner.UpdateAlignment();
         }
-
     }
 
 }

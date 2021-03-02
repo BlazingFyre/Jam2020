@@ -16,6 +16,13 @@ public class SpiritWhole : MonoBehaviour
     public int turnStartMana = 4;
     public int mana = 4;
 
+    private ActionLog actionLog;
+
+    public void Start()
+    {
+        actionLog = GameObject.FindGameObjectWithTag("Battle Systems").GetComponent<ActionLog>();
+    }
+
     public void InitContainers(CardContainer deck, CardContainer grave, CardContainer hand)
     {
         this.deck = deck;
@@ -31,7 +38,13 @@ public class SpiritWhole : MonoBehaviour
     {
         for (int i = 0; i < amount; i++)
         {
-            hand.PlaceTop(deck.DrawTop());
+            actionLog.Enter(new ActionLog.Draw(
+                this,
+                0,
+                deck,
+                0,
+                hand
+                ));
         }
     }
 
