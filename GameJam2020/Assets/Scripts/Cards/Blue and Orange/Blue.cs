@@ -10,12 +10,12 @@ public class Blue : CardHalf
 
     public override bool IsTargetable(GameObject target)
     {
-        return target.GetComponent<Spirit>() != null;
+        return target.GetComponent<SpiritHalf>() != null;
     }
 
     public override void CardFunction(GameObject target)
     {
-        target.GetComponent<Spirit>().Tire();
+        target.GetComponent<SpiritHalf>().Tire();
     }
 
 }

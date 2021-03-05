@@ -34,36 +34,6 @@ public class SpiritWhole : MonoBehaviour
         hand.GetComponent<Use>().InitOwner(this);
     }
 
-    private void DrawCards(int amount)
-    {
-        for (int i = 0; i < amount; i++)
-        {
-            GameObject.FindGameObjectWithTag("Battle Systems").GetComponent<ActionLog>().Enter(new ActionLog.Draw(
-                this,
-                0,
-                deck,
-                0,
-                hand
-                ));
-        }
-    }
-
-    public void RefreshHand()
-    {
-        DrawCards(turnStartCards);
-    }
-
-    public void DiscardHand()
-    {
-        if (!hand.IsEmpty())
-        {
-            for (int j = hand.GetCards().Count - 1; j > -1; j--)
-            {
-                hand.GetCards()[j].GetComponent<Whole>().GetSide(SleepState.Waking).GetComponent<CardHalf>().Discard();
-            }
-        }
-    }
-
     public CardContainer GetBaseDeck()
     {
         return baseDeck;
@@ -84,20 +54,20 @@ public class SpiritWhole : MonoBehaviour
         return hand;
     }
 
-    public Spirit GetSpirit(Side side)
+    public SpiritHalf GetSpirit(Side side)
     {
-        return GetComponent<Whole>().GetSide(side).GetComponent<Spirit>();
+        return GetComponent<Whole>().GetSide(side).GetComponent<SpiritHalf>();
     }
 
-    public Spirit GetSpirit(SleepState state)
+    public SpiritHalf GetSpirit(SleepState state)
     {
-        if (GetComponent<Whole>().GetSide(Side.A).GetComponent<Spirit>().GetSleepState() == state)
+        if (GetComponent<Whole>().GetSide(Side.A).GetComponent<SpiritHalf>().GetSleepState() == state)
         {
-            return GetComponent<Whole>().GetSide(Side.A).GetComponent<Spirit>();
+            return GetComponent<Whole>().GetSide(Side.A).GetComponent<SpiritHalf>();
         }
         else
         {
-            return GetComponent<Whole>().GetSide(Side.B).GetComponent<Spirit>();
+            return GetComponent<Whole>().GetSide(Side.B).GetComponent<SpiritHalf>();
         }
     }
 
@@ -109,6 +79,11 @@ public class SpiritWhole : MonoBehaviour
     public void RefreshMana()
     {
         mana = turnStartMana;
+    }
+
+    public int GetTurnStartCards()
+    {
+        return turnStartCards;
     }
 
 }

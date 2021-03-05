@@ -32,7 +32,7 @@ public class CardHalf : MonoBehaviour
     public void Play(GameObject target)
     {
         // Log "Play" action
-        actionLog.Enter(new ActionLog.Play(
+        actionLog.Enter(new ActionLog.Cast(
                 GetComponent<Half>().GetWhole().GetComponent<Use>().GetController(), 
                 this, 
                 target

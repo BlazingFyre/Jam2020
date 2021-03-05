@@ -43,29 +43,15 @@ public class Entity : MonoBehaviour
 
     public void Damage(int amount)
     {
-        int prevHealth = health;
-
-        //TODO: apply status effects to amount(?)
-
         //Assure the health does not exceed maxHealth or go below 0
         health = ClampHealth(health - amount);
-
-        print(this.name + "'s HP: " + prevHealth + " -> " + health + " (damaged by " + amount + ")");
-
         CheckHealth();
     }
 
     public void Heal(int amount)
     {
-        int prevHealth = health;
-
-        //TODO: apply status effects to amount(?)
-
         //Assure the health does not exceed maxHealth or go below 0
         health = ClampHealth(health + amount);
-
-        print(this.name + "'s HP: " + prevHealth + " -> " + health + " (healed by " + amount + ")");
-
         // This check should be here just in case there is some negative healing status
         CheckHealth();
     }
@@ -85,10 +71,11 @@ public class Entity : MonoBehaviour
         return Mathf.Min(Mathf.Max(healthValue, 0), maxHealth);
     }
 
+    // TODO: Replace with a Destroy Action!
     public void Destroy()
     {
         print(this.name + " was destroyed!");
-        // Uhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+        // B: Very temporary
         Object.Destroy(gameObject);
     }
 

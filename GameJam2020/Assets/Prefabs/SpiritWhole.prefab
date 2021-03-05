@@ -57,6 +57,8 @@ MonoBehaviour:
   grave: {fileID: 0}
   hand: {fileID: 0}
   turnStartCards: 4
+  turnStartMana: 4
+  mana: 4
 --- !u!114 &2644747853960016119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,7 +188,7 @@ PrefabInstance:
     - target: {fileID: 3847365308317587599, guid: 19a280d794f25b8409d73587e5e397a7,
         type: 3}
       propertyPath: m_Name
-      value: Spirit
+      value: SpiritHalf
       objectReference: {fileID: 0}
     - target: {fileID: 5996048037756465937, guid: 19a280d794f25b8409d73587e5e397a7,
         type: 3}
@@ -500,7 +502,7 @@ PrefabInstance:
     - target: {fileID: 3847365308317587599, guid: 19a280d794f25b8409d73587e5e397a7,
         type: 3}
       propertyPath: m_Name
-      value: Spirit
+      value: SpiritHalf
       objectReference: {fileID: 0}
     - target: {fileID: 7969937181755803012, guid: 19a280d794f25b8409d73587e5e397a7,
         type: 3}

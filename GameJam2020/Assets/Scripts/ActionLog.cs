@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using static Phases;
+using static SleepStates;
 
 public class ActionLog : MonoBehaviour
 {
@@ -46,116 +47,79 @@ public class ActionLog : MonoBehaviour
         public Action(SpiritWhole source)
         {
             this.source = source;
-
             actionLog = GameObject.FindGameObjectWithTag("Battle Systems").GetComponent<ActionLog>();
         }
         
-        // Run action through all statuses, moods, etc. to update things like damage values.
+        // Run action through all statuses, moods, etc. to update things like damage values
         public virtual void BeforeTriggers()
         {
             // TODO: All of this crap
         }
 
-        // Run action through all statuses, moods, etc. to trigger conditionals.
+        // Run action through all statuses, moods, etc. to trigger conditionals
         public virtual void AfterTriggers()
         {
             // TODO: All of this crap
         }
 
-        // Actually perform the action.
+        // Actually perform the action
         public virtual void Run() { }
 
+        // Print a readout of the action for debugging purposes
         public virtual void Print()
         {
-            Debug.Log("Action " + this + " from " + source);
+            Debug.Log(source + ": " + this);
         }
     }
 
-    public class Damage : Action
+    // ==== Cards =================================================================================
+
+    public class Cast : Action
     {
-        public SpiritWhole target;
-        public int amount;
-
-        public Damage(SpiritWhole source, SpiritWhole target, int amount) : base(source)
-        {
-            this.target = target;
-            this.amount = amount;
-        }
-
-        public override void Print()
-        {
-            Debug.Log(source + " damages " + target + " by " + amount);
-        }
-    }
-
-    public class Discard : Action
-    {
-        public CardWhole target;
-
-        public Discard(SpiritWhole source, CardWhole target) : base(source)
-        {
-            this.target = target;
-        }
-
-        public override void Run()
-        {
-            // Place this into its controller's graveyard ...
-            target.GetComponent<Use>().GetController().GetGrave().PlaceIndex(
-                // ... after drawing it from its respective container
-                target.GetCardContainer().DrawTarget(target), 0
-            );
-        }
-
-        public override void Print()
-        {
-            Debug.Log(source + " discards " + target);
-        }
-    }
-
-    public class Play : Action
-    {
-        public CardHalf card;
+        public CardHalf toCast;
         public GameObject target;
 
-        public Play(SpiritWhole source, CardHalf card, GameObject target) : base(source)
+        public Cast(SpiritWhole source, CardHalf toCast, GameObject target) : base(source)
         {
-            this.card = card;
+            this.toCast = toCast;
             this.target = target;
         }
 
         public override void Print()
         {
-            Debug.Log(source + " plays " + card + " targeting " + target);
+            Debug.Log(source + ": " + toCast + " is cast " + " targeting " + target);
         }
     }
 
-    public class Draw : Action
+    // ---- Card Movement -------------------------------------------------------------------------
+
+    public class Move : Action
     {
         // B: For indices, 0 is top of the deck, -1 is bottom.
-        public CardWhole card;
+        public CardWhole toMove;
         public int fromIndex;
         public CardContainer fromContainer;
         public int toIndex;
         public CardContainer toContainer;
 
-        public Draw(SpiritWhole source, CardWhole card, CardContainer fromContainer, int toIndex, CardContainer toContainer) : base(source)
+        public Move(SpiritWhole source, CardWhole toMove, CardContainer fromContainer, int toIndex, CardContainer toContainer) : base(source)
         {
-            this.card = card;
+            this.toMove = toMove;
             this.fromContainer = fromContainer;
             this.toIndex = toIndex;
             this.toContainer = toContainer;
 
             // If nothing could've been drawn, fizzle.
-            if (fromContainer.IsEmpty() || !fromContainer.GetCards().Contains(card))
+            if (fromContainer.IsEmpty() || !fromContainer.GetCards().Contains(toMove))
             {
                 fizzled = true;
                 return;
             }
         }
 
-        public Draw(SpiritWhole source, int fromIndex, CardContainer fromContainer, int toIndex, CardContainer toContainer) : base(source)
+        public Move(SpiritWhole source, int fromIndex, CardContainer fromContainer, int toIndex, CardContainer toContainer) : base(source)
         {
-            card = null;
+            toMove = null;
             this.fromIndex = fromIndex;
             this.fromContainer = fromContainer;
             this.toIndex = toIndex;
@@ -172,13 +136,13 @@ public class ActionLog : MonoBehaviour
         public override void Run()
         {
             CardWhole drawnCard;
-            if (card == null)
+            if (toMove == null)
             {
                 drawnCard = fromContainer.DrawIndex(fromIndex);
-            } 
+            }
             else
             {
-                drawnCard = fromContainer.DrawTarget(card);
+                drawnCard = fromContainer.DrawTarget(toMove);
             }
 
             toContainer.PlaceIndex(drawnCard, toIndex);
@@ -186,17 +150,76 @@ public class ActionLog : MonoBehaviour
 
         public override void Print()
         {
-            if (card == null)
+            if (toMove == null)
             {
-                Debug.Log(source + " draws [i: " + fromIndex + "] from " + fromContainer + " and places it into [i: " + toIndex + "] " + toContainer);
+                Debug.Log(source + ": [i: " + fromIndex + "] " + fromContainer + " moves to [i: " + toIndex + "] " + toContainer);
             }
             else
             {
-                Debug.Log(source + " draws " + card + " from " + fromContainer + " and places it into [i: " + toIndex + "] " + toContainer);
+                Debug.Log(source + ": " + toMove + " from " + fromContainer + " moves to [i: " + toIndex + "] " + toContainer);
             }
         }
 
     }
+
+    public class Draw : Action
+    {
+        public SpiritWhole toDraw;
+        public int amount;
+
+        public Draw(SpiritWhole source, SpiritWhole toDraw, int amount) : base(source)
+        {
+            this.toDraw = toDraw;
+            this.amount = amount;
+        }
+
+        public override void Run()
+        {
+            for (int i = 0; i < amount; i++)
+            {
+                actionLog.Enter(new Move(
+                source,
+                0,
+                toDraw.GetDeck(),
+                0,
+                toDraw.GetHand()
+                ));
+            }
+        }
+
+        public override void Print()
+        {
+            Debug.Log(source + ": " + toDraw + " draws " + amount + " cards");
+        }
+    }
+
+    public class Discard : Action
+    {
+        public CardWhole target;
+
+        public Discard(SpiritWhole source, CardWhole target) : base(source)
+        {
+            this.target = target;
+        }
+
+        public override void Run()
+        {
+            actionLog.Enter(new Move(
+                source, 
+                target, 
+                target.GetCardContainer(), 
+                0, 
+                target.GetComponent<Use>().GetController().GetGrave()
+                ));
+        }
+
+        public override void Print()
+        {
+            Debug.Log(source + ": " + target + " is discarded");
+        }
+    }
+
+    // ==== Battle Flow ===========================================================================
 
     public class PhaseChange : Action
     {
@@ -216,8 +239,7 @@ public class ActionLog : MonoBehaviour
 
             if (phase == Phase.Start)
             {
-                turnTaker.RefreshMana();
-                turnTaker.RefreshHand();
+                actionLog.Enter(new RefreshHand(null, turnTaker));
             }
             else if (phase == Phase.Main)
             {
@@ -225,7 +247,7 @@ public class ActionLog : MonoBehaviour
             }
             else if (phase == Phase.End)
             {
-                turnTaker.DiscardHand();
+                actionLog.Enter(new DiscardHand(null, turnTaker));
             }
         }
 
@@ -236,7 +258,7 @@ public class ActionLog : MonoBehaviour
             if (phase == Phase.Start)
             {
                 actionLog.Enter(new ActionLog.PhaseChange(
-                    turnTaker, 
+                    turnTaker,
                     Phase.Main
                     ));
             }
@@ -267,4 +289,81 @@ public class ActionLog : MonoBehaviour
         }
 
     }
+
+    public class RefreshHand : Action
+    {
+        public SpiritWhole toRefresh;
+        public int amount;
+
+        public RefreshHand(SpiritWhole source, SpiritWhole toRefresh) : base(source)
+        {
+            this.toRefresh = toRefresh;
+            this.amount = toRefresh.GetTurnStartCards();
+        }
+
+        public override void Run()
+        {
+            actionLog.Enter(new Draw(
+                source,
+                toRefresh,
+                amount
+                ));
+        }
+
+        public override void Print()
+        {
+            Debug.Log(source + ": " + toRefresh + " refreshes hand, drawing " + amount + " cards");
+        }
+    }
+
+    public class DiscardHand : Action
+    {
+        public SpiritWhole toDiscard;
+
+        public DiscardHand(SpiritWhole source, SpiritWhole toDiscard) : base(source)
+        {
+            this.toDiscard = toDiscard;
+        }
+
+        public override void Run()
+        {
+            for (int j = toDiscard.GetHand().GetCards().Count - 1; j > -1; j--)
+            {
+                actionLog.Enter(new Discard(
+                    null,
+                    toDiscard.GetHand().GetCards()[j]
+                    ));
+            }
+        }
+
+        public override void Print()
+        {
+            Debug.Log(source + ": " + toDiscard + " discards hand");
+        }
+    }
+
+    // ==== Spirits ===============================================================================
+
+    public class Damage : Action
+    {
+        public SpiritHalf target;
+        public int amount;
+
+        public Damage(SpiritWhole source, SpiritHalf target, int amount) : base(source)
+        {
+            this.target = target;
+            this.amount = amount;
+        }
+
+        public override void Run()
+        {
+            target.Damage(amount);
+        }
+
+        public override void Print()
+        {
+            Debug.Log(source + ": " + target + " is damaged by " + amount);
+        }
+    }
+
 }

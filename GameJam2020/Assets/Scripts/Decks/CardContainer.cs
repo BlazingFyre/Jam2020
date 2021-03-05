@@ -107,7 +107,7 @@ public class CardContainer : MonoBehaviour
     public void CopyFrom(CardContainer toCopy)
     {
         cards = new List<CardWhole>();
-        CardGenerator cardGenerator = GameObject.FindGameObjectWithTag("Battle Canvas").GetComponent<BattleCanvas>().GetCardsObject().GetComponent<CardGenerator>();
+        CardGenerator cardGenerator = GameObject.FindGameObjectWithTag("Battle Systems").GetComponent<BattleSystem>().GetCardsObject().GetComponent<CardGenerator>();
 
         foreach (CardWhole c in toCopy.GetCards())
         {

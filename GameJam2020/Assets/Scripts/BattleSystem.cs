@@ -14,6 +14,11 @@ public class BattleSystem : MonoBehaviour
 
     // Objects that are always loaded and connected to BattleSystem
     public GameObject battleCanvas;
+    public GameObject alignersObject;
+    public GameObject UIObject;
+    public GameObject decksObject;
+    public GameObject cardsObject;
+
     public CardContainer playerDeck;
     public CardContainer playerGrave;
     public CardContainer playerHand;
@@ -58,6 +63,11 @@ public class BattleSystem : MonoBehaviour
     private void AlignBattle()
     {
         GetComponent<BattleAligner>().AlignSpirits();
+    }
+
+    public GameObject GetCardsObject()
+    {
+        return cardsObject;
     }
 
     public SpiritWhole GetPlayer()
