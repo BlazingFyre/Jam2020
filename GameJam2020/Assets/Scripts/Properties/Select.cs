@@ -30,4 +30,14 @@ public class Select : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         }
     }
 
+    public void EnableTargetHighlight()
+    {
+        GetComponent<Selectable>().targetGraphic.color = GetComponent<Selectable>().colors.selectedColor;
+    }
+
+    public void DisableTargetHighlight()
+    {
+        GetComponent<Selectable>().targetGraphic.color = GetComponent<Selectable>().colors.normalColor;
+    }
+
 }

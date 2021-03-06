@@ -87,7 +87,7 @@ public class ActionLog : MonoBehaviour
 
         public override void Print()
         {
-            Debug.Log(source + ": " + toCast + " is cast " + " targeting " + target);
+            Debug.Log(source + ": " + toCast + " is cast on " + target);
         }
     }
 
