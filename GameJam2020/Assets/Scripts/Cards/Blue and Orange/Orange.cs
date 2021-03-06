@@ -12,7 +12,11 @@ public class Orange : CardHalf
 
     public override void CardFunction(GameObject target)
     {
-        target.GetComponent<SpiritHalf>().Damage(5);
+        actionLog.Enter(new ActionLog.Damage(
+            GetController(),
+            target.GetComponent<SpiritHalf>(),
+            5
+            ));
     }
 
 }

@@ -13,35 +13,21 @@ public class SpiritHalf : Entity
         return state;
     }
 
-    private void SetSleepState(SleepState state)
+    public void SetSleepState(SleepState state)
     {
         this.state = state;
-    }
 
-    private void Awaken()
-    {
-        /*
-        if (!IsAwake() && flip.IsAwake())
+        SpiritHalf flip = GetComponent<Half>().GetFlip().GetComponent<SpiritHalf>();
+
+        // If they are both the same SleepState, force the flip to change
+        if (flip.GetSleepState() == state)
         {
-            SetAwake(true);
-            flip.SetAwake(false);
-
-            spiritFunction.GetHand().GetComponent<HandAligner>().UpdateAlignment();
+            GameObject.FindGameObjectWithTag("Battle Systems").GetComponent<ActionLog>().Enter(new ActionLog.SleepChange(
+                GetComponent<Half>().GetWhole().GetComponent<SpiritWhole>(),
+                flip,
+                (state == SleepState.Waking) ? SleepState.Dreaming : SleepState.Waking
+                ));
         }
-        */
-    }
-
-    public void Tire()
-    {
-        /*
-        if (IsAwake() && !flip.IsAwake())
-        {
-            SetAwake(false);
-            flip.SetAwake(true);
-
-            spiritFunction.GetHand().GetComponent<HandAligner>().UpdateAlignment();
-        }
-        */
     }
 
 }

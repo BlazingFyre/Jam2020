@@ -12,7 +12,7 @@ public class CardHalf : MonoBehaviour
 
     public Type DiscardAction { get; set; } = typeof(ActionLog.Discard);
 
-    private ActionLog actionLog;
+    protected ActionLog actionLog;
 
     public void Start()
     {
@@ -42,16 +42,16 @@ public class CardHalf : MonoBehaviour
         CardFunction(target);
 
         // Log DiscardAction action
-        Discard();
-    }
-
-    public void Discard()
-    {
-        actionLog.Enter((ActionLog.Action)System.Activator.CreateInstance(
+        actionLog.Enter((ActionLog.Action) System.Activator.CreateInstance(
             DiscardAction,
             GetComponent<Half>().GetWhole().GetComponent<Use>().GetController(),
             GetComponent<Half>().GetWhole().GetComponent<CardWhole>()
             ));
+    }
+
+    public SpiritWhole GetController()
+    {
+        return GetComponent<Half>().GetWhole().GetComponent<Use>().GetController();
     }
 
 }

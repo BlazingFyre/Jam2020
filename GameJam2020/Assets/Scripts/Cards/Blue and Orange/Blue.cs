@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static SleepStates;
 
 public class Blue : CardHalf
 {
@@ -15,7 +16,11 @@ public class Blue : CardHalf
 
     public override void CardFunction(GameObject target)
     {
-        target.GetComponent<SpiritHalf>().Tire();
+        actionLog.Enter(new ActionLog.SleepChange(
+            GetController(),
+            target.GetComponent<SpiritHalf>(),
+            SleepState.Dreaming
+            ));
     }
 
 }

@@ -21,7 +21,7 @@ public class ActionLog : MonoBehaviour
     public void Enter(Action action)
     {
         // These are fizzle checks. If anything fizzles an action, it won't run.
-        if (action.fizzled) { return; }
+        if (action.fizzled || action == null) { return; }
 
         action.BeforeTriggers();
         if (action.fizzled) { return; }
@@ -363,6 +363,34 @@ public class ActionLog : MonoBehaviour
         public override void Print()
         {
             Debug.Log(source + ": " + target + " is damaged by " + amount);
+        }
+    }
+
+    public class SleepChange : Action
+    {
+        public SpiritHalf toChange;
+        public SleepState state;
+
+        public SleepChange(SpiritWhole source, SpiritHalf toChange, SleepState state) : base(source)
+        {
+            this.toChange = toChange;
+            this.state = state;
+
+            // Fizzle if no change is made
+            if (toChange.GetSleepState() == state)
+            {
+                fizzled = true;
+            }
+        }
+
+        public override void Run()
+        {
+            toChange.SetSleepState(state);
+        }
+
+        public override void Print()
+        {
+            Debug.Log(source + ": " + toChange + " is now " + state);
         }
     }
 
