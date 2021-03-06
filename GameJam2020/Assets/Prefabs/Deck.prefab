@@ -148,7 +148,7 @@ GameObject:
   - component: {fileID: 2433414780810942675}
   - component: {fileID: 3024636845467327212}
   - component: {fileID: 3302207767650569952}
-  - component: {fileID: 5001134872121133712}
+  - component: {fileID: 500859268152700457}
   m_Layer: 0
   m_Name: Deck
   m_TagString: Untagged
@@ -295,7 +295,7 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 3024636845467327212}
---- !u!114 &5001134872121133712
+--- !u!114 &500859268152700457
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -304,7 +304,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 3795990374422719603}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Script: {fileID: 11500000, guid: f51fa26f4e3b8c34fb70457ccb07cf76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Delegates: []

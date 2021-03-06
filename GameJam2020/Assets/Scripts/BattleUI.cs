@@ -6,18 +6,21 @@ using static Phases;
 public class BattleUI : MonoBehaviour
 {
     public bool dragging = false;
-    public CardWhole draggedCard = null;
+    public GameObject draggedObject = null;
 
-    public void DragCard(CardWhole card)
+    public bool selecting = false;
+    public GameObject selectedObject = null;
+
+    public void DragObject(GameObject o)
     {
         dragging = true;
-        draggedCard = card;
+        draggedObject = o;
     }
 
-    public void UndragCard()
+    public void UndragObject()
     {
         dragging = false;
-        draggedCard = null;
+        draggedObject = null;
     }
 
     public bool IsDragging()
@@ -25,6 +28,25 @@ public class BattleUI : MonoBehaviour
         return dragging;
     }
 
+    public void SelectObject(GameObject o)
+    {
+        selecting = true;
+        selectedObject = o;
+    }
+
+    public void UnselectObject(GameObject o)
+    {
+        if (selectedObject == o)
+        {
+            selecting = false;
+            selectedObject = null;
+        }
+    }
+
+    public bool IsSelecting()
+    {
+        return selecting;
+    }
 
     public void EndTurnButton()
     {

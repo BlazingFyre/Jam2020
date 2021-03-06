@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 1920765267663450908}
   - component: {fileID: 1566831132863312037}
   - component: {fileID: 3075798869982433352}
+  - component: {fileID: 6875960131547067734}
+  - component: {fileID: 9085047114164904190}
   m_Layer: 0
   m_Name: CardHalf
   m_TagString: Untagged
@@ -52,9 +54,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87589447523c6554595ad2838cbc1a7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  halfName: 
-  halfText: 
-  halfArt: {fileID: 0}
 --- !u!114 &3522994167791773638
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -147,3 +146,27 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 1566831132863312037}
+--- !u!114 &6875960131547067734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4709785550377736799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f51fa26f4e3b8c34fb70457ccb07cf76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &9085047114164904190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4709785550377736799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d98dd8c1ab71fcf4089a63b7b746e394, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
