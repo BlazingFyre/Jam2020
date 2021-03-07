@@ -6,8 +6,8 @@ using System;
 public class CardHalf : MonoBehaviour
 {
 
-    public virtual string HalfName { get; set; } = "";
-    public virtual string HalfText { get; set; } = "";
+    public virtual string HalfName { get; set; } = "Default Name";
+    public virtual string HalfText { get; set; } = "Default text.";
     public virtual Sprite HalfArt { get; set; } = null;
 
     public Type DiscardAction { get; set; } = typeof(ActionLog.Discard);

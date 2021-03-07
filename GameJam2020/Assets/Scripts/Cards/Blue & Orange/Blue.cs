@@ -7,7 +7,7 @@ public class Blue : CardHalf
 {
 
     public override string HalfName { get; set; } = "Blue";
-    public override string HalfText { get; set; } = "Tire target.";
+    public override string HalfText { get; set; } = "Sleep.";
 
     public override bool IsTargetable(GameObject target)
     {

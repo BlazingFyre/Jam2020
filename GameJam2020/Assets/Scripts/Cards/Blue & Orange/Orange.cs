@@ -5,6 +5,9 @@ using UnityEngine;
 public class Orange : CardHalf
 {
 
+    public override string HalfName { get; set; } = "Orange";
+    public override string HalfText { get; set; } = "Deal 5 damage.";
+
     public override bool IsTargetable(GameObject target)
     {
         return target.GetComponent<SpiritHalf>() != null;

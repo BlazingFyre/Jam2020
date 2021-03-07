@@ -7,8 +7,6 @@ using static SleepStates;
 public class ActionLog : MonoBehaviour
 {
 
-    //yield return new WaitForSeconds(actionDelay);
-
     public bool printLog = false;
     public float DelayScalar { get; set; } = 1.0f;
 
@@ -76,11 +74,17 @@ public class ActionLog : MonoBehaviour
 
     public class Action
     {
+        // The Spirit whose choices this action can be traced back to. Null if there is none
         public SpiritWhole source;
+        // The sub-actions that this actions begets
         public List<Action> children;
+        // Whether or not the action has "fizzled," or failed to resolve
         public bool fizzled = false;
 
+        // A more convenient way to access the actionLog
         protected ActionLog actionLog;
+        // The time delay of each action. Overriden if a delay is used
+        protected virtual float actionDelay { get; set; } = 0;
 
         public Action(SpiritWhole source)
         {
@@ -89,7 +93,8 @@ public class ActionLog : MonoBehaviour
             actionLog = GameObject.FindGameObjectWithTag("Battle Systems").GetComponent<ActionLog>();
         }
         
-        // For entering sub-actions (do NOT use ActionLog.Enter within Run)
+        // For entering sub-actions, which are considered encompassed within the current option
+        // Entering an action into the action log would instead queue it for the next available time
         protected void EnterChild(Action action)
         {
             children.Add(action);
@@ -123,153 +128,11 @@ public class ActionLog : MonoBehaviour
         {
             Debug.Log(source + ": " + this);
         }
-    }
 
-    // ==== Cards =================================================================================
-
-    public class Cast : Action
-    {
-        public CardHalf toCast;
-        public GameObject target;
-
-        public Cast(SpiritWhole source, CardHalf toCast, GameObject target) : base(source)
+        // For overriding base action delay times
+        public void WithDelay(float actionDelay)
         {
-            this.toCast = toCast;
-            this.target = target;
-        }
-
-        public override void Print()
-        {
-            Debug.Log(source + ": " + toCast + " is cast on " + target);
-        }
-    }
-
-    // ---- Card Movement -------------------------------------------------------------------------
-
-    public class Move : Action
-    {
-        // B: For indices, 0 is top of the deck, -1 is bottom.
-        public CardWhole toMove;
-        public int fromIndex;
-        public CardContainer fromContainer;
-        public int toIndex;
-        public CardContainer toContainer;
-
-        public Move(SpiritWhole source, CardWhole toMove, CardContainer fromContainer, int toIndex, CardContainer toContainer) : base(source)
-        {
-            this.toMove = toMove;
-            this.fromContainer = fromContainer;
-            this.toIndex = toIndex;
-            this.toContainer = toContainer;
-        }
-
-        public Move(SpiritWhole source, int fromIndex, CardContainer fromContainer, int toIndex, CardContainer toContainer) : base(source)
-        {
-            toMove = null;
-            this.fromIndex = fromIndex;
-            this.fromContainer = fromContainer;
-            this.toIndex = toIndex;
-            this.toContainer = toContainer;
-        }
-
-        public override bool WillFizzle()
-        {
-            // If nothing could've been drawn, fizzle.
-            return fromContainer.IsEmpty() || (toMove != null && !fromContainer.GetCards().Contains(toMove));
-        }
-
-        public override IEnumerator Run()
-        {
-            CardWhole drawnCard;
-            if (toMove == null)
-            {
-                drawnCard = fromContainer.DrawIndex(fromIndex);
-            }
-            else
-            {
-                drawnCard = fromContainer.DrawTarget(toMove);
-            }
-
-            toContainer.PlaceIndex(drawnCard, toIndex);
-
-            yield return new WaitForSeconds(actionLog.DelayScalar * 0.25f);
-        }
-
-        public override void Print()
-        {
-            if (toMove == null)
-            {
-                Debug.Log(source + ": [i: " + fromIndex + "] " + fromContainer + " moves to [i: " + toIndex + "] " + toContainer);
-            }
-            else
-            {
-                Debug.Log(source + ": " + toMove + " from " + fromContainer + " moves to [i: " + toIndex + "] " + toContainer);
-            }
-        }
-
-    }
-
-    public class Draw : Action
-    {
-        public SpiritWhole toDraw;
-        public int amount;
-
-        public Draw(SpiritWhole source, SpiritWhole toDraw, int amount) : base(source)
-        {
-            this.toDraw = toDraw;
-            this.amount = amount;
-        }
-
-        public override bool WillFizzle()
-        {
-            return toDraw.GetDeck().IsEmpty();
-        }
-
-        public override IEnumerator Run()
-        {
-            for (int i = 0; i < amount; i++)
-            {
-                EnterChild(new Move(
-                source,
-                0,
-                toDraw.GetDeck(),
-                0,
-                toDraw.GetHand()
-                ));
-            }
-            yield break;
-        }
-
-        public override void Print()
-        {
-            Debug.Log(source + ": " + toDraw + " draws " + amount + " cards");
-        }
-    }
-
-    public class Discard : Action
-    {
-        public CardWhole target;
-
-        public Discard(SpiritWhole source, CardWhole target) : base(source)
-        {
-            this.target = target;
-        }
-
-        public override IEnumerator Run()
-        {
-            EnterChild(new Move(
-                source, 
-                target, 
-                target.GetCardContainer(), 
-                0, 
-                target.GetComponent<Use>().GetController().GetGrave()
-                ));
-            yield break;
-        }
-
-        public override void Print()
-        {
-            Debug.Log(source + ": " + target + " is discarded");
+            this.actionDelay = actionDelay;
         }
     }
 
@@ -279,6 +142,8 @@ public class ActionLog : MonoBehaviour
     {
         SpiritWhole turnTaker;
         Phase phase;
+
+        protected override float actionDelay { get; set; } = 1;
 
         public PhaseChange(SpiritWhole turnTaker, Phase phase) : base(null)
         {
@@ -300,7 +165,7 @@ public class ActionLog : MonoBehaviour
                 EnterChild(new DiscardHand(null, turnTaker));
             }
 
-            yield return new WaitForSeconds(actionLog.DelayScalar * 1.0f);
+            yield return new WaitForSeconds(actionLog.DelayScalar * actionDelay);
         }
 
         public override void AfterTriggers()
@@ -396,12 +261,189 @@ public class ActionLog : MonoBehaviour
         }
     }
 
+    // ==== Cards =================================================================================
+
+    public class Cast : Action
+    {
+        public CardHalf toCast;
+        public GameObject target;
+
+        public Cast(SpiritWhole source, CardHalf toCast, GameObject target) : base(source)
+        {
+            this.toCast = toCast;
+            this.target = target;
+        }
+
+        public override void Print()
+        {
+            Debug.Log(source + ": " + toCast + " is cast on " + target);
+        }
+    }
+
+    // ---- Card Movement -------------------------------------------------------------------------
+
+    public class Move : Action
+    {
+        // B: For indices, 0 is top of the deck, -1 is bottom.
+        public CardWhole toMove;
+        public int fromIndex;
+        public CardContainer fromContainer;
+        public int toIndex;
+        public CardContainer toContainer;
+
+        protected override float actionDelay { get; set; } = 0.25f;
+
+        public Move(SpiritWhole source, CardWhole toMove, CardContainer fromContainer, int toIndex, CardContainer toContainer) : base(source)
+        {
+            this.toMove = toMove;
+            this.fromContainer = fromContainer;
+            this.toIndex = toIndex;
+            this.toContainer = toContainer;
+        }
+
+        public Move(SpiritWhole source, int fromIndex, CardContainer fromContainer, int toIndex, CardContainer toContainer) : base(source)
+        {
+            toMove = null;
+            this.fromIndex = fromIndex;
+            this.fromContainer = fromContainer;
+            this.toIndex = toIndex;
+            this.toContainer = toContainer;
+        }
+
+        public override bool WillFizzle()
+        {
+            // If nothing could've been drawn, fizzle.
+            return fromContainer.IsEmpty() || (toMove != null && !fromContainer.GetCards().Contains(toMove));
+        }
+
+        public override IEnumerator Run()
+        {
+            CardWhole drawnCard;
+            if (toMove == null)
+            {
+                drawnCard = fromContainer.DrawIndex(fromIndex);
+            }
+            else
+            {
+                drawnCard = fromContainer.DrawTarget(toMove);
+            }
+
+            toContainer.PlaceIndex(drawnCard, toIndex);
+
+            yield return new WaitForSeconds(actionLog.DelayScalar * actionDelay);
+        }
+
+        public override void Print()
+        {
+            if (toMove == null)
+            {
+                Debug.Log(source + ": [i: " + fromIndex + "] " + fromContainer + " moves to [i: " + toIndex + "] " + toContainer);
+            }
+            else
+            {
+                Debug.Log(source + ": " + toMove + " from " + fromContainer + " moves to [i: " + toIndex + "] " + toContainer);
+            }
+        }
+
+    }
+
+    public class Draw : Action
+    {
+        public SpiritWhole toDraw;
+        public int amount;
+
+        public Draw(SpiritWhole source, SpiritWhole toDraw, int amount) : base(source)
+        {
+            this.toDraw = toDraw;
+            this.amount = amount;
+        }
+
+        public override bool WillFizzle()
+        {
+            return toDraw.GetDeck().IsEmpty();
+        }
+
+        public override IEnumerator Run()
+        {
+            for (int i = 0; i < amount; i++)
+            {
+                EnterChild(new Move(
+                source,
+                0,
+                toDraw.GetDeck(),
+                0,
+                toDraw.GetHand()
+                ));
+            }
+            yield break;
+        }
+
+        public override void Print()
+        {
+            Debug.Log(source + ": " + toDraw + " draws " + amount + " cards");
+        }
+    }
+
+    public class Discard : Action
+    {
+        public CardWhole target;
+
+        public Discard(SpiritWhole source, CardWhole target) : base(source)
+        {
+            this.target = target;
+        }
+
+        public override IEnumerator Run()
+        {
+            EnterChild(new Move(
+                source, 
+                target, 
+                target.GetCardContainer(), 
+                0, 
+                target.GetComponent<Use>().GetController().GetGrave()
+                ));
+            yield break;
+        }
+
+        public override void Print()
+        {
+            Debug.Log(source + ": " + target + " is discarded");
+        }
+    }
+
+    // ==== Decks =================================================================================
+
+    public class Shuffle : Action
+    {
+        public CardContainer toShuffle;
+
+        protected override float actionDelay { get; set; } = 0.25f;
+
+        public Shuffle(SpiritWhole source, CardContainer toShuffle) : base(source)
+        {
+            this.toShuffle = toShuffle;
+        }
+
+        public override IEnumerator Run()
+        {
+            toShuffle.Shuffle();
+            yield return new WaitForSeconds(actionLog.DelayScalar * actionDelay);
+        }
+
+        public override void Print()
+        {
+            Debug.Log(source + ": " + toShuffle + " is shuffled");
+        }
+    }
+
     // ==== Spirits ===============================================================================
 
     public class Damage : Action
     {
         public SpiritHalf target;
         public int amount;
+
+        protected override float actionDelay { get; set; } = 0.25f;
 
         public Damage(SpiritWhole source, SpiritHalf target, int amount) : base(source)
         {
@@ -412,7 +454,7 @@ public class ActionLog : MonoBehaviour
         public override IEnumerator Run()
         {
             target.Damage(amount);
-            yield return new WaitForSeconds(actionLog.DelayScalar * 0.25f);
+            yield return new WaitForSeconds(actionLog.DelayScalar * actionDelay);
         }
 
         public override void Print()
@@ -425,6 +467,8 @@ public class ActionLog : MonoBehaviour
     {
         public SpiritHalf toChange;
         public SleepState state;
+
+        protected override float actionDelay { get; set; } = 0.25f;
 
         public SleepChange(SpiritWhole source, SpiritHalf toChange, SleepState state) : base(source)
         {
@@ -449,7 +493,7 @@ public class ActionLog : MonoBehaviour
                 (state == SleepState.Dreaming) ? SleepState.Waking : SleepState.Dreaming
                 ));
 
-            yield return new WaitForSeconds(actionLog.DelayScalar * 0.25f);
+            yield return new WaitForSeconds(actionLog.DelayScalar * actionDelay);
         }
 
         public override void Print()
