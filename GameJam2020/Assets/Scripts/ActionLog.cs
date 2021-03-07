@@ -10,10 +10,11 @@ public class ActionLog : MonoBehaviour
     //yield return new WaitForSeconds(actionDelay);
 
     public bool printLog = false;
-    private bool processingQueue = false;
+    public float DelayScalar { get; set; } = 1.0f;
 
     public List<Action> log = new List<Action>();
     public List<Action> queue = new List<Action>();
+    private bool processingQueue = false;
 
     public List<Action> GetLog()
     {
@@ -27,28 +28,29 @@ public class ActionLog : MonoBehaviour
         if (!processingQueue)
         {
             processingQueue = true;
-            Process(queue[0]);
+            StartCoroutine(Process(queue[0]));
         }
     }
 
-    private void Process(Action action)
+    private IEnumerator Process(Action action)
     {
         // These are fizzle checks, to prevent impossible actions from being logged
-        if (action == null || action.fizzled || action.WillFizzle()) { return; }
+        if (action == null || action.fizzled || action.WillFizzle()) { yield break; }
 
         action.BeforeTriggers();
-        if (action.fizzled) { return; }
+        if (action.fizzled) { yield break; }
 
         if (printLog)
         {
             action.Print();
         }
+        log.Add(action);
 
-        action.Run();
+        yield return StartCoroutine(action.Run());
 
         foreach (Action a in action.GetChildren())
         {
-            Process(a);
+            yield return StartCoroutine(Process(a));
         }
 
         action.AfterTriggers();
@@ -59,7 +61,7 @@ public class ActionLog : MonoBehaviour
 
             if (queue.Count != 0)
             {
-                Process(queue[0]);
+                StartCoroutine(Process(queue[0]));
             } 
             else
             {
@@ -114,7 +116,7 @@ public class ActionLog : MonoBehaviour
         public virtual bool WillFizzle() { return false; }
 
         // Actually perform the action
-        public virtual void Run() { }
+        public virtual IEnumerator Run() { yield break; }
 
         // Print a readout of the action for debugging purposes
         public virtual void Print()
@@ -176,7 +178,7 @@ public class ActionLog : MonoBehaviour
             return fromContainer.IsEmpty() || (toMove != null && !fromContainer.GetCards().Contains(toMove));
         }
 
-        public override void Run()
+        public override IEnumerator Run()
         {
             CardWhole drawnCard;
             if (toMove == null)
@@ -189,6 +191,8 @@ public class ActionLog : MonoBehaviour
             }
 
             toContainer.PlaceIndex(drawnCard, toIndex);
+
+            yield return new WaitForSeconds(actionLog.DelayScalar * 0.25f);
         }
 
         public override void Print()
@@ -221,7 +225,7 @@ public class ActionLog : MonoBehaviour
             return toDraw.GetDeck().IsEmpty();
         }
 
-        public override void Run()
+        public override IEnumerator Run()
         {
             for (int i = 0; i < amount; i++)
             {
@@ -233,6 +237,7 @@ public class ActionLog : MonoBehaviour
                 toDraw.GetHand()
                 ));
             }
+            yield break;
         }
 
         public override void Print()
@@ -250,7 +255,7 @@ public class ActionLog : MonoBehaviour
             this.target = target;
         }
 
-        public override void Run()
+        public override IEnumerator Run()
         {
             EnterChild(new Move(
                 source, 
@@ -259,6 +264,7 @@ public class ActionLog : MonoBehaviour
                 0, 
                 target.GetComponent<Use>().GetController().GetGrave()
                 ));
+            yield break;
         }
 
         public override void Print()
@@ -280,7 +286,7 @@ public class ActionLog : MonoBehaviour
             this.phase = phase;
         }
 
-        public override void Run()
+        public override IEnumerator Run()
         {
             actionLog.GetComponent<BattleSystem>().SetTurnSpirit(turnTaker);
             actionLog.GetComponent<BattleSystem>().SetPhase(phase);
@@ -289,14 +295,12 @@ public class ActionLog : MonoBehaviour
             {
                 EnterChild(new RefreshHand(null, turnTaker));
             }
-            else if (phase == Phase.Main)
-            {
-
-            }
             else if (phase == Phase.End)
             {
                 EnterChild(new DiscardHand(null, turnTaker));
             }
+
+            yield return new WaitForSeconds(actionLog.DelayScalar * 1.0f);
         }
 
         public override void AfterTriggers()
@@ -349,13 +353,14 @@ public class ActionLog : MonoBehaviour
             this.amount = toRefresh.GetTurnStartCards();
         }
 
-        public override void Run()
+        public override IEnumerator Run()
         {
             EnterChild(new Draw(
                 source,
                 toRefresh,
                 amount
                 ));
+            yield break;
         }
 
         public override void Print()
@@ -373,7 +378,7 @@ public class ActionLog : MonoBehaviour
             this.toDiscard = toDiscard;
         }
 
-        public override void Run()
+        public override IEnumerator Run()
         {
             for (int j = toDiscard.GetHand().GetCards().Count - 1; j > -1; j--)
             {
@@ -382,6 +387,7 @@ public class ActionLog : MonoBehaviour
                     toDiscard.GetHand().GetCards()[j]
                     ));
             }
+            yield break;
         }
 
         public override void Print()
@@ -403,9 +409,10 @@ public class ActionLog : MonoBehaviour
             this.amount = amount;
         }
 
-        public override void Run()
+        public override IEnumerator Run()
         {
             target.Damage(amount);
+            yield return new WaitForSeconds(actionLog.DelayScalar * 0.25f);
         }
 
         public override void Print()
@@ -431,9 +438,18 @@ public class ActionLog : MonoBehaviour
             return toChange.GetSleepState() == state;
         }
 
-        public override void Run()
+        public override IEnumerator Run()
         {
             toChange.SetSleepState(state);
+
+            // Force flip's SleepState to change as well
+            EnterChild(new SleepChange(
+                source,
+                toChange.GetComponent<Half>().GetFlip().GetComponent<SpiritHalf>(),
+                (state == SleepState.Dreaming) ? SleepState.Waking : SleepState.Dreaming
+                ));
+
+            yield return new WaitForSeconds(actionLog.DelayScalar * 0.25f);
         }
 
         public override void Print()

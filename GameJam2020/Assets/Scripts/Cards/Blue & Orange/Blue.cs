@@ -11,7 +11,7 @@ public class Blue : CardHalf
 
     public override bool IsTargetable(GameObject target)
     {
-        return target.GetComponent<SpiritHalf>() != null;
+        return target.GetComponent<SpiritHalf>() != null && target.GetComponent<SpiritHalf>().GetSleepState() != SleepState.Dreaming;
     }
 
     public override void CardFunction(GameObject target)
