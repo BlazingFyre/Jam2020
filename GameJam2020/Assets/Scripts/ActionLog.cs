@@ -30,9 +30,9 @@ public class ActionLog : MonoBehaviour
         }
     }
 
-    private IEnumerator Process(Action action)
+    public IEnumerator Process(Action action)
     {
-        // These are fizzle checks, to prevent impossible actions from being logged
+        // These are fizzle checks, to prevent impossible actions
         if (action == null || action.fizzled || action.WillFizzle()) { yield break; }
 
         action.BeforeTriggers();
@@ -45,11 +45,6 @@ public class ActionLog : MonoBehaviour
         log.Add(action);
 
         yield return StartCoroutine(action.Run());
-
-        foreach (Action a in action.GetChildren())
-        {
-            yield return StartCoroutine(Process(a));
-        }
 
         action.AfterTriggers();
 
@@ -92,17 +87,12 @@ public class ActionLog : MonoBehaviour
             this.children = new List<Action>();
             actionLog = GameObject.FindGameObjectWithTag("Battle Systems").GetComponent<ActionLog>();
         }
-        
-        // For entering sub-actions, which are considered encompassed within the current option
-        // Entering an action into the action log would instead queue it for the next available time
-        protected void EnterChild(Action action)
-        {
-            children.Add(action);
-        }
 
-        public List<Action> GetChildren()
+        // Process an action immediately instead of entering it into the queue
+        // Used for sub-actions
+        protected IEnumerator SubProcess(Action action)
         {
-            return children;
+            yield return actionLog.StartCoroutine(actionLog.Process(action));
         }
 
         // Run action through all statuses, moods, etc. to update things like damage values
@@ -130,9 +120,10 @@ public class ActionLog : MonoBehaviour
         }
 
         // For overriding base action delay times
-        public void WithDelay(float actionDelay)
+        public Action WithDelay(float actionDelay)
         {
             this.actionDelay = actionDelay;
+            return this;
         }
     }
 
@@ -156,16 +147,23 @@ public class ActionLog : MonoBehaviour
             actionLog.GetComponent<BattleSystem>().SetTurnSpirit(turnTaker);
             actionLog.GetComponent<BattleSystem>().SetPhase(phase);
 
+            yield return new WaitForSeconds(actionLog.DelayScalar * actionDelay);
+
             if (phase == Phase.Start)
             {
-                EnterChild(new RefreshHand(null, turnTaker));
+                yield return SubProcess(new RefreshHand(
+                    null, 
+                    turnTaker
+                    ));
             }
             else if (phase == Phase.End)
             {
-                EnterChild(new DiscardHand(null, turnTaker));
+                yield return SubProcess(new DiscardHand(
+                    null, 
+                    turnTaker
+                    ));
             }
 
-            yield return new WaitForSeconds(actionLog.DelayScalar * actionDelay);
         }
 
         public override void AfterTriggers()
@@ -220,11 +218,11 @@ public class ActionLog : MonoBehaviour
 
         public override IEnumerator Run()
         {
-            EnterChild(new Draw(
+            yield return actionLog.StartCoroutine(actionLog.Process(new Draw(
                 source,
                 toRefresh,
                 amount
-                ));
+                )));
             yield break;
         }
 
@@ -247,12 +245,11 @@ public class ActionLog : MonoBehaviour
         {
             for (int j = toDiscard.GetHand().GetCards().Count - 1; j > -1; j--)
             {
-                EnterChild(new Discard(
+                yield return SubProcess(new Discard(
                     null,
                     toDiscard.GetHand().GetCards()[j]
                     ));
             }
-            yield break;
         }
 
         public override void Print()
@@ -360,22 +357,36 @@ public class ActionLog : MonoBehaviour
 
         public override bool WillFizzle()
         {
-            return toDraw.GetDeck().IsEmpty();
+            return toDraw.GetDeck().IsEmpty() && toDraw.GetGrave().IsEmpty();
         }
 
         public override IEnumerator Run()
         {
             for (int i = 0; i < amount; i++)
             {
-                EnterChild(new Move(
-                source,
-                0,
-                toDraw.GetDeck(),
-                0,
-                toDraw.GetHand()
-                ));
+                // If the deck is empty during an attempted draw, shuffle the graveyard into the deck
+                if (toDraw.GetDeck().IsEmpty() && !toDraw.GetGrave().IsEmpty())
+                {
+                    yield return SubProcess(new MoveDeck(
+                        source,
+                        toDraw.GetGrave(),
+                        toDraw.GetDeck()
+                        ));
+
+                    yield return SubProcess(new Shuffle(
+                        source,
+                        toDraw.GetDeck()
+                        ));
+                }
+
+                yield return SubProcess(new Move(
+                    source,
+                    0,
+                    toDraw.GetDeck(),
+                    0,
+                    toDraw.GetHand()
+                    ));
             }
-            yield break;
         }
 
         public override void Print()
@@ -395,14 +406,13 @@ public class ActionLog : MonoBehaviour
 
         public override IEnumerator Run()
         {
-            EnterChild(new Move(
+            yield return SubProcess(new Move(
                 source, 
                 target, 
                 target.GetCardContainer(), 
                 0, 
                 target.GetComponent<Use>().GetController().GetGrave()
                 ));
-            yield break;
         }
 
         public override void Print()
@@ -424,6 +434,11 @@ public class ActionLog : MonoBehaviour
             this.toShuffle = toShuffle;
         }
 
+        public override bool WillFizzle()
+        {
+            return !toShuffle.IsEmpty();
+        }
+
         public override IEnumerator Run()
         {
             toShuffle.Shuffle();
@@ -433,6 +448,46 @@ public class ActionLog : MonoBehaviour
         public override void Print()
         {
             Debug.Log(source + ": " + toShuffle + " is shuffled");
+        }
+    }
+
+    public class MoveDeck : Action
+    {
+        public CardContainer fromContainer;
+        public CardContainer toContainer;
+
+        protected override float actionDelay { get; set; } = 0.25f;
+
+        public MoveDeck(SpiritWhole source, CardContainer fromContainer, CardContainer toContainer) : base(source)
+        {
+            this.fromContainer = fromContainer;
+            this.toContainer = toContainer;
+        }
+
+        public override bool WillFizzle()
+        {
+            return fromContainer.IsEmpty();
+        }
+
+        public override IEnumerator Run()
+        {
+            int amountOfCards = fromContainer.GetCards().Count;
+
+            for (int i = amountOfCards - 1; i > -1; i--)
+            {
+                yield return SubProcess(new Move(
+                    source,
+                    i,
+                    fromContainer,
+                    0,
+                    toContainer
+                    ).WithDelay(actionDelay / amountOfCards));
+            }
+        }
+
+        public override void Print()
+        {
+            Debug.Log(source + ": " + fromContainer + " is placed into " + toContainer);
         }
     }
 
@@ -487,7 +542,7 @@ public class ActionLog : MonoBehaviour
             toChange.SetSleepState(state);
 
             // Force flip's SleepState to change as well
-            EnterChild(new SleepChange(
+            yield return SubProcess(new SleepChange(
                 source,
                 toChange.GetComponent<Half>().GetFlip().GetComponent<SpiritHalf>(),
                 (state == SleepState.Dreaming) ? SleepState.Waking : SleepState.Dreaming
