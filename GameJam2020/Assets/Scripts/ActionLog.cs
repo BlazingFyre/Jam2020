@@ -10,8 +10,10 @@ public class ActionLog : MonoBehaviour
     //yield return new WaitForSeconds(actionDelay);
 
     public bool printLog = false;
+    private bool processingQueue = false;
 
     public List<Action> log = new List<Action>();
+    public List<Action> queue = new List<Action>();
 
     public List<Action> GetLog()
     {
@@ -20,26 +22,60 @@ public class ActionLog : MonoBehaviour
 
     public void Enter(Action action)
     {
-        // These are fizzle checks. If anything fizzles an action, it won't run.
-        if (action.fizzled || action == null) { return; }
+        queue.Add(action);
+
+        if (!processingQueue)
+        {
+            processingQueue = true;
+            Process(queue[0]);
+        }
+    }
+
+    private void Process(Action action)
+    {
+        // These are fizzle checks, to prevent impossible actions from being logged
+        if (action == null || action.fizzled || action.WillFizzle()) { return; }
 
         action.BeforeTriggers();
         if (action.fizzled) { return; }
 
-        log.Add(action);
         if (printLog)
         {
             action.Print();
         }
 
         action.Run();
-        
+
+        foreach (Action a in action.GetChildren())
+        {
+            Process(a);
+        }
+
         action.AfterTriggers();
+
+        if (queue.Contains(action))
+        {
+            queue.Remove(action);
+
+            if (queue.Count != 0)
+            {
+                Process(queue[0]);
+            } 
+            else
+            {
+                processingQueue = false;
+            }
+        }
     }
+    
+    // ============================================================================================
+    // ==== Action Collection =====================================================================
+    // ============================================================================================
 
     public class Action
     {
         public SpiritWhole source;
+        public List<Action> children;
         public bool fizzled = false;
 
         protected ActionLog actionLog;
@@ -47,9 +83,21 @@ public class ActionLog : MonoBehaviour
         public Action(SpiritWhole source)
         {
             this.source = source;
+            this.children = new List<Action>();
             actionLog = GameObject.FindGameObjectWithTag("Battle Systems").GetComponent<ActionLog>();
         }
         
+        // For entering sub-actions (do NOT use ActionLog.Enter within Run)
+        protected void EnterChild(Action action)
+        {
+            children.Add(action);
+        }
+
+        public List<Action> GetChildren()
+        {
+            return children;
+        }
+
         // Run action through all statuses, moods, etc. to update things like damage values
         public virtual void BeforeTriggers()
         {
@@ -61,6 +109,9 @@ public class ActionLog : MonoBehaviour
         {
             // TODO: All of this crap
         }
+
+        // Returns true if the action cannot be performed (and therefore should fizzle)
+        public virtual bool WillFizzle() { return false; }
 
         // Actually perform the action
         public virtual void Run() { }
@@ -108,13 +159,6 @@ public class ActionLog : MonoBehaviour
             this.fromContainer = fromContainer;
             this.toIndex = toIndex;
             this.toContainer = toContainer;
-
-            // If nothing could've been drawn, fizzle.
-            if (fromContainer.IsEmpty() || !fromContainer.GetCards().Contains(toMove))
-            {
-                fizzled = true;
-                return;
-            }
         }
 
         public Move(SpiritWhole source, int fromIndex, CardContainer fromContainer, int toIndex, CardContainer toContainer) : base(source)
@@ -124,13 +168,12 @@ public class ActionLog : MonoBehaviour
             this.fromContainer = fromContainer;
             this.toIndex = toIndex;
             this.toContainer = toContainer;
+        }
 
+        public override bool WillFizzle()
+        {
             // If nothing could've been drawn, fizzle.
-            if (fromContainer.IsEmpty())
-            {
-                fizzled = true;
-                return;
-            }
+            return fromContainer.IsEmpty() || (toMove != null && !fromContainer.GetCards().Contains(toMove));
         }
 
         public override void Run()
@@ -173,11 +216,16 @@ public class ActionLog : MonoBehaviour
             this.amount = amount;
         }
 
+        public override bool WillFizzle()
+        {
+            return toDraw.GetDeck().IsEmpty();
+        }
+
         public override void Run()
         {
             for (int i = 0; i < amount; i++)
             {
-                actionLog.Enter(new Move(
+                EnterChild(new Move(
                 source,
                 0,
                 toDraw.GetDeck(),
@@ -204,7 +252,7 @@ public class ActionLog : MonoBehaviour
 
         public override void Run()
         {
-            actionLog.Enter(new Move(
+            EnterChild(new Move(
                 source, 
                 target, 
                 target.GetCardContainer(), 
@@ -239,7 +287,7 @@ public class ActionLog : MonoBehaviour
 
             if (phase == Phase.Start)
             {
-                actionLog.Enter(new RefreshHand(null, turnTaker));
+                EnterChild(new RefreshHand(null, turnTaker));
             }
             else if (phase == Phase.Main)
             {
@@ -247,7 +295,7 @@ public class ActionLog : MonoBehaviour
             }
             else if (phase == Phase.End)
             {
-                actionLog.Enter(new DiscardHand(null, turnTaker));
+                EnterChild(new DiscardHand(null, turnTaker));
             }
         }
 
@@ -303,7 +351,7 @@ public class ActionLog : MonoBehaviour
 
         public override void Run()
         {
-            actionLog.Enter(new Draw(
+            EnterChild(new Draw(
                 source,
                 toRefresh,
                 amount
@@ -329,7 +377,7 @@ public class ActionLog : MonoBehaviour
         {
             for (int j = toDiscard.GetHand().GetCards().Count - 1; j > -1; j--)
             {
-                actionLog.Enter(new Discard(
+                EnterChild(new Discard(
                     null,
                     toDiscard.GetHand().GetCards()[j]
                     ));
@@ -375,12 +423,12 @@ public class ActionLog : MonoBehaviour
         {
             this.toChange = toChange;
             this.state = state;
+        }
 
+        public override bool WillFizzle()
+        {
             // Fizzle if no change is made
-            if (toChange.GetSleepState() == state)
-            {
-                fizzled = true;
-            }
+            return toChange.GetSleepState() == state;
         }
 
         public override void Run()
