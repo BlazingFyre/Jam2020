@@ -11,15 +11,6 @@ public class Half : MonoBehaviour
 
     public Side side;
 
-    public void InitVars(Whole whole, Half flip, Side side)
-    {
-        /*
-        this.whole = whole;
-        this.flip = flip;
-        this.side = side;
-        */
-    }
-
     public Whole GetWhole()
     {
         return whole;
@@ -33,12 +24,6 @@ public class Half : MonoBehaviour
     public Side GetSide()
     {
         return side;
-    }
-
-    public void Mirror()
-    {
-        this.SwitchSide();
-        flip.SwitchSide();
     }
 
     public void SwitchSide()

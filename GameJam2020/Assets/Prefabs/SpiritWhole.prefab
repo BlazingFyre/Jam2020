@@ -80,6 +80,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 744303491895835977}
     m_Modifications:
+    - target: {fileID: 3204075457336643587, guid: 19a280d794f25b8409d73587e5e397a7,
+        type: 3}
+      propertyPath: m_text
+      value: '-'
+      objectReference: {fileID: 0}
     - target: {fileID: 3630995796855193563, guid: 19a280d794f25b8409d73587e5e397a7,
         type: 3}
       propertyPath: m_Pivot.x
@@ -394,6 +399,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 744303491895835977}
     m_Modifications:
+    - target: {fileID: 3204075457336643587, guid: 19a280d794f25b8409d73587e5e397a7,
+        type: 3}
+      propertyPath: m_text
+      value: +
+      objectReference: {fileID: 0}
     - target: {fileID: 3630995796855193563, guid: 19a280d794f25b8409d73587e5e397a7,
         type: 3}
       propertyPath: m_Pivot.x

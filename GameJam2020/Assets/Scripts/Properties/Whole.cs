@@ -10,20 +10,6 @@ public class Whole : MonoBehaviour
     public Half side1;
     public Half side2;
 
-    public void InitSides(GameObject objectA, GameObject objectB)
-    {
-        /*
-        objectA.AddComponent<Half>();
-        objectB.AddComponent<Half>();
-
-        side1 = objectA.GetComponent<Half>();
-        side2 = objectB.GetComponent<Half>();
-
-        side1.InitVars(this, side2, Side.A);
-        side2.InitVars(this, side1, Side.B);
-        */
-    }
-
     public Half GetSide(Side side)
     {
         if (side1.GetSide() == side)
@@ -39,6 +25,18 @@ public class Whole : MonoBehaviour
     public Half GetSide(SleepState state)
     {
         return GetSide(GetComponent<Use>().GetController().GetSpirit(state).GetComponent<Half>().GetSide());
+    }
+
+    public void SwapHalves()
+    {
+        // Swap side variables
+        Half temp = side1;
+        side1 = side2;
+        side2 = temp;
+
+        // Change each Half's side
+        side1.SwitchSide();
+        side2.SwitchSide();
     }
 
 }

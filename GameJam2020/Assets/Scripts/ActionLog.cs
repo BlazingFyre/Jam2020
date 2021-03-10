@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Phases;
 using static SleepStates;
+using static Sides;
 
 public class ActionLog : MonoBehaviour
 {
@@ -133,7 +134,6 @@ public class ActionLog : MonoBehaviour
     {
         SpiritWhole turnTaker;
         Phase phase;
-
         protected override float actionDelay { get; set; } = 1;
 
         public PhaseChange(SpiritWhole turnTaker, Phase phase) : base(null)
@@ -277,6 +277,30 @@ public class ActionLog : MonoBehaviour
         }
     }
 
+    // ---- Card Manipulation ---------------------------------------------------------------------
+
+    public class Mirror : Action
+    {
+        public Whole toMirror;
+        protected override float actionDelay { get; set; } = 0.25f;
+
+        public Mirror(SpiritWhole source, Whole toMirror) : base(source)
+        {
+            this.toMirror = toMirror;
+        }
+
+        public override IEnumerator Run()
+        {
+            toMirror.SwapHalves();
+            yield return new WaitForSeconds(actionLog.DelayScalar * actionDelay);
+        }
+
+        public override void Print()
+        {
+            Debug.Log(source + ": " + toMirror + " is mirrored");
+        }
+    }
+
     // ---- Card Movement -------------------------------------------------------------------------
 
     public class Move : Action
@@ -287,7 +311,6 @@ public class ActionLog : MonoBehaviour
         public CardContainer fromContainer;
         public int toIndex;
         public CardContainer toContainer;
-
         protected override float actionDelay { get; set; } = 0.25f;
 
         public Move(SpiritWhole source, CardWhole toMove, CardContainer fromContainer, int toIndex, CardContainer toContainer) : base(source)
@@ -426,7 +449,6 @@ public class ActionLog : MonoBehaviour
     public class Shuffle : Action
     {
         public CardContainer toShuffle;
-
         protected override float actionDelay { get; set; } = 0.25f;
 
         public Shuffle(SpiritWhole source, CardContainer toShuffle) : base(source)
@@ -455,7 +477,6 @@ public class ActionLog : MonoBehaviour
     {
         public CardContainer fromContainer;
         public CardContainer toContainer;
-
         protected override float actionDelay { get; set; } = 0.25f;
 
         public MoveDeck(SpiritWhole source, CardContainer fromContainer, CardContainer toContainer) : base(source)
@@ -497,7 +518,6 @@ public class ActionLog : MonoBehaviour
     {
         public SpiritHalf target;
         public int amount;
-
         protected override float actionDelay { get; set; } = 0.25f;
 
         public Damage(SpiritWhole source, SpiritHalf target, int amount) : base(source)
@@ -522,7 +542,6 @@ public class ActionLog : MonoBehaviour
     {
         public SpiritHalf toChange;
         public SleepState state;
-
         protected override float actionDelay { get; set; } = 0.25f;
 
         public SleepChange(SpiritWhole source, SpiritHalf toChange, SleepState state) : base(source)
