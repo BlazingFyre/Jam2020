@@ -19,11 +19,7 @@ public class BattleSystem : MonoBehaviour
     public GameObject decksObject;
     public GameObject cardsObject;
 
-    public CardContainer playerDeck;
-    public CardContainer playerGrave;
     public CardContainer playerHand;
-    public CardContainer enemyDeck;
-    public CardContainer enemyGrave;
     public CardContainer enemyHand;
 
     // Information kept for turns
@@ -35,23 +31,23 @@ public class BattleSystem : MonoBehaviour
 
     public void Start()
     {
-        InitBattle();
         AlignBattle();
+        InitBattle();
     }
 
     private void InitBattle()
     {
-        // Place both Spirits under the hierarchy of the Canvas
-        playerSpirit.transform.SetParent(battleCanvas.transform, false);
-        enemySpirit.transform.SetParent(battleCanvas.transform, false);
+        // Link the Hands to each Spirit
+        playerSpirit.SetHand(playerHand);
+        enemySpirit.SetHand(enemyHand);
+        playerHand.GetComponent<Use>().InitOwner(playerSpirit);
+        enemyHand.GetComponent<Use>().InitOwner(enemySpirit);
 
-        // Link the decks/graveyards/hands to the Spirits
-        playerSpirit.InitContainers(playerDeck, playerGrave, playerHand);
-        enemySpirit.InitContainers(enemyDeck, enemyGrave, enemyHand);
-
-        // Initialize the Spirit's decks using their Base Decks
-        playerSpirit.GetDeck().CopyFrom(playerSpirit.GetBaseDeck());
-        enemySpirit.GetDeck().CopyFrom(enemySpirit.GetBaseDeck());
+        // Link cards to their Decks/Spirits
+        playerSpirit.GetDeck().InitializeCardConnections();
+        playerSpirit.GetGrave().InitializeCardConnections();
+        enemySpirit.GetDeck().InitializeCardConnections();
+        enemySpirit.GetGrave().InitializeCardConnections();
 
         // Start the first turn
         GetComponent<ActionLog>().Enter(new ActionLog.PhaseChange(
@@ -63,11 +59,22 @@ public class BattleSystem : MonoBehaviour
     private void AlignBattle()
     {
         GetComponent<BattleAligner>().AlignSpirits();
+        GetComponent<BattleAligner>().AlignDecks();
     }
 
     public GameObject GetCardsObject()
     {
         return cardsObject;
+    }
+
+    public GameObject GetDecksObject()
+    {
+        return decksObject;
+}
+
+    public GameObject GetCanvas()
+    {
+        return battleCanvas;
     }
 
     public SpiritWhole GetPlayer()

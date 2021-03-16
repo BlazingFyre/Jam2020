@@ -33,8 +33,8 @@ public class HandAligner : CardAligner
             foreach (CardWhole c in cards)
             {
                 // Make the waking half interactable, make the dreaming half uninteractable
-                c.GetComponent<Whole>().GetSide(SleepState.Waking).GetComponent<Selectable>().interactable = true;
-                c.GetComponent<Whole>().GetSide(SleepState.Dreaming).GetComponent<Selectable>().interactable = false;
+                c.GetSide(SleepState.Waking).GetComponent<Selectable>().interactable = true;
+                c.GetSide(SleepState.Dreaming).GetComponent<Selectable>().interactable = false;
 
                 // Make it active
                 c.gameObject.SetActive(true);

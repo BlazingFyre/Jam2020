@@ -115,13 +115,8 @@ public class CardContainer : MonoBehaviour
             cards.Add(newCard);
         }
 
-        foreach (CardWhole c in cards)
-        {
-            c.GetComponent<Use>().InitOwner(GetComponent<Use>().GetOwner());
-        }
-
+        InitializeCardConnections();
         UpdateDeck();
-
     }
 
     private void UpdateDeck()
@@ -134,6 +129,17 @@ public class CardContainer : MonoBehaviour
         {
             cardAligner.UpdateAlignment();
         }
+    }
+
+    public void InitializeCardConnections()
+    {
+        foreach (CardWhole c in cards)
+        {
+            c.SetCardContainer(this);
+            c.GetComponent<Use>().InitOwner(GetComponent<Use>().GetOwner());
+        }
+
+        UpdateDeck();
     }
 
 }

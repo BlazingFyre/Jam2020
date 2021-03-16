@@ -22,11 +22,6 @@ public class Whole : MonoBehaviour
         }
     }
 
-    public Half GetSide(SleepState state)
-    {
-        return GetSide(GetComponent<Use>().GetController().GetSpirit(state).GetComponent<Half>().GetSide());
-    }
-
     public void SwapHalves()
     {
         // Swap side variables

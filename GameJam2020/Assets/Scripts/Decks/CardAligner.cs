@@ -7,6 +7,17 @@ using static Sides;
 public class CardAligner : MonoBehaviour
 {
 
+    public void InitializeCardAlignment()
+    {
+        List<CardWhole> cards = GetComponent<CardContainer>().GetCards();
+        BattleSystem battleSystem = GameObject.FindGameObjectWithTag("Battle Systems").GetComponent<BattleSystem>();
+
+        foreach (CardWhole c in cards)
+        {
+            c.transform.SetParent(battleSystem.GetCardsObject().transform, false);
+        }
+    }
+
     public virtual void UpdateAlignment()
     {
         List<CardWhole> cards = GetComponent<CardContainer>().GetCards();

@@ -7,36 +7,17 @@ using static SleepStates;
 public class SpiritWhole : MonoBehaviour
 {
 
-    public CardContainer baseDeck;
     public CardContainer deck;
     public CardContainer grave;
     public CardContainer hand;
 
     public int turnStartCards = 4;
-    public int turnStartMana = 4;
-    public int mana = 4;
 
     private ActionLog actionLog;
 
     public void Start()
     {
         actionLog = GameObject.FindGameObjectWithTag("Battle Systems").GetComponent<ActionLog>();
-    }
-
-    public void InitContainers(CardContainer deck, CardContainer grave, CardContainer hand)
-    {
-        this.deck = deck;
-        this.grave = grave;
-        this.hand = hand;
-
-        deck.GetComponent<Use>().InitOwner(this);
-        grave.GetComponent<Use>().InitOwner(this);
-        hand.GetComponent<Use>().InitOwner(this);
-    }
-
-    public CardContainer GetBaseDeck()
-    {
-        return baseDeck;
     }
 
     public CardContainer GetDeck()
@@ -54,6 +35,11 @@ public class SpiritWhole : MonoBehaviour
         return hand;
     }
 
+    public void SetHand(CardContainer hand)
+    {
+        this.hand = hand;
+    }
+
     public SpiritHalf GetSpirit(Side side)
     {
         return GetComponent<Whole>().GetSide(side).GetComponent<SpiritHalf>();
@@ -69,16 +55,6 @@ public class SpiritWhole : MonoBehaviour
         {
             return GetComponent<Whole>().GetSide(Side.B).GetComponent<SpiritHalf>();
         }
-    }
-
-    public void AddMana(int amount)
-    {
-        mana = mana + amount;
-    }
-
-    public void RefreshMana()
-    {
-        mana = turnStartMana;
     }
 
     public int GetTurnStartCards()
