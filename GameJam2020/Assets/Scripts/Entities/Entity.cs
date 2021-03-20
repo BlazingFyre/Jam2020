@@ -8,7 +8,7 @@ public class Entity : MonoBehaviour
     public int health;
     public int maxHealth;
 
-    //TODO: add statuses
+    //TODO: Add statuses
 
     public Entity() { }
     public Entity(int health, int maxHealth)
@@ -65,7 +65,7 @@ public class Entity : MonoBehaviour
         }
     }
 
-    // Returns a health value between 0 and maxHealth
+    // Returns a valid health value (between 0 and maxHealth)
     private int ClampHealth(int healthValue)
     {
         return Mathf.Min(Mathf.Max(healthValue, 0), maxHealth);

@@ -7,10 +7,15 @@ using static SleepStates;
 public class SpiritWhole : MonoBehaviour
 {
 
+    // ---- Preloaded -----------------------------------------------------------------------------
     public CardContainer deck;
     public CardContainer grave;
+    // --------------------------------------------------------------------------------------------
+
+    // The hand for a spirit. Initialized at the start of a battle
     public CardContainer hand;
 
+    // The number of cards drawn at the start of this spirit's turn
     public int turnStartCards = 4;
 
     private ActionLog actionLog;

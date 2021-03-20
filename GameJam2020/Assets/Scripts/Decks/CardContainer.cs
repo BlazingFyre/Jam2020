@@ -6,12 +6,16 @@ using TMPro;
 
 public class CardContainer : MonoBehaviour
 {
-
-    public int maxCards = int.MaxValue;
-    public List<CardWhole> cards = new List<CardWhole>();
-
+    // ---- Preloaded (optional) ------------------------------------------------------------------
     public TextMeshProUGUI cardNumberDisplay;
-    public CardAligner cardAligner;
+    public DeckAligner cardAligner;
+    // --------------------------------------------------------------------------------------------
+
+    // TODO: Account for IsFull() in Move Actions (fizzle if unable to fit more)
+    // The maximum size of a container. Hand size is set here
+    public int maxCards = int.MaxValue;
+    // The list of cards
+    public List<CardWhole> cards = new List<CardWhole>();
 
     public List<CardWhole> GetCards()
     {
@@ -26,11 +30,6 @@ public class CardContainer : MonoBehaviour
     public bool IsEmpty()
     {
         return cards.Count() == 0;
-    }
-
-    public void Clear()
-    {
-        cards = new List<CardWhole>();
     }
 
     public CardWhole DrawTarget(CardWhole target)
@@ -107,7 +106,7 @@ public class CardContainer : MonoBehaviour
     public void CopyFrom(CardContainer toCopy)
     {
         cards = new List<CardWhole>();
-        CardGenerator cardGenerator = GameObject.FindGameObjectWithTag("Battle Systems").GetComponent<BattleSystem>().GetCardsObject().GetComponent<CardGenerator>();
+        CardGenerator cardGenerator = GameObject.FindGameObjectWithTag("Battle Systems").GetComponent<CanvasManager>().GetCardsObject().GetComponent<CardGenerator>();
 
         foreach (CardWhole c in toCopy.GetCards())
         {

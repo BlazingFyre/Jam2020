@@ -7,9 +7,12 @@ using TMPro;
 public class SpiritHalf : Entity
 {
 
+    // ---- Preloaded -----------------------------------------------------------------------------
+    // The state of a spirit (either Waking or Dreaming)
     public SleepState state;
-
+    // ---- Preloaded (optional) ------------------------------------------------------------------
     public TextMeshProUGUI sleepDisplay;
+    // --------------------------------------------------------------------------------------------
 
     public SleepState GetSleepState()
     {
@@ -21,7 +24,10 @@ public class SpiritHalf : Entity
         this.state = state;
 
         // Temporary. Displays the SleepState of this Spirit.
-        sleepDisplay.text = (state == SleepState.Waking) ? "+" : "-";
+        if (sleepDisplay != null)
+        {
+            sleepDisplay.text = (state == SleepState.Waking) ? "+" : "-";
+        }
     }
 
 }

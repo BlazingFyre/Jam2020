@@ -6,6 +6,7 @@ using static SleepStates;
 public class CardWhole : MonoBehaviour
 {
 
+    // The container holding the card(s). Initialized when each deck boots up
     public CardContainer container;
 
     public CardContainer GetCardContainer()
@@ -19,11 +20,6 @@ public class CardWhole : MonoBehaviour
 
     public Half GetSide(SleepState state)
     {
-        Debug.Log(GetComponent<Whole>());
-        Debug.Log(GetComponent<Use>());
-        Debug.Log(GetComponent<Use>().GetController());
-        Debug.Log(GetComponent<Use>().GetController().GetSpirit(state));
-
         return GetComponent<Whole>().GetSide(GetComponent<Use>().GetController().GetSpirit(state).GetComponent<Half>().GetSide());
     }
 

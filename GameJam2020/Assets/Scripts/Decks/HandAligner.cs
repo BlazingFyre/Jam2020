@@ -5,11 +5,12 @@ using UnityEngine.UI;
 using static Sides;
 using static SleepStates;
 
-public class HandAligner : CardAligner
+public class HandAligner : DeckAligner
 {
 
     public override void UpdateAlignment()
     {
+
         List<CardWhole> cards = GetComponent<CardContainer>().GetCards();
 
         if (cards.Count != 0)

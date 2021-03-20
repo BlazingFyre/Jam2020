@@ -6,8 +6,11 @@ using static SleepStates;
 public class Blue : CardHalf
 {
 
-    public override string HalfName { get; set; } = "Blue";
-    public override string HalfText { get; set; } = "Sleep.";
+    public void Reset()
+    {
+        halfName = "Blue";
+        halfText = "Sleep.";
+    }
 
     public override bool IsTargetable(GameObject target)
     {
