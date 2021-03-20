@@ -41,21 +41,21 @@ public class BattleAligner : MonoBehaviour
 
         // Place the decks under the hierarchy of Canvas > Decks
         playerSpirit.GetDeck().transform.SetParent(GetComponent<CanvasManager>().GetDecksObject().transform, false);
-        playerSpirit.GetGrave().transform.SetParent(GetComponent<CanvasManager>().GetDecksObject().transform, false);
+        playerSpirit.GetBin().transform.SetParent(GetComponent<CanvasManager>().GetDecksObject().transform, false);
         enemySpirit.GetDeck().transform.SetParent(GetComponent<CanvasManager>().GetDecksObject().transform, false);
-        enemySpirit.GetGrave().transform.SetParent(GetComponent<CanvasManager>().GetDecksObject().transform, false);
+        enemySpirit.GetBin().transform.SetParent(GetComponent<CanvasManager>().GetDecksObject().transform, false);
 
         // Align the decks
         playerSpirit.GetDeck().transform.position = playerDeck.position;
-        playerSpirit.GetGrave().transform.position = playerBin.position;
+        playerSpirit.GetBin().transform.position = playerBin.position;
         enemySpirit.GetDeck().transform.position = enemyDeck.position;
-        enemySpirit.GetGrave().transform.position = enemyBin.position;
+        enemySpirit.GetBin().transform.position = enemyBin.position;
 
         // Place the cards under the hierarch of Canvas > Cards
         playerSpirit.GetDeck().GetComponent<DeckAligner>().InitializeCardAlignment();
-        playerSpirit.GetGrave().GetComponent<DeckAligner>().InitializeCardAlignment();
+        playerSpirit.GetBin().GetComponent<DeckAligner>().InitializeCardAlignment();
         enemySpirit.GetDeck().GetComponent<DeckAligner>().InitializeCardAlignment();
-        enemySpirit.GetGrave().GetComponent<DeckAligner>().InitializeCardAlignment();
+        enemySpirit.GetBin().GetComponent<DeckAligner>().InitializeCardAlignment();
     }
 
 }

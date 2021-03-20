@@ -9,7 +9,7 @@ public class SpiritWhole : MonoBehaviour
 
     // ---- Preloaded -----------------------------------------------------------------------------
     public CardContainer deck;
-    public CardContainer grave;
+    public CardContainer bin;
     // --------------------------------------------------------------------------------------------
 
     // The hand for a spirit. Initialized at the start of a battle
@@ -30,9 +30,9 @@ public class SpiritWhole : MonoBehaviour
         return deck;
     }
 
-    public CardContainer GetGrave()
+    public CardContainer GetBin()
     {
-        return grave;
+        return bin;
     }
 
     public CardContainer GetHand()

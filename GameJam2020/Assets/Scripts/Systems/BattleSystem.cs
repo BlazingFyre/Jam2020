@@ -34,9 +34,9 @@ public class BattleSystem : MonoBehaviour
 
         // Link cards to their Decks/Spirits
         playerSpirit.GetDeck().InitializeCardConnections();
-        playerSpirit.GetGrave().InitializeCardConnections();
+        playerSpirit.GetBin().InitializeCardConnections();
         enemySpirit.GetDeck().InitializeCardConnections();
-        enemySpirit.GetGrave().InitializeCardConnections();
+        enemySpirit.GetBin().InitializeCardConnections();
 
         // Clear the log
         GetComponent<ActionLog>().ClearLog();

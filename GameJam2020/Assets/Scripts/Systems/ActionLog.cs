@@ -393,19 +393,19 @@ public class ActionLog : MonoBehaviour
 
         public override bool WillFizzle()
         {
-            return toDraw.GetDeck().IsEmpty() && toDraw.GetGrave().IsEmpty();
+            return toDraw.GetDeck().IsEmpty() && toDraw.GetBin().IsEmpty();
         }
 
         public override IEnumerator Run()
         {
             for (int i = 0; i < amount; i++)
             {
-                // If the deck is empty during an attempted draw, shuffle the graveyard into the deck
-                if (toDraw.GetDeck().IsEmpty() && !toDraw.GetGrave().IsEmpty())
+                // If the deck is empty during an attempted draw, shuffle the bin into the deck
+                if (toDraw.GetDeck().IsEmpty() && !toDraw.GetBin().IsEmpty())
                 {
                     yield return SubProcess(new MoveDeck(
                         source,
-                        toDraw.GetGrave(),
+                        toDraw.GetBin(),
                         toDraw.GetDeck()
                         ));
 
@@ -447,7 +447,7 @@ public class ActionLog : MonoBehaviour
                 target, 
                 target.GetCardContainer(), 
                 0, 
-                target.GetComponent<Use>().GetController().GetGrave()
+                target.GetComponent<Use>().GetController().GetBin()
                 ));
         }
 
