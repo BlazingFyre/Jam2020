@@ -54,7 +54,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deck: {fileID: 2667255401547375316}
-  grave: {fileID: 4795719658774127773}
+  bin: {fileID: 4795719658774127773}
   hand: {fileID: 0}
   turnStartCards: 4
 --- !u!114 &2644747853960016119

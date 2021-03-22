@@ -666,7 +666,6 @@ MonoBehaviour:
   enemyHand: {fileID: 1041292462}
   turnSpirit: {fileID: 0}
   turnPhase: 0
-  actionDelay: 0.5
 --- !u!4 &892484393
 Transform:
   m_ObjectHideFlags: 0
@@ -2059,6 +2058,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21c35f8d49cd85046bd2ef112270e939, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  halfName: Blue
+  halfText: Sleep.
+  halfArt: {fileID: 0}
 --- !u!114 &2737399279088951428 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2737399279012151521, guid: 48647b4cbb88b3e43aa68c680531dff0,
@@ -2709,6 +2711,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 070be39d37002e543919d89d38ca9e1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  halfName: Orange
+  halfText: Deal 5 damage.
+  halfArt: {fileID: 0}
 --- !u!114 &6926833651681845564
 MonoBehaviour:
   m_ObjectHideFlags: 0
