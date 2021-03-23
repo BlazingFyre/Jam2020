@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static Sides;
 using static SleepStates;
 
 public class HandAligner : DeckAligner
@@ -41,15 +42,26 @@ public class HandAligner : DeckAligner
 
     }
 
-    public void UpdateSleepAlignment()
+    public override void SetCardInteractability(bool interactive)
     {
-        // Card state changes
         foreach (CardWhole c in GetComponent<CardContainer>().GetCards())
         {
-            // Make the waking half interactable, make the dreaming half uninteractable
-            c.GetSide(SleepState.Waking).GetComponent<Selectable>().interactable = true;
-            c.GetSide(SleepState.Dreaming).GetComponent<Selectable>().interactable = false;
+            if (interactive)
+            {
+                c.GetSide(SleepState.Waking).GetComponent<Selectable>().interactable = true;
+                c.GetSide(SleepState.Dreaming).GetComponent<Selectable>().interactable = false;
+            }
+            else
+            {
+                c.GetComponent<Whole>().GetSide(Side.A).GetComponent<Selectable>().interactable = false;
+                c.GetComponent<Whole>().GetSide(Side.B).GetComponent<Selectable>().interactable = false;
+            }
         }
+    }
+
+    public void UpdateSleepAlignment()
+    {
+        SetCardInteractability(GameObject.FindGameObjectWithTag("Battle Systems").GetComponent<BattleUI>().IsPlayerInteractionEnabled());
     }
 
 }

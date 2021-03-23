@@ -38,6 +38,10 @@ public class ActionLog : MonoBehaviour
         if (!processingQueue)
         {
             processingQueue = true;
+            if (GetComponent<BattleSystem>().GetTurnSpirit() == GetComponent<BattleSystem>().GetPlayer())
+            {
+                GetComponent<BattleUI>().SetPlayerInteraction(false);
+            }
             StartCoroutine(Process(queue[0]));
         }
     }
@@ -72,6 +76,10 @@ public class ActionLog : MonoBehaviour
             else
             {
                 processingQueue = false;
+                if (GetComponent<BattleSystem>().GetTurnSpirit() == GetComponent<BattleSystem>().GetPlayer())
+                {
+                    GetComponent<BattleUI>().SetPlayerInteraction(true);
+                }
             }
         }
     }
@@ -199,6 +207,10 @@ public class ActionLog : MonoBehaviour
                         turnTaker,
                         Phase.End
                         ));
+                } 
+                else if (turnTaker == actionLog.GetComponent<BattleSystem>().GetPlayer())
+                {
+                    actionLog.GetComponent<BattleUI>().SetPlayerInteraction(true);
                 }
             }
             else if (phase == Phase.End)

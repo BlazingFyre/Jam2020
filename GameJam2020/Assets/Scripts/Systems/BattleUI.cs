@@ -11,6 +11,9 @@ public class BattleUI : MonoBehaviour
     public GameObject draggedObject = null;
     public GameObject selectedObject = null;
 
+    // Tracker for whether or not player input via interactables is enabld
+    public bool playerInteraction = true;
+
     // A list of potential targets, collected to highlight them upon initiating a card drag
     public List<GameObject> targetables = new List<GameObject>();
 
@@ -79,10 +82,35 @@ public class BattleUI : MonoBehaviour
 
     public void EndTurnButton()
     {
+        SetPlayerInteraction(false);
+
         GetComponent<ActionLog>().Enter(new ActionLog.PhaseChange(
             GetComponent<BattleSystem>().GetTurnSpirit(),
             Phase.End
             ));
+    }
+
+    public void SetPlayerInteraction(bool playerInteraction)
+    {
+        this.playerInteraction = playerInteraction;
+
+        // Update end turn button
+        GetComponent<UIManager>().getEndTurnButton().interactable = playerInteraction;
+
+        // Update decks
+        GetComponent<BattleSystem>().GetPlayer().GetDeck().GetComponent<Selectable>().interactable = playerInteraction;
+        GetComponent<BattleSystem>().GetPlayer().GetBin().GetComponent<Selectable>().interactable = playerInteraction;
+        GetComponent<BattleSystem>().GetEnemy().GetDeck().GetComponent<Selectable>().interactable = playerInteraction;
+        GetComponent<BattleSystem>().GetEnemy().GetBin().GetComponent<Selectable>().interactable = playerInteraction;
+
+        // Update cards
+        GetComponent<BattleSystem>().GetPlayer().GetHand().GetComponent<DeckAligner>().SetCardInteractability(playerInteraction);
+        GetComponent<BattleSystem>().GetEnemy().GetHand().GetComponent<DeckAligner>().SetCardInteractability(playerInteraction);
+    }
+
+    public bool IsPlayerInteractionEnabled()
+    {
+        return playerInteraction;
     }
 
 }
