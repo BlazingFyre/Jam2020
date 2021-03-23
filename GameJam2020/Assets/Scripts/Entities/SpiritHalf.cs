@@ -23,11 +23,14 @@ public class SpiritHalf : Entity
     {
         this.state = state;
 
-        // Temporary. Displays the SleepState of this Spirit.
+        // Displays the SleepState of this Spirit
         if (sleepDisplay != null)
         {
             sleepDisplay.text = (state == SleepState.Waking) ? "+" : "-";
         }
+
+        // Update the hand according to sleep state changes
+        GetComponent<Half>().GetWhole().GetComponent<SpiritWhole>().GetHand().GetComponent<HandAligner>().UpdateSleepAlignment();
     }
 
 }

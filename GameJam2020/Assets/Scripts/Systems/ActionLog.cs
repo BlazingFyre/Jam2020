@@ -11,7 +11,7 @@ public class ActionLog : MonoBehaviour
     // Enable to get a live readout of the action log
     public bool printLog = false;
     // A scalar applied to all time delays in actions. For adjusting overall animation speed later
-    public float DelayScalar { get; set; } = 1.0f;
+    public float DelayScalar { get; set; } = 0.5f;
 
     // The log of all actions within a battle
     public List<Action> log = new List<Action>();
@@ -236,7 +236,6 @@ public class ActionLog : MonoBehaviour
                 toRefresh,
                 amount
                 )));
-            yield break;
         }
 
         public override void Print()
@@ -258,8 +257,9 @@ public class ActionLog : MonoBehaviour
         {
             for (int j = toDiscard.GetHand().GetCards().Count - 1; j > -1; j--)
             {
-                yield return SubProcess(new Discard(
-                    null,
+                yield return SubProcess((ActionLog.Action) System.Activator.CreateInstance(
+                    toDiscard.GetHand().GetCards()[j].GetSide(SleepState.Waking).GetComponent<CardHalf>().EndTurnAction,
+                    source,
                     toDiscard.GetHand().GetCards()[j]
                     ));
             }
@@ -312,6 +312,69 @@ public class ActionLog : MonoBehaviour
         {
             Debug.Log(source + ": " + toMirror + " is mirrored");
         }
+    }
+
+    public class Crack : Action
+    {
+
+        public CardWhole toCrack;
+
+        protected override float actionDelay { get; set; } = 0.25f;
+
+        public Crack(SpiritWhole source, CardWhole toCrack) : base(source)
+        {
+            this.toCrack = toCrack;
+        }
+
+        public override IEnumerator Run()
+        {
+            toCrack.SetDurability(toCrack.GetDurability() - 1);
+            yield return new WaitForSeconds(actionLog.DelayScalar * actionDelay);
+
+            if (toCrack.GetDurability() == 0)
+            {
+                yield return SubProcess(new Shatter(
+                    source,
+                    toCrack
+                    ));
+            }
+        }
+
+        public override void Print()
+        {
+            Debug.Log(source + ": " + toCrack + " cracks");
+        }
+
+    }
+
+    public class Shatter : Action
+    {
+
+        public CardWhole toShatter;
+
+        protected override float actionDelay { get; set; } = 0.25f;
+
+        public Shatter(SpiritWhole source, CardWhole toShatter) : base(source)
+        {
+            this.toShatter = toShatter;
+        }
+
+        public override IEnumerator Run()
+        {
+            toShatter.SetDurability(0);
+            yield return new WaitForSeconds(actionLog.DelayScalar * actionDelay);
+
+            yield return SubProcess(new Discard(
+                source,
+                toShatter
+                ));
+        }
+
+        public override void Print()
+        {
+            Debug.Log(source + ": " + toShatter + " shatters");
+        }
+
     }
 
     // ---- Card Movement -------------------------------------------------------------------------
@@ -438,27 +501,53 @@ public class ActionLog : MonoBehaviour
 
     public class Discard : Action
     {
-        public CardWhole target;
+        public CardWhole toDiscard;
 
-        public Discard(SpiritWhole source, CardWhole target) : base(source)
+        public Discard(SpiritWhole source, CardWhole toDiscard) : base(source)
         {
-            this.target = target;
+            this.toDiscard = toDiscard;
         }
 
         public override IEnumerator Run()
         {
             yield return SubProcess(new Move(
-                source, 
-                target, 
-                target.GetCardContainer(), 
-                -1, 
-                target.GetComponent<Use>().GetController().GetDeck()
+                source,
+                toDiscard,
+                toDiscard.GetCardContainer(), 
+                0,
+                toDiscard.GetComponent<Use>().GetController().GetBin()
                 ));
         }
 
         public override void Print()
         {
-            Debug.Log(source + ": " + target + " is discarded");
+            Debug.Log(source + ": " + toDiscard + " is discarded");
+        }
+    }
+
+    public class Recycle : Action
+    {
+        public CardWhole toRecycle;
+
+        public Recycle(SpiritWhole source, CardWhole toRecycle) : base(source)
+        {
+            this.toRecycle = toRecycle;
+        }
+
+        public override IEnumerator Run()
+        {
+            yield return SubProcess(new Move(
+                source,
+                toRecycle,
+                toRecycle.GetCardContainer(),
+                -1,
+                toRecycle.GetComponent<Use>().GetController().GetDeck()
+                ));
+        }
+
+        public override void Print()
+        {
+            Debug.Log(source + ": " + toRecycle + " is replaced into the deck");
         }
     }
 

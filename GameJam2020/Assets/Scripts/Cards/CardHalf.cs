@@ -11,9 +11,12 @@ public class CardHalf : MonoBehaviour
     public string halfText = "Default text.";
     public Sprite halfArt = null;
 
-    // The action to be logged at the end of the turn (typically discards to the deck)
-    public Type DiscardAction { get; set; } = typeof(ActionLog.Discard);
 
+    // The action to be logged after you play the card (typically cracks the card)
+    public Type UseAction { get; set; } = typeof(ActionLog.Crack);
+    // The action to be logged at the end of the turn (typically recycles)
+    public Type EndTurnAction { get; set; } = typeof(ActionLog.Recycle);
+    
     protected ActionLog actionLog;
 
     public void Start()
@@ -37,12 +40,13 @@ public class CardHalf : MonoBehaviour
         // Perform card's actual text
         CardFunction(target);
 
-        // Log DiscardAction action
+        // Log UseAction action (typically cracks the card)
         actionLog.Enter((ActionLog.Action) System.Activator.CreateInstance(
-            DiscardAction,
+            UseAction,
             GetComponent<Half>().GetWhole().GetComponent<Use>().GetController(),
             GetComponent<Half>().GetWhole().GetComponent<CardWhole>()
             ));
+
     }
 
     public SpiritWhole GetController()
