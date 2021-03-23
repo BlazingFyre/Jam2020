@@ -196,9 +196,9 @@ public class ActionLog : MonoBehaviour
                 if (turnTaker == actionLog.GetComponent<BattleSystem>().GetEnemy())
                 {
                     actionLog.Enter(new ActionLog.PhaseChange(
-                    turnTaker,
-                    Phase.End
-                    ));
+                        turnTaker,
+                        Phase.End
+                        ));
                 }
             }
             else if (phase == Phase.End)
@@ -400,6 +400,10 @@ public class ActionLog : MonoBehaviour
         {
             for (int i = 0; i < amount; i++)
             {
+
+                // Removed for now
+
+                /*
                 // If the deck is empty during an attempted draw, shuffle the bin into the deck
                 if (toDraw.GetDeck().IsEmpty() && !toDraw.GetBin().IsEmpty())
                 {
@@ -414,6 +418,7 @@ public class ActionLog : MonoBehaviour
                         toDraw.GetDeck()
                         ));
                 }
+                */
 
                 yield return SubProcess(new Move(
                     source,
@@ -446,8 +451,8 @@ public class ActionLog : MonoBehaviour
                 source, 
                 target, 
                 target.GetCardContainer(), 
-                0, 
-                target.GetComponent<Use>().GetController().GetBin()
+                -1, 
+                target.GetComponent<Use>().GetController().GetDeck()
                 ));
         }
 
