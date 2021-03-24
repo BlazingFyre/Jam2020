@@ -22,8 +22,8 @@ public class Entity : MonoBehaviour
 
     public void SetHealth(int health)
     {
-        this.health = ClampHealth(health);
-        CheckHealth();
+        // Clamp health between 0 and the maximum durability
+        this.health = Mathf.Min(Mathf.Max(0, health), maxHealth);
 
         if (healthDisplay != null)
         {
@@ -40,47 +40,8 @@ public class Entity : MonoBehaviour
     {
         this.maxHealth = maxHealth;
 
-        this.health = ClampHealth(health);
-        CheckHealth();
-    }
-
-    // Consolidate Heal/Damage into actions
-    public void Damage(int amount)
-    {
-        //Assure the health does not exceed maxHealth or go below 0
-        SetHealth(health - amount);
-        CheckHealth();
-    }
-
-    public void Heal(int amount)
-    {
-        //Assure the health does not exceed maxHealth or go below 0
-        SetHealth(health + amount);
-        // This check should be here just in case there is some negative healing status
-        CheckHealth();
-    }
-
-    // Destroys the Entity if health is 0
-    private void CheckHealth()
-    {
-        if (health <= 0)
-        {
-            Destroy();
-        }
-    }
-
-    // Returns a valid health value (between 0 and maxHealth)
-    private int ClampHealth(int healthValue)
-    {
-        return Mathf.Min(Mathf.Max(healthValue, 0), maxHealth);
-    }
-
-    // TODO: Replace with a Destroy Action!
-    public void Destroy()
-    {
-        print(this.name + " was destroyed!");
-        // B: Very temporary
-        Object.Destroy(gameObject);
+        // Assure health value is updated accordingly
+        SetHealth(health);
     }
 
 }

@@ -31,7 +31,7 @@ public class CardWhole : MonoBehaviour
     public void SetDurability(int durability)
     {
         // Clamp the durability between 0 and the maximum durability
-        this.durability = Math.Min(Math.Max(0, durability), maxDurability);
+        this.durability = Mathf.Min(Mathf.Max(0, durability), maxDurability);
 
         // Show the new durability
         GetSide(SleepState.Waking).GetComponent<CardDisplay>().UpdateDisplay();

@@ -50,10 +50,10 @@ public class ActionLog : MonoBehaviour
     public IEnumerator Process(Action action)
     {
         // These are fizzle checks, to prevent impossible actions
-        if (action == null || action.fizzled || action.WillFizzle()) { yield break; }
+        if (action == null || action.WillFizzle() || action.HasFizzled()) { yield break; }
 
         action.BeforeTriggers();
-        if (action.fizzled) { yield break; }
+        if (action.HasFizzled()) { yield break; }
 
         if (printLog)
         {
@@ -132,6 +132,9 @@ public class ActionLog : MonoBehaviour
         // Returns true if the action cannot be performed (and therefore should fizzle)
         public virtual bool WillFizzle() { return false; }
 
+        // Returns the current status of the action, for counterspell-like effects
+        public bool HasFizzled() { return fizzled; }
+
         // Actually perform the action
         public virtual IEnumerator Run() { yield break; }
 
@@ -150,6 +153,52 @@ public class ActionLog : MonoBehaviour
     }
 
     // ==== Battle Flow ===========================================================================
+
+    public class BattleStart : Action
+    {
+
+        public BattleStart() : base(null) { }
+
+        public override IEnumerator Run()
+        {
+            actionLog.Enter(new PhaseChange(
+                actionLog.GetComponent<BattleSystem>().GetPlayer(),
+                Phase.Start
+                ));
+
+            yield return new WaitForSeconds(actionLog.DelayScalar * actionDelay);
+        }
+
+        public override void Print()
+        {
+            Debug.Log("The battle begins!");
+        }
+
+    }
+
+    public class BattleEnd : Action
+    {
+
+        SpiritWhole winner;
+
+        public BattleEnd(SpiritWhole winner) : base(null)
+        {
+            this.winner = winner;
+        }
+
+        public override IEnumerator Run()
+        {
+            yield return new WaitForSeconds(actionLog.DelayScalar * actionDelay);
+
+            actionLog.GetComponent<BattleSystem>().EndBattle();
+        }
+
+        public override void Print()
+        {
+            Debug.Log(winner + " has won the battle!");
+        }
+
+    }
 
     public class PhaseChange : Action
     {
@@ -252,7 +301,7 @@ public class ActionLog : MonoBehaviour
 
         public override void Print()
         {
-            Debug.Log(source + ": " + toRefresh + " refreshes hand, drawing " + amount + " cards");
+            Debug.Log(source + ": " + toRefresh + " refreshes their hand");
         }
     }
 
@@ -420,8 +469,8 @@ public class ActionLog : MonoBehaviour
 
         public override bool WillFizzle()
         {
-            // If nothing could've been drawn, fizzle.
-            return fromContainer.IsEmpty() || (toMove != null && !fromContainer.GetCards().Contains(toMove));
+            // If nothing could've been drawn or the target container is full, fizzle.
+            return fromContainer.IsEmpty() || toContainer.IsFull() || (toMove != null && !fromContainer.GetCards().Contains(toMove));
         }
 
         public override IEnumerator Run()
@@ -473,41 +522,33 @@ public class ActionLog : MonoBehaviour
 
         public override IEnumerator Run()
         {
-            for (int i = 0; i < amount; i++)
+            int drawAttempts = amount;
+
+            for (int i = 0; i < drawAttempts; i++)
             {
-
-                // Removed for now
-
-                /*
-                // If the deck is empty during an attempted draw, shuffle the bin into the deck
-                if (toDraw.GetDeck().IsEmpty() && !toDraw.GetBin().IsEmpty())
-                {
-                    yield return SubProcess(new MoveDeck(
-                        source,
-                        toDraw.GetBin(),
-                        toDraw.GetDeck()
-                        ));
-
-                    yield return SubProcess(new Shuffle(
-                        source,
-                        toDraw.GetDeck()
-                        ));
-                }
-                */
-
-                yield return SubProcess(new Move(
+                Action moveAction = new Move(
                     source,
                     0,
                     toDraw.GetDeck(),
                     0,
                     toDraw.GetHand()
-                    ));
+                    );
+
+                // Assure that the number of cards counted as "drawn" in the overall Draw action is correct
+                // B: This will not show up on the actionLog readouts, unfortunately
+
+                if (moveAction.WillFizzle())
+                {
+                    amount--;
+                }
+
+                yield return SubProcess(moveAction);
             }
         }
 
         public override void Print()
         {
-            Debug.Log(source + ": " + toDraw + " draws " + amount + " cards");
+            Debug.Log(source + ": " + toDraw + " attempts to draw " + amount + " cards");
         }
     }
 
@@ -633,11 +674,44 @@ public class ActionLog : MonoBehaviour
 
     // ==== Spirits ===============================================================================
 
+    public class HealthChange : Action
+    {
+        public SpiritHalf target;
+        // Positive values increase health, negative values decrease health
+        public int amount;
+        protected override float actionDelay { get; set; } = 0.25f;
+
+        public HealthChange(SpiritWhole source, SpiritHalf target, int amount) : base(source)
+        {
+            this.target = target;
+            this.amount = amount;
+        }
+
+        public override IEnumerator Run()
+        {
+            target.SetHealth(target.GetHealth() + amount);
+            yield return new WaitForSeconds(actionLog.DelayScalar * actionDelay);
+
+            if (target.GetHealth() <= 0)
+            {
+                actionLog.Enter(new BattleEnd(
+                    (target == actionLog.GetComponent<BattleSystem>().GetPlayer()) 
+                        ? actionLog.GetComponent<BattleSystem>().GetEnemy() 
+                        : actionLog.GetComponent<BattleSystem>().GetPlayer()
+                    ));
+            }
+        }
+
+        public override void Print()
+        {
+            Debug.Log(source + ": " + target + "'s health is changed by " + amount);
+        }
+    }
+
     public class Damage : Action
     {
         public SpiritHalf target;
         public int amount;
-        protected override float actionDelay { get; set; } = 0.25f;
 
         public Damage(SpiritWhole source, SpiritHalf target, int amount) : base(source)
         {
@@ -647,13 +721,42 @@ public class ActionLog : MonoBehaviour
 
         public override IEnumerator Run()
         {
-            target.Damage(amount);
-            yield return new WaitForSeconds(actionLog.DelayScalar * actionDelay);
+            yield return SubProcess(new HealthChange(
+                source,
+                target,
+                amount * -1
+                ));
         }
 
         public override void Print()
         {
             Debug.Log(source + ": " + target + " is damaged by " + amount);
+        }
+    }
+
+    public class Heal : Action
+    {
+        public SpiritHalf target;
+        public int amount;
+
+        public Heal(SpiritWhole source, SpiritHalf target, int amount) : base(source)
+        {
+            this.target = target;
+            this.amount = amount;
+        }
+
+        public override IEnumerator Run()
+        {
+            yield return SubProcess(new HealthChange(
+                source,
+                target,
+                amount
+                ));
+        }
+
+        public override void Print()
+        {
+            Debug.Log(source + ": " + target + " is healed by " + amount);
         }
     }
 

@@ -21,11 +21,14 @@ public class BattleSystem : MonoBehaviour
     public void Start()
     {
         AlignBattle();
-        InitBattle();
+        StartBattle(playerSpirit, enemySpirit);
     }
 
-    private void InitBattle()
+    public void StartBattle(SpiritWhole playerSpirit, SpiritWhole enemySpirit)
     {
+        this.playerSpirit = playerSpirit;
+        this.enemySpirit = enemySpirit;
+
         // Link the Hands to each Spirit
         playerSpirit.SetHand(playerHand);
         enemySpirit.SetHand(enemyHand);
@@ -42,10 +45,12 @@ public class BattleSystem : MonoBehaviour
         GetComponent<ActionLog>().ClearLog();
 
         // Start the first turn
-        GetComponent<ActionLog>().Enter(new ActionLog.PhaseChange(
-            playerSpirit, 
-            Phase.Start
-            ));
+        GetComponent<ActionLog>().Enter(new ActionLog.BattleStart());
+    }
+
+    public void EndBattle()
+    {
+
     }
 
     private void AlignBattle()
