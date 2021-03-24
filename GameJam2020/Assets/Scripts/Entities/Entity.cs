@@ -1,21 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Entity : MonoBehaviour
 {
 
-    public int health;
-    public int maxHealth;
+    // ---- Preloaded (optional) ------------------------------------------------------------------
+    public TextMeshProUGUI healthDisplay;
+    // --------------------------------------------------------------------------------------------
+
+    public int health = 50;
+    public int maxHealth = 50;
 
     //TODO: Add statuses
-
-    public Entity() { }
-    public Entity(int health, int maxHealth)
-    {
-        this.health = health;
-        this.maxHealth = maxHealth;
-    }
 
     public int GetHealth()
     {
@@ -26,6 +24,11 @@ public class Entity : MonoBehaviour
     {
         this.health = ClampHealth(health);
         CheckHealth();
+
+        if (healthDisplay != null)
+        {
+            healthDisplay.text = health.ToString() + " / " + maxHealth.ToString();
+        }
     }
 
     public int GetMaxHealth()
@@ -41,17 +44,18 @@ public class Entity : MonoBehaviour
         CheckHealth();
     }
 
+    // Consolidate Heal/Damage into actions
     public void Damage(int amount)
     {
         //Assure the health does not exceed maxHealth or go below 0
-        health = ClampHealth(health - amount);
+        SetHealth(health - amount);
         CheckHealth();
     }
 
     public void Heal(int amount)
     {
         //Assure the health does not exceed maxHealth or go below 0
-        health = ClampHealth(health + amount);
+        SetHealth(health + amount);
         // This check should be here just in case there is some negative healing status
         CheckHealth();
     }
