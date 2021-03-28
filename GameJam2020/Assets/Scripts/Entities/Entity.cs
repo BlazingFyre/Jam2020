@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 public class Entity : MonoBehaviour
 {
@@ -12,8 +13,6 @@ public class Entity : MonoBehaviour
 
     public int health = 50;
     public int maxHealth = 50;
-
-    //TODO: Add statuses
 
     public int GetHealth()
     {

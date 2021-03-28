@@ -9,13 +9,14 @@ public class BattleSystem : MonoBehaviour
     // ---- Preloaded -----------------------------------------------------------------------------
     public SpiritWhole playerSpirit;
     public SpiritWhole enemySpirit;
+    // Who takes the first turn
+    public SpiritWhole turnSpirit;
 
     public CardContainer playerHand;
     public CardContainer enemyHand;
     // --------------------------------------------------------------------------------------------
 
     // Information kept for turns
-    public SpiritWhole turnSpirit;
     public Phase turnPhase;
 
     public void Start()

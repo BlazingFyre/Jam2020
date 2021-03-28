@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static ActionLog;
 
 public class Orange : CardHalf
 {
@@ -18,7 +19,7 @@ public class Orange : CardHalf
 
     public override void CardFunction(GameObject target)
     {
-        actionLog.Enter(new ActionLog.Damage(
+        actionLog.Enter(new Damage(
             GetController(),
             target.GetComponent<SpiritHalf>(),
             5

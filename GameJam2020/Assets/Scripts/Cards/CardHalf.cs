@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using static ActionLog;
 
 public class CardHalf : MonoBehaviour
 {
@@ -13,9 +14,9 @@ public class CardHalf : MonoBehaviour
 
 
     // The action to be logged after you play the card (typically cracks the card)
-    public Type UseAction { get; set; } = typeof(ActionLog.Crack);
+    public Type UseAction { get; set; } = typeof(Crack);
     // The action to be logged at the end of the turn (typically recycles)
-    public Type EndTurnAction { get; set; } = typeof(ActionLog.Recycle);
+    public Type EndTurnAction { get; set; } = typeof(Recycle);
     
     protected ActionLog actionLog;
 
@@ -31,7 +32,7 @@ public class CardHalf : MonoBehaviour
     public void Play(GameObject target)
     {
         // Log "Play" action
-        actionLog.Enter(new ActionLog.Cast(
+        actionLog.Enter(new Cast(
                 GetComponent<Half>().GetWhole().GetComponent<Use>().GetController(), 
                 this, 
                 target

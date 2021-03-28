@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Sides;
 using static SleepStates;
 
 public class CardWhole : MonoBehaviour

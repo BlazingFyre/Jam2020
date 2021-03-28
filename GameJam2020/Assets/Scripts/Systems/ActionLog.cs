@@ -4,6 +4,7 @@ using UnityEngine;
 using static Phases;
 using static SleepStates;
 using static Sides;
+using System;
 
 public class ActionLog : MonoBehaviour
 {
@@ -18,7 +19,7 @@ public class ActionLog : MonoBehaviour
     // The queue of actions. Item 0 is first in line
     public List<Action> queue = new List<Action>();
     // Whether or not the queue is currently being processed
-    private bool processingQueue = false;
+    public bool processingQueue = false;
 
     public void ClearLog()
     {
@@ -50,20 +51,26 @@ public class ActionLog : MonoBehaviour
     public IEnumerator Process(Action action)
     {
         // These are fizzle checks, to prevent impossible actions
-        if (action == null || action.WillFizzle() || action.HasFizzled()) { yield break; }
-
-        action.BeforeTriggers();
-        if (action.HasFizzled()) { yield break; }
-
-        if (printLog)
+        if (action != null && !action.WillFizzle() && !action.HasFizzled())
         {
-            action.Print();
+
+            yield return StartCoroutine(action.BeforeTriggers());
+
+            if (!action.HasFizzled())
+            {
+
+                if (printLog)
+                {
+                    action.Print();
+                }
+                log.Add(action);
+
+                yield return StartCoroutine(action.Run());
+
+                yield return StartCoroutine(action.AfterTriggers());
+
+            }
         }
-        log.Add(action);
-
-        yield return StartCoroutine(action.Run());
-
-        action.AfterTriggers();
 
         if (queue.Contains(action))
         {
@@ -99,7 +106,7 @@ public class ActionLog : MonoBehaviour
         public bool fizzled = false;
 
         // A more convenient way to access the actionLog
-        protected ActionLog actionLog;
+        protected ActionLog actionLog = GameObject.FindGameObjectWithTag("Battle Systems").GetComponent<ActionLog>();
         // The time delay of each action. Overriden if a delay is used
         protected virtual float actionDelay { get; set; } = 0;
 
@@ -107,26 +114,49 @@ public class ActionLog : MonoBehaviour
         {
             this.source = source;
             this.children = new List<Action>();
-            actionLog = GameObject.FindGameObjectWithTag("Battle Systems").GetComponent<ActionLog>();
         }
 
         // Process an action immediately instead of entering it into the queue
         // Used for sub-actions
-        protected IEnumerator SubProcess(Action action)
+        public IEnumerator SubProcess(Action action)
         {
             yield return actionLog.StartCoroutine(actionLog.Process(action));
         }
 
         // Run action through all statuses, moods, etc. to update things like damage values
-        public virtual void BeforeTriggers()
+        public virtual IEnumerator BeforeTriggers()
         {
-            // TODO: All of this crap
+            yield return ProcessTriggers(true);
         }
 
         // Run action through all statuses, moods, etc. to trigger conditionals
-        public virtual void AfterTriggers()
+        public virtual IEnumerator AfterTriggers()
         {
-            // TODO: All of this crap
+            yield return ProcessTriggers(false);
+        }
+
+        private IEnumerator ProcessTriggers(bool preAction)
+        {
+            // Process action through all statuses
+            // TODO: Fix ordering
+            Status[] statuses = FindObjectsOfType<Status>();
+
+            Debug.Log("statuses: " + statuses);
+
+            foreach (Status s in statuses)
+            {
+                if (preAction)
+                {
+                    yield return s.ProcessPreAction(this);
+                }
+                else
+                {
+                    yield return s.ProcessPostAction(this);
+                }
+            }
+
+            // TODO: Implement moods
+            yield break;
         }
 
         // Returns true if the action cannot be performed (and therefore should fizzle)
@@ -179,7 +209,7 @@ public class ActionLog : MonoBehaviour
     public class BattleEnd : Action
     {
 
-        SpiritWhole winner;
+        public SpiritWhole winner;
 
         public BattleEnd(SpiritWhole winner) : base(null)
         {
@@ -202,8 +232,8 @@ public class ActionLog : MonoBehaviour
 
     public class PhaseChange : Action
     {
-        SpiritWhole turnTaker;
-        Phase phase;
+        public SpiritWhole turnTaker;
+        public Phase phase;
         protected override float actionDelay { get; set; } = 1;
 
         public PhaseChange(SpiritWhole turnTaker, Phase phase) : base(null)
@@ -236,13 +266,14 @@ public class ActionLog : MonoBehaviour
 
         }
 
-        public override void AfterTriggers()
+        public override IEnumerator AfterTriggers()
         {
-            base.AfterTriggers();
+
+            yield return actionLog.StartCoroutine(base.AfterTriggers());
 
             if (phase == Phase.Start)
             {
-                actionLog.Enter(new ActionLog.PhaseChange(
+                actionLog.Enter(new PhaseChange(
                     turnTaker,
                     Phase.Main
                     ));
@@ -252,7 +283,7 @@ public class ActionLog : MonoBehaviour
                 // Temporary! Replace with AI stuff
                 if (turnTaker == actionLog.GetComponent<BattleSystem>().GetEnemy())
                 {
-                    actionLog.Enter(new ActionLog.PhaseChange(
+                    actionLog.Enter(new PhaseChange(
                         turnTaker,
                         Phase.End
                         ));
@@ -264,12 +295,13 @@ public class ActionLog : MonoBehaviour
             }
             else if (phase == Phase.End)
             {
-                actionLog.Enter(new ActionLog.PhaseChange(
+                actionLog.Enter(new PhaseChange(
                     actionLog.GetComponent<BattleSystem>().GetNonturnSpirit(),
                     Phase.Start
                     ));
             }
 
+            yield break;
         }
 
         public override void Print()
@@ -674,6 +706,7 @@ public class ActionLog : MonoBehaviour
 
     // ==== Spirits ===============================================================================
 
+    // ---- Health Manipulation -------------------------------------------------------------------
     public class HealthChange : Action
     {
         public SpiritHalf target;
@@ -760,6 +793,91 @@ public class ActionLog : MonoBehaviour
         }
     }
 
+    // ---- Status Manipulation -------------------------------------------------------------------
+
+    public class ApplyStatus : Action
+    {
+
+        public SpiritHalf target;
+        public Type statusType;
+        public int amount;
+
+        protected override float actionDelay { get; set; } = 0.25f;
+
+        public ApplyStatus(SpiritWhole source, SpiritHalf target, Type statusType, int amount) : base(source)
+        {
+            this.target = target;
+            this.statusType = statusType;
+            this.amount = amount;
+        }
+
+        public override IEnumerator Run()
+        {
+
+            Status targetStatus = (Status) target.GetComponent(statusType);
+
+            if (targetStatus == null)
+            {
+                target.gameObject.AddComponent(statusType);
+                targetStatus = (Status) target.GetComponent(statusType);
+                targetStatus.SetAmount(amount);
+            } 
+            else
+            {
+                targetStatus.SetAmount(targetStatus.GetAmount() + amount);
+            }
+
+            if (targetStatus.GetAmount() == 0)
+            {
+                yield return SubProcess(new RemoveStatus(
+                    source,
+                    target,
+                    statusType
+                    ));
+            } 
+            else
+            {
+                yield return new WaitForSeconds(actionLog.DelayScalar * actionDelay);
+            }
+            
+        }
+
+        public override void Print()
+        {
+            Debug.Log(source + ": " + amount + " " + statusType.Name + " is applied to " + target);
+        }
+
+    }
+
+    public class RemoveStatus : Action
+    {
+
+        public SpiritHalf target;
+        public Type statusType;
+
+        protected override float actionDelay { get; set; } = 0.25f;
+
+        public RemoveStatus(SpiritWhole source, SpiritHalf target, Type statusType) : base(source)
+        {
+            this.target = target;
+            this.statusType = statusType;
+        }
+
+        public override IEnumerator Run()
+        {
+            GameObject.Destroy((Status) target.GetComponent(statusType));
+
+            yield return new WaitForSeconds(actionLog.DelayScalar * actionDelay);
+        }
+
+        public override void Print()
+        {
+            Debug.Log(source + ": all " + statusType.Name + " is removed from " + target);
+        }
+    }
+
+
+    // ---- Sleep Manipulation --------------------------------------------------------------------
     public class SleepChange : Action
     {
         public SpiritHalf toChange;
