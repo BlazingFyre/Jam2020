@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5edc75474da96604e873cfd999377a82, type: 3}
+  m_Name: Player
+  m_EditorClassIdentifier: 
+  Health:
+    Value: 50
+    Max: 50
+    Min: 0
+  Grace:
+    Value: 12
+    Max: Infinity
+    Min: 0
+  Grit:
+    Value: 12
+    Max: Infinity
+    Min: 0
+  Mana:
+    Value: 3
+    Max: Infinity
+    Min: 0
+  ManaGain: 4

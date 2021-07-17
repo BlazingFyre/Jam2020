@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Variables/IntVariable")]
 public class IntVariable : ScriptableObject
 {
     public int Value;
