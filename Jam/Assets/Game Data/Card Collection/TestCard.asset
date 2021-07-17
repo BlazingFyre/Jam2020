@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-3127935142123257923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21e3eb58ca2ffdf4c86766a941f0799f, type: 3}
+  m_Name: '1: Damage'
+  m_EditorClassIdentifier: 
+  Number: 2
+  ExtraNumber: 3
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d61424ddc3bf1b2429dd9d197818ef4d, type: 3}
+  m_Name: TestCard
+  m_EditorClassIdentifier: 
+  SideA:
+    Name: 
+    Text: 
+    Art: {fileID: 0}
+    StacktionTypes:
+    - GuidAssignmentFailed: 0
+      GUID: 21e3eb58ca2ffdf4c86766a941f0799f
+      TypeNameAndAssembly: Damage, Assembly-CSharp
+      _suppressLogs: 0
+    - GuidAssignmentFailed: 0
+      GUID: 21e3eb58ca2ffdf4c86766a941f0799f
+      TypeNameAndAssembly: Damage, Assembly-CSharp
+      _suppressLogs: 0
+    Side: 0
+    Stacktions:
+    - {fileID: 2411965548394327466}
+    - {fileID: -3127935142123257923}
+  SideB:
+    Name: 
+    Text: 
+    Art: {fileID: 0}
+    StacktionTypes: []
+    Side: 0
+    Stacktions: []
+--- !u!114 &2411965548394327466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21e3eb58ca2ffdf4c86766a941f0799f, type: 3}
+  m_Name: '0: Damage'
+  m_EditorClassIdentifier: 
+  Number: 1
+  ExtraNumber: 2
