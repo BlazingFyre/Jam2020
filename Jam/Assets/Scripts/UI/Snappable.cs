@@ -6,71 +6,71 @@ using System;
 public class Snappable : MonoBehaviour
 {
     public enum SnapRole { Snapper, Snappee }
-    public enum SnapCondition { Manual, WhenColliding }
-    public enum SnapStyle { SetTransform, NudgeTransform }
+    public enum SnapCondition { Manual }
+    public enum SnapStyle { NudgeTransform, SetTransform }
     public enum SnapChannel { All }
 
     [Serializable]
     public class SnapSettings
     {
         [Header("Basic Settings")]
-        public SnapRole Role;
+        public SnapRole Role = SnapRole.Snapper;
         public SnapChannel Channel = SnapChannel.All;
 
         [Header("Snapper Settings")]
-        public SnapCondition Condition;
-        public SnapStyle Style;
-        public float NudgeSpeed;
-
-        [Header("Optional Settings")]
-        public Collider Collider;
+        public SnapCondition Condition = SnapCondition.Manual;
+        public SnapStyle Style = SnapStyle.NudgeTransform;
+        public IntReference NudgeSpeed;
     }
 
     public bool Paused = false;
-    public Snappable SnappedObject;
+    public Snappable Snapper;
 
     public SnapSettings Settings;
 
-    void Start()
-    {
-        if (Settings.Collider == null)
-        {
-            gameObject.AddComponent<BoxCollider>();
-            Settings.Collider = GetComponent<Collider>();
-        }
-    }
+    //[HideInInspector]
+    public bool IsAligned = false;
 
-    void FixedUpdate()
+    public void FixedUpdate()
     {
-        if (!Paused && SnappedObject != null)
+        if (Snapper != null)
         {
-            if (Settings.Style == SnapStyle.SetTransform)
+            if (!Paused && !Snapper.Paused)
             {
-                SnappedObject.transform.position = gameObject.transform.position;
-                SnappedObject.transform.rotation = gameObject.transform.rotation;
+                if (Settings.Style == SnapStyle.SetTransform)
+                {
+                    transform.position = Snapper.transform.position;
+                }
+                else if (Settings.Style == SnapStyle.NudgeTransform)
+                {
+                    transform.position = Vector3.MoveTowards(
+                        transform.position,
+                        Snapper.transform.position,
+                        Settings.NudgeSpeed.Value
+                        );
+                }
             }
-            else if (Settings.Style == SnapStyle.NudgeTransform)
-            {
-                //TODO: Make it nudge the snapped object towards this object with the set force
-            }
+
+            IsAligned = (Snapper.transform.position.x == transform.position.x)
+                && (Snapper.transform.position.y == transform.position.y);
         }
     }
 
     // For manual snapping
 
-    public void Snap(Snappable target)
+    public void Snap(Snappable snapper)
     {
-        if (SnappedObject != null)
+        if (Snapper != null)
         {
-            Unsnap(SnappedObject);
+            Unsnap(Snapper);
         }
 
-        SnappedObject = target;
+        Snapper = snapper;
     }
 
-    public void Unsnap(Snappable target)
+    public void Unsnap(Snappable snapper)
     {
-        SnappedObject = null;
+        Snapper = null;
     }
 
     public void Pause()
@@ -81,20 +81,6 @@ public class Snappable : MonoBehaviour
     public void Unpause()
     {
         Paused = false;
-    }
-
-    // For automatic (collider-based) snapping
-
-    void OnTriggerEnter(Collider col)
-    {
-        if (Settings.Condition == SnapCondition.WhenColliding
-            && Settings.Role == SnapRole.Snapper
-            && col.GetComponent<Snappable>() != null
-            && col.GetComponent<Snappable>().Settings.Channel == Settings.Channel
-            || col.GetComponent<Snappable>().Settings.Channel == SnapChannel.All)
-        {
-
-        }
     }
 
 }

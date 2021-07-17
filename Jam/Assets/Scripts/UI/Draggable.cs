@@ -9,7 +9,6 @@ public class Draggable : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     [Serializable]
     public class DragSettings
     {
-        [Header("Snap Interactions")]
         public bool OverridesSnapping = true;
     }
 
@@ -50,7 +49,10 @@ public class Draggable : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         if (IsBeingDragged)
         {
-            gameObject.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            if (GetComponent<Snappable>() == null || Settings.OverridesSnapping)
+            {
+                transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            }
         }
     }
 }
