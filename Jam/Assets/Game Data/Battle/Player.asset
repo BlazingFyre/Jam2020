@@ -12,10 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5edc75474da96604e873cfd999377a82, type: 3}
   m_Name: Player
   m_EditorClassIdentifier: 
+  BaseDeck:
+    Cards:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+  BaseBin:
+    Cards: []
   Health:
-    Value: 0
+    Value: 25
     Max: 50
     Min: 0
+  EnergyGain: 4
+  Deck:
+    Cards: []
+  Bin:
+    Cards: []
+  Hand:
+    Cards: []
   Grace:
     Value: 12
     Max: Infinity
@@ -24,8 +39,7 @@ MonoBehaviour:
     Value: 12
     Max: Infinity
     Min: 0
-  Mana:
+  Energy:
     Value: 3
     Max: Infinity
     Min: 0
-  ManaGain: 4

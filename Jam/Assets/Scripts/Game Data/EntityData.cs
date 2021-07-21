@@ -5,12 +5,24 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Game Data/EntityData")]
 public class EntityData : ScriptableObject
 {
-    [Header("HP Eye")]
+    [Header("Persistent Data")]
+    public CardContainer BaseDeck;
+    public CardContainer BaseBin;
+    [Space]
     public FloatClamped Health;
+    public float EnergyGain;
+
+    [Header("Battle Data")]
+    public CardContainer Deck;
+    public CardContainer Bin;
+    public CardContainer Hand;
+    [Space]
     public FloatClamped Grace;
     public FloatClamped Grit;
+    public FloatClamped Energy;
+    
+    public void OnValidate()
+    {
 
-    [Header("Mana Eye")]
-    public FloatClamped Mana;
-    public float ManaGain;
+    }
 }

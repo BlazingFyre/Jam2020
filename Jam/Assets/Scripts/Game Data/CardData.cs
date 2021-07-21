@@ -28,70 +28,70 @@ public class CardData : ScriptableObject
     }
 
     [Header("CTRL + S to see updated Stacktions")]
-    [Space]
+    
     public CardSideData SideA;
     [Space]
     public CardSideData SideB;
 
-    public void Start()
+    public void OnValidate()
     {
         SideA.Side = Side.A;
         SideB.Side = Side.B;
+        UpdateStacktions(SideA);
+        UpdateStacktions(SideB);
     }
 
-    public void OnValidate()
+    private void UpdateStacktions(CardSideData sideData)
     {
-        List<Stacktion> NewStacktions = new List<Stacktion>(SideA.StacktionTypes.Count);
+        List<Stacktion> NewStacktions = new List<Stacktion>(sideData.StacktionTypes.Count);
 
-        if (SideA.StacktionTypes.Count < SideA.Stacktions.Count)
+        if (SideA.StacktionTypes.Count < sideData.Stacktions.Count)
         {
-            for (int i = SideA.StacktionTypes.Count; i < SideA.Stacktions.Count; i++)
+            for (int i = sideData.StacktionTypes.Count; i < sideData.Stacktions.Count; i++)
             {
-                RemoveAsset(SideA.Stacktions[i]);
+                RemoveAsset(sideData.Side, sideData.Stacktions[i]);
             }
         }
 
-        for (int i = 0; i < SideA.StacktionTypes.Count; i++)
+        for (int i = 0; i < sideData.StacktionTypes.Count; i++)
         {
-            if (SideA.Stacktions.Count > i)
+            if (sideData.Stacktions.Count > i)
             {
-                Debug.Log("hello!");
-
-                if (SideA.Stacktions[i].GetType() == null && SideA.StacktionTypes[i].Type == null
-                    || SideA.StacktionTypes[i].Type == SideA.Stacktions[i].GetType())
+                if (sideData.Stacktions[i].GetType() == null && sideData.StacktionTypes[i].Type == null
+                    || sideData.StacktionTypes[i].Type == sideData.Stacktions[i].GetType())
                 {
-                    NewStacktions.Add(SideA.Stacktions[i]);
+                    NewStacktions.Add(sideData.Stacktions[i]);
                 }
                 else
                 {
-                    if (SideA.Stacktions[i] != null)
+                    if (sideData.Stacktions[i] != null)
                     {
-                        RemoveAsset(SideA.Stacktions[i]);
+                        RemoveAsset(sideData.Side, sideData.Stacktions[i]);
                     }
 
-                    if (SideA.StacktionTypes[i].Type != null)
+                    if (sideData.StacktionTypes[i].Type != null)
                     {
-                        InsertAsset((Stacktion)CreateInstance(SideA.StacktionTypes[i].Type), NewStacktions, i);
+                        InsertAsset(sideData.Side, (Stacktion)CreateInstance(sideData.StacktionTypes[i].Type), NewStacktions, i);
                     }
                 }
             }
-            else if (SideA.StacktionTypes[i].Type != null)
+            else if (sideData.StacktionTypes[i].Type != null)
             {
-                InsertAsset((Stacktion)CreateInstance(SideA.StacktionTypes[i].Type), NewStacktions, i);
+                InsertAsset(sideData.Side, (Stacktion)CreateInstance(sideData.StacktionTypes[i].Type), NewStacktions, i);
             }
         }
 
-        SideA.Stacktions = NewStacktions;
+        sideData.Stacktions = NewStacktions;
     }
 
-    private void InsertAsset(Stacktion stacktion, List<Stacktion> newStacktions, int i)
+    private void InsertAsset(Side side, Stacktion stacktion, List<Stacktion> newStacktions, int i)
     {
         newStacktions.Add(stacktion);
         AssetDatabase.AddObjectToAsset(stacktion, AssetDatabase.GetAssetPath(this));
-        stacktion.name = i + ": " + stacktion.GetType();
+        stacktion.name = side.ToString() + i + ": " + stacktion.GetType();
     }
 
-    private void RemoveAsset(Stacktion stacktion)
+    private void RemoveAsset(Side side, Stacktion stacktion)
     {
         AssetDatabase.RemoveObjectFromAsset(stacktion);
         DestroyImmediate(stacktion);

@@ -17,7 +17,7 @@ public class Snappable : MonoBehaviour
         public SnapRole Role = SnapRole.Snapper;
         public SnapChannel Channel = SnapChannel.All;
 
-        [Header("Snapper Settings")]
+        [Header("Snapping Settings")]
         public SnapCondition Condition = SnapCondition.Manual;
         public SnapStyle Style = SnapStyle.NudgeTransform;
         public FloatReference NudgeSpeed;

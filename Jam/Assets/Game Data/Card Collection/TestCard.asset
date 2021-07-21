@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-3127935142123257923
+--- !u!114 &-2881925793547849700
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 21e3eb58ca2ffdf4c86766a941f0799f, type: 3}
-  m_Name: '1: Damage'
+  m_Name: 'A1: Damage'
   m_EditorClassIdentifier: 
-  Number: 2
-  ExtraNumber: 3
+  Number: 0
+  ExtraNumber: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41,16 +41,21 @@ MonoBehaviour:
       _suppressLogs: 0
     Side: 0
     Stacktions:
-    - {fileID: 2411965548394327466}
-    - {fileID: -3127935142123257923}
+    - {fileID: 3887932771352015307}
+    - {fileID: -2881925793547849700}
   SideB:
     Name: 
     Text: 
     Art: {fileID: 0}
-    StacktionTypes: []
-    Side: 0
-    Stacktions: []
---- !u!114 &2411965548394327466
+    StacktionTypes:
+    - GuidAssignmentFailed: 0
+      GUID: 21e3eb58ca2ffdf4c86766a941f0799f
+      TypeNameAndAssembly: Damage, Assembly-CSharp
+      _suppressLogs: 0
+    Side: 1
+    Stacktions:
+    - {fileID: 2890867521182314361}
+--- !u!114 &2890867521182314361
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -60,7 +65,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 21e3eb58ca2ffdf4c86766a941f0799f, type: 3}
-  m_Name: '0: Damage'
+  m_Name: 'B0: Damage'
   m_EditorClassIdentifier: 
-  Number: 1
-  ExtraNumber: 2
+  Number: 0
+  ExtraNumber: 0
+--- !u!114 &3887932771352015307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21e3eb58ca2ffdf4c86766a941f0799f, type: 3}
+  m_Name: 'A0: Damage'
+  m_EditorClassIdentifier: 
+  Number: 0
+  ExtraNumber: 0

@@ -401,10 +401,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EntityData: {fileID: 11400000, guid: 9ea52babf8001b44d9b83181ca925f07, type: 2}
-  ManaColor: {fileID: 11400000, guid: 4da5f72e691b6a94882f1ff3585aff7a, type: 2}
-  ManaIris: {fileID: 2143437756}
-  ManaValueText: {fileID: 2134127337}
-  ManaGainText: {fileID: 2085396602}
+  EnergyColor: {fileID: 11400000, guid: 4da5f72e691b6a94882f1ff3585aff7a, type: 2}
+  EnergyIris: {fileID: 2143437756}
+  EnergyValueText: {fileID: 2134127337}
+  EnergyGainText: {fileID: 2085396602}
 --- !u!1 &447043397
 GameObject:
   m_ObjectHideFlags: 0
